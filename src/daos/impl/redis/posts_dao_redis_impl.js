@@ -35,7 +35,6 @@ const findById = async (id) => {
   //return redisClient.ping()
 };
 
-/* eslint-disable arrow-body-style */
 /**
  * Get an array of all post objects.
  *
@@ -75,7 +74,5 @@ const findAll = async () => {
 /* eslint-disable no-unused-vars */
 
 export {
-  findById
+  insert, findById, findAll
 };
-
-/* eslint-enable no-unused-vars */
