@@ -4,24 +4,14 @@ import { postsData } from '../data/postsData.js'
 const prisma = new PrismaClient()
 
 async function main() {
-   let response, i, j 
    // Erase old data... 
-   response = await prisma.$executeRaw`truncate table posts`
+   await prisma.$executeRaw`truncate table posts`
    console.log('Table truncated') 
 
   // Seed new data 
-  for (i = 1; i <= 1000 * 1000; i++) {
-    j = Math.floor(Math.random() * 100)
-    response = await prisma.posts.create({
-        data: {
-          id: i, 
-          userId: postsData[j].userId,
-          title: postsData[j].title,
-          body: postsData[j].body 
-        }
-      })
-    if (Math.floor(i/10000) === (i/10000) ) console.log(`${i}`)
-  }
+  for (let i = 0; i < postsData.length; i++) 
+    await prisma.posts.create({ data: postsData[i] })
+  
   console.log('Done') 
   }
 

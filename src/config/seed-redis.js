@@ -2,22 +2,14 @@ import { redisClient } from './redisClient.js'
 import { postsData } from '../../data/postsData.js'
 
 async function main() {
-   let response, i, j 
    // Erase old data... 
-   response = await redisClient.flushdb()
+   await redisClient.flushdb()
    console.log('Data flushed')
 
    // Seed new data 
-   for (i = 1; i <= 1000 * 1000; i++) {
-     j = Math.floor(Math.random() * 100)
-     response = await redisClient.hmset(`posts:${i}`, {
-        id: i, 
-        userId: postsData[j].userId,
-        title: postsData[j].title,
-        body: postsData[j].body 
-      } ) 
-     if (Math.floor(i/10000) === (i/10000) ) console.log(`${i}`)
-    }
+   for (let i = 0; i < postsData.length; i++) 
+      await redisClient.hmset(`posts:${i+1}`, postsData[i])
+    
     console.log('Done') 
   }
 

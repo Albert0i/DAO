@@ -6,7 +6,7 @@
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "jsdoc": "node node_modules/jsdoc/jsdoc.js",
-    "redis": "start \"redis server\" /MIN redis-server ./redis/conf/redis.conf",    
+    "redis": "start \"redis server\" /MIN redis-server ./redis/conf/redis.conf",
     "seed-redis": "node src/config/seed-redis.js"
   },
   "keywords": [],
@@ -14,6 +14,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@prisma/client": "^5.18.0",
     "ioredis": "^5.4.1",
     "prisma": "^5.18.0",
     "util": "^0.12.5"
