@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "jsdoc": "node node_modules/jsdoc/jsdoc.js"
+    "jsdoc": "node node_modules/jsdoc/jsdoc.js",
+    "redis": "start \"redis server\" /MIN redis-server ./redis/conf/redis.conf",    
+    "seed-redis": "node src/config/seed-redis.js"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +21,8 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "jsdoc": "^4.0.3"
+  },
+  "prisma": {
+    "seed": "node prisma/seed-mysql.js"
   }
 }

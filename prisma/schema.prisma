@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Posts {
+  id        Int     @id 
+  userId    Int
+  title     String
+  body      String @db.Text
+}
+
+// 
+// Every time you made changes to the model, be sure to run: 
+// npx prisma db push  --> to reflect changes in server side
+// npx prisma generate --> to reflect changes in client side 
+// 
+//
+// prisma docs | MySQL/MariaDB 
+// https://www.prisma.io/docs/orm/overview/databases/mysql
+//
+// Prisma Client API reference
+// https://www.prisma.io/docs/orm/reference/prisma-client-reference#filter-conditions-and-operators
+// 
+// Full-text search
+// https://www.prisma.io/docs/orm/prisma-client/queries/full-text-search
+// 
+// 14.9 Full-Text Search Functions
+// https://dev.mysql.com/doc/refman/8.0/en/fulltext-search.html
+// 
+// mysql -u root -p -h 127.0.0.1
+// 
+// 6.5.4 mysqldump — A Database Backup Program
+// https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html
+//  
+// mysqldump  -u root -p -h 127.0.0.1 --databases employees --no-create-db --no-create-info --skip-add-locks --skip-comments --skip-set-charset --compact > employeedb.sql
+// 
+// 
