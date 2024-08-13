@@ -113,7 +113,7 @@ The Redis DAO implementations live in the `src/daos/impl/redis` folder. This is 
 You won’t need to change the configuration or modify the `daoloader` when working with the sample project. You do however need to understand where the DAO implementations for Redis can be found, as these files are the focus of the programming challenges throughout this course.
 
 
-#### IV. 
+#### IV. A Post DAO 
 
 
 #### V. Bibliography 
