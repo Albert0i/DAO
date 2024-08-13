@@ -1,7 +1,11 @@
-import { addNumbers } from "../src/addNumber"
+import { addNumbers, addNumbersAsync } from "../src/addNumber"
 
 test("adds 1 + 1 to equal 3", () => {
     expect(addNumbers(1, 2)).toBe(3)
+})
+
+test("adds 1 + 1 to equal 3", () => {
+    expect(addNumbersAsync(1, 2)).resolves.toBe(3);
 })
 
 /*
@@ -19,6 +23,5 @@ test("adds 1 + 1 to equal 3", () => {
    JSDoc
    https://jsdoc.app/
 
-   npm run jsdoc src/addNumber.js
-   
+   npm run jsdoc src
 */
