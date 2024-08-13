@@ -118,6 +118,9 @@ You won’t need to change the configuration or modify the `daoloader` when work
 
 #### V. Bibliography 
 1. [Redis for JavaScript developers](https://redis.io/university/courses/ru102js/)
+2. [util](https://www.npmjs.com/package/util)
+3. [JSDoc](https://jsdoc.app/)
+4. [jest](https://www.npmjs.com/package/jest)
 
 
 #### Epilogue 
