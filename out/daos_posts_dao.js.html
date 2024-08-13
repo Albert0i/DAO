@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: config/redisClient.js</title>
+    <title>JSDoc: Source: daos/posts_dao.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: config/redisClient.js</h1>
+    <h1 class="page-title">Source: daos/posts_dao.js</h1>
 
     
 
@@ -26,30 +26,37 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Redis } from 'ioredis'
+            <pre class="prettyprint source linenums"><code>//const daoLoader = require('./daoloader');
+const daoLoader = import("./daoloader.js")
 
-/**
- * Create a Redis instance. 
- * @returns {redisClient} The Redis Client instance 
- */
-const redisClient = new Redis({
-    port: 7000, // Redis port
-    host: "127.0.0.1", // a Redis instance.
-  });
+const impl = daoLoader.loadDao('posts');
 
-/**
- * Close Redis connection 
- */
-const disconnect = () => {
-  redisClient.disconnect()
-}
+module.exports = {
+  /**
+   * Insert a new post.
+   *
+   * @param {Object} post - a post object.
+   * @returns {Promise} - a Promise, resolving to the string value
+   *   for the ID of the post in the database.
+   */
+  insert: async post => impl.insert(post),
 
-export { redisClient, disconnect }
+  /**
+   * Get the post object for a given post ID.
+   *
+   * @param {number} id - a post ID.
+   * @returns {Promise} - a Promise, resolving to a post object.
+   */
+  findById: async id => impl.findById(id),
 
-/*
-   Node-Redis
-   https://www.npmjs.com/package/redis
-*/</code></pre>
+  /**
+   * Get an array of all post objects.
+   *
+   * @returns {Promise} - a Promise, resolving to an array of post objects.
+   */
+  findAll: async () => impl.findAll(),
+};
+</code></pre>
         </article>
     </section>
 
