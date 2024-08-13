@@ -1,4 +1,4 @@
-const redisClient = import("../../../config/redisClient.js")
+import  { redisClient } from "../../../config/redisClient.js"
 
 /**
  * Insert a new post.
@@ -31,6 +31,8 @@ const findById = async (id) => {
   // const siteHash = await client.hgetallAsync(siteKey);
 
   // return (siteHash === null ? siteHash : remap(siteHash));
+  return redisClient.hgetall(`posts:${id}`)
+  //return redisClient.ping()
 };
 
 /* eslint-disable arrow-body-style */
@@ -72,10 +74,8 @@ const findAll = async () => {
 
 /* eslint-disable no-unused-vars */
 
-module.exports = {
-  insert,
-  findById,
-  findAll
+export {
+  findById
 };
 
 /* eslint-enable no-unused-vars */

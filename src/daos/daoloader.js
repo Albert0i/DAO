@@ -1,7 +1,5 @@
 import 'dotenv/config'
 
-/* eslint-disable import/no-dynamic-require, global-require */
-
 /**
  * Load an implementation of a specified DAO.
  * @param {string} daoName - the name of the DAO to load
@@ -10,8 +8,7 @@ import 'dotenv/config'
 const loadDao = (daoName) => {
   const currentDatabase = process.env.DAO_DATASTORE
   
-  return import(`./impl/${currentDatabase}/${daoName}_dao_${currentDatabase}_impl`)  
+  return import(`./impl/${currentDatabase}/${daoName}_dao_${currentDatabase}_impl.js`)  
 };
-/* eslint-enable */
 
 export  { loadDao };
