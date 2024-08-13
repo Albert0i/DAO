@@ -68,13 +68,10 @@ If you don't strictly control your key naming, you quickly have a mess on your h
 
 
 #### III. [Optional: DAO Loader Implementation](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/b9e0436b7d504284bb29870a04d0147e/d12fff65d1dd4767b41f04565f4d2347/?child=first)
-DAO Loader Implementation (Optional)
-This unit contains optional information about the implementation of the DAO loader in the sample application. This material is included for those interested in how the loader works; however, this material will not be part of the quiz questions, homework, or final exam.
-
-The daoLoader is a helper module (src/daos/impl/daoloader.js) that works with values in the project's config.json file.
+The `daoLoader` is a helper module (src/daos/impl/daoloader.js) that works with values in the project's `config.json` file.
 
 config.json looks like this:
-
+```
 {
   "application": {
     "port": 8081,
@@ -89,10 +86,12 @@ config.json looks like this:
     }
   }
 }
-The dataStores property is used by the daoLoader module to determine which path to load DAO implementations from. This allows us to potentially have multiple sets of DAO implementations for different databases and to switch between them through configuration with no code changes required.
+```
 
-The loadDao function loads a database specific implementation of each DAO based on this configuration value.
+The `dataStores` property is used by the `daoLoader` module to determine which path to load DAO implementations from. This allows us to potentially have multiple sets of DAO implementations for different databases and to switch between them through configuration with no code changes required.
 
+The `loadDao` function loads a database specific implementation of each DAO based on this configuration value.
+```
 /**
  * Load an implementation of a specified DAO.
  * @param {string} daoName - the name of the DAO to load
@@ -102,12 +101,16 @@ const loadDao = (daoName) => {
   const currentDatabase = config.get('application.dataStore');
   return require(`./impl/${currentDatabase}/${daoName}_dao_${currentDatabase}_impl`);
 };
+```
+
 For example, when loading the site DAO with dataStore set to redis, the daoloader will look for a site DAO implementation for Redis here:
-
+```
 daos/impl/redis/site_dao_redis_impl.js
-The Redis DAO implementations live in the src/daos/impl/redis folder. This is also the only folder in the application's source tree that contains Redis specific code.
+```
 
-You won’t need to change the configuration or modify the daoloader when working with the sample project. You do however need to understand where the DAO implementations for Redis can be found, as these files are the focus of the programming challenges throughout this course.
+The Redis DAO implementations live in the `src/daos/impl/redis` folder. This is also the only folder in the application's source tree that contains Redis specific code.
+
+You won’t need to change the configuration or modify the `daoloader` when working with the sample project. You do however need to understand where the DAO implementations for Redis can be found, as these files are the focus of the programming challenges throughout this course.
 
 
 #### IV. 
