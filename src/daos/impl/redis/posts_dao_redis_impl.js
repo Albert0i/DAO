@@ -1,4 +1,5 @@
 import { redisClient } from './redisClient.js'
+import { load, findAllWithLua } from './scripts/findAll_script.js'
 import { getPostHashKey, getPostIDsKey } from './redis_key_generator.js'
 
 /**
@@ -33,8 +34,11 @@ const insert = async (post) => {
   const postHashKey = getPostHashKey(id);
   const postIDsKey = getPostIDsKey()
 
-  await redisClient.hmset(postHashKey, post);
-  await await redisClient.zadd(postIDsKey, id, postHashKey)
+  return await redisClient.multi()
+                          .hmset(postHashKey, post)           // 'OK' 
+                          .zadd(postIDsKey, id, postHashKey)  // 1
+                          .exec()
+  // [ [ null, 'OK' ], [ null, 1 ] ]
 };
 
 /**
@@ -48,7 +52,8 @@ const update = async (post) => {
   const id = post.id
   const postHashKey = getPostHashKey(id);
   
-  await redisClient.hmset(postHashKey, post);  
+  return await redisClient.hmset(postHashKey, post);  
+  // OK
 };
 
 /**
@@ -61,9 +66,13 @@ const update = async (post) => {
 const del = async (id) => {
   const postHashKey = getPostHashKey(id);
   const postIDsKey = getPostIDsKey()
+
   
-  await redisClient.del(postHashKey);  
-  await redisClient.zrem(postIDsKey, postHashKey);  
+  return await redisClient.multi()
+                          .del(postHashKey)               // 1
+                          .zrem(postIDsKey, postHashKey)  // 1
+                          .exec()
+  // [ [ null, 1 ], [ null, 1 ] ]
 };
 
 /**
@@ -96,16 +105,35 @@ const findAll = async () => {
     words = ids[i].split(':')
     id = words[words.length-1]
 
-    postHash = await findById(i);
+    postHash = await findById(id);
     allPosts.push(postHash)
   }
 
   return allPosts; 
 };
-/* eslint-enable */
 
-/* eslint-disable no-unused-vars */
+/**
+ * Get an array of all post objects using Lua script.
+ *
+ * @returns {Promise} - a Promise, resolving to an array of post objects.
+ */
+const findAllEx = async () => {  
+  const postIDsKey = getPostIDsKey() 
+  
+  load()
+  return findAllWithLua(postIDsKey)
+}
+
+/**
+ * Disconnect from database.
+ *
+ * @returns {void}
+ */
+const disconnect = async () => {
+  redisClient.disconnect()
+}
+
 
 export {
-  insert, update, del, findById, findAll
+  insert, update, del, findById, findAllEx, findAll, disconnect
 };
