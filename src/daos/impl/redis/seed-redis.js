@@ -1,5 +1,5 @@
 import { redisClient } from './redisClient.js'
-import { postsData } from '../../data/postsData.js'
+import { postsData } from '../../../../data/postsData.js'
 
 async function main() {
    // Erase old data... 
@@ -7,8 +7,11 @@ async function main() {
    console.log('Data flushed')
 
    // Seed new data 
-   for (let i = 0; i < postsData.length; i++) 
-      await redisClient.hmset(`posts:${i+1}`, postsData[i])
+   for (let i = 0; i < postsData.length; i++) {
+    await redisClient.hmset(`posts:${i+1}`, postsData[i])
+    await redisClient.zadd(`posts:ids`, i+1, `posts:${i+1}`)
+   }
+      
     
     console.log('Done') 
   }

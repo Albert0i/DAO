@@ -1,4 +1,4 @@
-import  { redisClient } from "../../../config/redisClient.js"
+import  { redisClient } from "./redisClient.js"
 
 /**
  * Insert a new post.
