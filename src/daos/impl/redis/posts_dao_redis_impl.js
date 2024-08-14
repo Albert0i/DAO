@@ -38,6 +38,35 @@ const insert = async (post) => {
 };
 
 /**
+ * Update a post.
+ *
+ * @param {Object} post - a post object.
+ * @returns {Promise} - a Promise, resolving to the string value
+ *   for the key of the post Redis.
+ */
+const update = async (post) => {
+  const id = post.id
+  const postHashKey = getPostHashKey(id);
+  
+  await redisClient.hmset(postHashKey, post);  
+};
+
+/**
+ * Delete a post.
+ *
+ * @param {Object} post - a post object.
+ * @returns {Promise} - a Promise, resolving to the string value
+ *   for the key of the post Redis.
+ */
+const del = async (id) => {
+  const postHashKey = getPostHashKey(id);
+  const postIDsKey = getPostIDsKey()
+  
+  await redisClient.del(postHashKey);  
+  await redisClient.zrem(postIDsKey, postHashKey);  
+};
+
+/**
  * Get the post object for a given post ID.
  *
  * @param {number} id - a post ID.
@@ -78,5 +107,5 @@ const findAll = async () => {
 /* eslint-disable no-unused-vars */
 
 export {
-  insert, findById, findAll
+  insert, update, del, findById, findAll
 };
