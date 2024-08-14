@@ -56,12 +56,10 @@ test(`${testSuiteName}: findAllEx posts`, async () => {
     'userId',
     '9'
   ]
+  const pos_id = 5
   const posts = await findAllEx();
-  //console.log(posts)
-  const singlePost = posts.filter(post => post[5] === data[5]);
-  //console.log(singlePost[0])
-  //console.log(posts[88])
-  //console.log(posts[88][5])
+  const singlePost = posts.filter(post => post[pos_id] === data[pos_id]);
+
   expect(posts.length).toEqual(100);
   expect(singlePost[0]).toEqual(data)
 });
