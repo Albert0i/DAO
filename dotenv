@@ -5,6 +5,8 @@
 # Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
 # See the documentation for all the connection string options: https://pris.ly/d/connection-strings
 
-DATABASE_URL=mysql://username:password@localhost:3306/MyDB
+DATABASE_URL=mysql://root:root@localhost:3306/movieDB
 
 DAO_DATASTORE=redis
+
+REDIS_PREFIX=DEMO:DAO

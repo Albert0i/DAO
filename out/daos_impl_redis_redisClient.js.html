@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: daos/daoloader.js</title>
+    <title>JSDoc: Source: daos/impl/redis/redisClient.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: daos/daoloader.js</h1>
+    <h1 class="page-title">Source: daos/impl/redis/redisClient.js</h1>
 
     
 
@@ -26,21 +26,30 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import 'dotenv/config'
+            <pre class="prettyprint source linenums"><code>import { Redis } from 'ioredis'
 
 /**
- * Load an implementation of a specified DAO.
- * @param {string} daoName - the name of the DAO to load
- * @returns {Object} - the DAO implemenation for the currently configured database.
+ * Create a Redis instance. 
+ * @returns {redisClient} The Redis Client instance 
  */
-const loadDao = (daoName) => {
-  const currentDatabase = process.env.DAO_DATASTORE
-  
-  return import(`./impl/${currentDatabase}/${daoName}_dao_${currentDatabase}_impl.js`)  
-};
+const redisClient = new Redis({
+    port: 7000, // Redis port
+    host: "127.0.0.1", // a Redis instance.
+  });
 
-export  { loadDao };
-</code></pre>
+/**
+ * Close Redis connection 
+ */
+const disconnect = () => {
+  redisClient.disconnect()
+}
+
+export { redisClient, disconnect }
+
+/*
+   Node-Redis
+   https://www.npmjs.com/package/redis
+*/</code></pre>
         </article>
     </section>
 

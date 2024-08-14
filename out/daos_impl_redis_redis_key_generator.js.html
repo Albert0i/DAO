@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: daos/daoloader.js</title>
+    <title>JSDoc: Source: daos/impl/redis/redis_key_generator.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: daos/daoloader.js</h1>
+    <h1 class="page-title">Source: daos/impl/redis/redis_key_generator.js</h1>
 
     
 
@@ -28,18 +28,44 @@
         <article>
             <pre class="prettyprint source linenums"><code>import 'dotenv/config'
 
-/**
- * Load an implementation of a specified DAO.
- * @param {string} daoName - the name of the DAO to load
- * @returns {Object} - the DAO implemenation for the currently configured database.
- */
-const loadDao = (daoName) => {
-  const currentDatabase = process.env.DAO_DATASTORE
-  
-  return import(`./impl/${currentDatabase}/${daoName}_dao_${currentDatabase}_impl.js`)  
-};
+// Prefix that all keys will start with, taken from config.json
+const prefix = process.env.REDIS_PREFIX
 
-export  { loadDao };
+/**
+ * Takes a string containing a Redis key name and returns a
+ * string containing that key with the application's configurable
+ * prefix added to the front.  Prefix is configured in .env.
+ *
+ * @param {string} key - a Redis key
+ * @returns {string} - a Redis key with the application prefix prepended to
+ *  the value of 'key'
+ * @private
+ */
+const getKey = key => `${prefix}:${key}`;
+
+/**
+ * Takes a numeric post ID and returns the post information key
+ * value for that ID.
+ *
+ * Key name: prefix:posts:[postId]
+ * Redis type stored at this key: hash
+ *
+ * @param {number} postId - the numeric ID of a post.
+ * @returns - the post information key for the provided post ID.
+ */
+const getPostHashKey = postId => getKey(`posts:${postId}`);
+
+/**
+ * Returns the Redis key name used for the set storing all post IDs.
+ *
+ * Key name: prefix:posts:ids
+ * Redis type stored at this key: sorted set
+ *
+ * @returns - the Redis key name used for the sorted set storing all post IDs.
+ */
+const getPostIDsKey = () => getKey('posts:ids');
+
+export { getPostHashKey, getPostIDsKey };
 </code></pre>
         </article>
     </section>

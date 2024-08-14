@@ -1,4 +1,25 @@
-import  { redisClient } from "./redisClient.js"
+import { redisClient } from './redisClient.js'
+import { getPostHashKey, getPostIDsKey } from './redis_key_generator.js'
+
+/**
+ * Takes a key/value pairs object representing a Redis hash, and
+ * returns a new object whose structure matches that of the post domain
+ * object.  Also converts fields whose values are numbers back to
+ * numbers as Redis stores all hash key values as strings.
+ *
+ * @param {Object} postHash - object containing hash values from Redis
+ * @returns {Object} - object containing the values from Redis remapped
+ *  to the shape of a post domain object.
+ * @private
+ */
+const remap = (postHash) => {
+  const remappedPostHash = { ...postHash };
+
+  remappedPostHash.id = parseInt(postHash.id, 10);
+  remappedPostHash.userId = parseInt(postHash.userId, 10);
+
+  return remappedPostHash;
+};
 
 /**
  * Insert a new post.
@@ -8,31 +29,25 @@ import  { redisClient } from "./redisClient.js"
  *   for the key of the post Redis.
  */
 const insert = async (post) => {
-  // const client = redis.getClient();
+  const id = post.id
+  const postHashKey = getPostHashKey(id);
+  const postIDsKey = getPostIDsKey()
 
-  // const siteHashKey = keyGenerator.getSiteHashKey(site.id);
-
-  // await client.hmsetAsync(siteHashKey, flatten(site));
-  // await client.saddAsync(keyGenerator.getSiteIDsKey(), siteHashKey);
-
-  // return siteHashKey;
+  await redisClient.hmset(postHashKey, post);
+  await await redisClient.zadd(postIDsKey, id, postHashKey)
 };
 
 /**
- * Get the site object for a given site ID.
+ * Get the post object for a given post ID.
  *
- * @param {number} id - a site ID.
- * @returns {Promise} - a Promise, resolving to a site object.
+ * @param {number} id - a post ID.
+ * @returns {Promise} - a Promise, resolving to a post object.
  */
 const findById = async (id) => {
-  // const client = redis.getClient();
-  // const siteKey = keyGenerator.getSiteHashKey(id);
+  const postKey = getPostHashKey(id);
+  const postHash = await redisClient.hgetall(postKey);
 
-  // const siteHash = await client.hgetallAsync(siteKey);
-
-  // return (siteHash === null ? siteHash : remap(siteHash));
-  return redisClient.hgetall(`posts:${id}`)
-  //return redisClient.ping()
+  return (Object.keys(postHash) == 0 ? null : remap(postHash));
 };
 
 /**
@@ -40,34 +55,23 @@ const findById = async (id) => {
  *
  * @returns {Promise} - a Promise, resolving to an array of post objects.
  */
-const findAll = async () => {
-  // START CHALLENGE #1 (2024/04/05)
-  // const client = redis.getClient();
-  // const ids = await client.smembersAsync(keyGenerator.getSiteIDsKey());
-
-  // let words = null; 
-  // let id = null
-  // let siteHash = null; 
-  // let allSites = []; 
-
-  // for (i=0; i< ids.length; i++) {
-  //   words = ids[i].split(':');
-  //   id = words[words.length-1];
-  //   //console.log(`id = ${id}`) 
-
-  //   siteHash = await findById(id);
-  //   //console.log('siteHash') 
-  //   //console.log(siteHash)
-
-  //   allSites.push(siteHash)
-  //   //console.log(`loop allSites.length = ${allSites.length}`);
-  //}
+const findAll = async () => {  
+  const postIDsKey = getPostIDsKey() 
+  const ids = await redisClient.zrange(postIDsKey, 0, -1)
+  let words = null; 
+  let id = null
+  let postHash = null; 
+  let allPosts = []; 
   
-  //console.log(`final allSites.length = ${allSites.length}`);
-  //return allSites;
-  return [];    
-  // End fix 
-  // END CHALLENGE #1 (2024/04/05)
+  for (let i=0; i < ids.length; i++) {
+    words = ids[i].split(':')
+    id = words[words.length-1]
+
+    postHash = await findById(i);
+    allPosts.push(postHash)
+  }
+
+  return allPosts; 
 };
 /* eslint-enable */
 

@@ -1,4 +1,5 @@
 import { redisClient } from './redisClient.js'
+import { getPostHashKey, getPostIDsKey } from './redis_key_generator.js'
 import { postsData } from '../../../../data/postsData.js'
 
 async function main() {
@@ -8,12 +9,15 @@ async function main() {
 
    // Seed new data 
    for (let i = 0; i < postsData.length; i++) {
-    await redisClient.hmset(`posts:${i+1}`, postsData[i])
-    await redisClient.zadd(`posts:ids`, i+1, `posts:${i+1}`)
-   }
-      
+    const id = postsData[i].id
+    const postHashKey = getPostHashKey(id)
+    const postIDsKey = getPostIDsKey()
+
+    await redisClient.hmset(postHashKey, postsData[i])  
+    await redisClient.zadd(postIDsKey, id, postHashKey)
+   }      
     
-    console.log('Done') 
+   console.log('Done') 
   }
 
 main()
