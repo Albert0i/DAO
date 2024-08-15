@@ -468,10 +468,10 @@ export {
 };
 ```
 
-To test with: 
+Change `DAO_DATASTORE` parameter to `mysql` in `.env`. And test with: 
 ```
 npx prisma db seed
-npm test -t dao-redis
+npm test -t dao-mysql
 ```
 
 ![alt dao mysql](img/dao-mysql.JPG)
