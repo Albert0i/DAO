@@ -1,5 +1,4 @@
-//import { insert, update, del, findById, findAll, disconnect } from "../src/daos/posts_dao.js"
-import { insert, findById, findAll, disconnect } from "../src/daos/impl/mysql/posts_dao_mysql_impl.js"
+import { insert, update, del, findById, findAll, disconnect } from "../src/daos/impl/mysql/posts_dao_mysql_impl.js"
 
 const testSuiteName = 'post_dao_redis_impl';
 
@@ -16,16 +15,16 @@ test(`${testSuiteName}: findById with existing post`, async () => {
         body: "officia veritatis tenetur vero qui itaque\nsint non ratione\nsed et ut asperiores iusto eos molestiae nostrum\nveritatis quibusdam et nemo iusto saepe"
       }
     const id = 66
-    const post = findById(id);
+    const post = await findById(id);
     
-    expect(post).resolves.toEqual(data)
+    expect(post).toEqual(data)
   })
 
 test(`${testSuiteName}: findById with missing post`, async () => {
   const id = 999
-  const post = findById(id);
-  
-  expect(post).resolves.toBe(null);
+  const post = await findById(id);
+
+  expect(post).toBe(null)
 });
 
 test(`${testSuiteName}: findAll posts`, async () => {
@@ -35,10 +34,10 @@ test(`${testSuiteName}: findAll posts`, async () => {
       title: "sapiente omnis fugit eos",
       body: "consequatur omnis est praesentium\nducimus non iste\nneque hic deserunt\nvoluptatibus veniam cum et rerum sed"
     }
-  const posts = await findAll();
+  const posts = await findAll();  
   const singlePost = posts.filter(post => post.id === data.id);
   
-  expect(posts.length).toEqual(100);
+  expect(posts.length).toBe(100);
   expect(singlePost[0]).toEqual(data)
 });
 
@@ -52,13 +51,13 @@ test(`${testSuiteName}: insert a post`, async () => {
     }
   
   const result = await insert(data);
-  expect([ [ null, 'OK' ], [ null, 1 ] ]).toEqual(expect.arrayContaining(result));
+  expect(result).toEqual(data);
   
-  const post = findById(data.id)
-  expect(post).resolves.toEqual(data);
+  const post = await findById(data.id)
+  expect(post).toEqual(data);
 });
 
-test.skip(`${testSuiteName}: update a post`, async () => {
+test(`${testSuiteName}: update a post`, async () => {
   const data = {
       userId: 999,
       id: 999,
@@ -67,18 +66,23 @@ test.skip(`${testSuiteName}: update a post`, async () => {
     }
   
   const result = await update(data);
-  expect(result).toBe('OK')
+  expect(result).toEqual(data)
 
-  const post = findById(data.id)  
-  expect(post).resolves.toEqual(data);
+  const post = await findById(data.id)  
+  expect(post).toEqual(data);
 });
 
-test.skip(`${testSuiteName}: delete a post`, async () => {
-  const id = 999
+test(`${testSuiteName}: delete a post`, async () => {
+  const data = {
+    userId: 999,
+    id: 999,
+    title: "死人頭",
+    body: "鞅曰：「吾說君以帝王之道比三代，而君曰：『久遠，吾不能待。且賢君者，各及其身顯名天下，安能邑邑待數十百年以成帝王乎？』故吾以彊國之術說君，君大說之耳。然亦難以比德於殷周矣。」"
+  }
   
-  const result = await del(id);
-  expect([ [ null, 1 ], [ null, 1 ] ]).toEqual(expect.arrayContaining(result));
+  const result = await del(data.id);
+  expect(result).toEqual(data);
 
-  const post = findById(id)  
-  expect(post).resolves.toBe(null);
+  const post = await findById(data.id)  
+  expect(post).toBe(null);
 });

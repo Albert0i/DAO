@@ -15,16 +15,16 @@ test(`${testSuiteName}: findById with existing post`, async () => {
         body: "officia veritatis tenetur vero qui itaque\nsint non ratione\nsed et ut asperiores iusto eos molestiae nostrum\nveritatis quibusdam et nemo iusto saepe"
       }
     const id = 66
-    const post = findById(id);
+    const post = await findById(id);
     
-    expect(post).resolves.toEqual(data)
+    expect(post).toEqual(data)
   })
 
 test(`${testSuiteName}: findById with missing post`, async () => {
   const id = 999
-  const post = findById(id);
+  const post = await findById(id);
   
-  expect(post).resolves.toBe(null);
+  expect(post).toBe(null);
 });
 
 test(`${testSuiteName}: findAll posts`, async () => {
@@ -37,7 +37,7 @@ test(`${testSuiteName}: findAll posts`, async () => {
   const posts = await findAll();
   const singlePost = posts.filter(post => post.id === data.id);
   
-  expect(posts.length).toEqual(100);
+  expect(posts.length).toBe(100);
   expect(singlePost[0]).toEqual(data)
 });
 

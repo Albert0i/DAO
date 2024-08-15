@@ -1,7 +1,3 @@
-// import { redisClient } from './redisClient.js'
-// import { findAllWithLua } from './scripts/findAll_script.js'
-// import { getPostHashKey, getPostIDsKey } from './redis_key_generator.js'
-
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
@@ -17,39 +13,32 @@ const insert = async (post) => {
   return prisma.posts.create({ data: post })
 }
 
-// /**
-//  * Update a post.
-//  *
-//  * @param {Object} post - a post object.
-//  * @returns {Promise} - a Promise, resolving to the string value
-//  *   for the key of the post Redis.
-//  */
-// const update = async (post) => {
-//   const id = post.id
-//   const postHashKey = getPostHashKey(id);
-  
-//   return await redisClient.hmset(postHashKey, post);  
-//   // OK
-// };
+/**
+ * Update a post.
+ *
+ * @param {Object} post - a post object.
+ * @returns {Promise} - a Promise, resolving to the string value
+ *   for the key of the post Redis.
+ */
+const update = async (post) => {
+  return prisma.posts.update({
+    where: { id: post.id },
+    data: post
+  })
+};
 
-// /**
-//  * Delete a post.
-//  *
-//  * @param {Object} post - a post object.
-//  * @returns {Promise} - a Promise, resolving to the string value
-//  *   for the key of the post Redis.
-//  */
-// const del = async (id) => {
-//   const postHashKey = getPostHashKey(id);
-//   const postIDsKey = getPostIDsKey()
-
-  
-//   return await redisClient.multi()
-//                           .del(postHashKey)               // 1
-//                           .zrem(postIDsKey, postHashKey)  // 1
-//                           .exec()
-//   // [ [ null, 1 ], [ null, 1 ] ]
-// };
+/**
+ * Delete a post.
+ *
+ * @param {Object} post - a post object.
+ * @returns {Promise} - a Promise, resolving to the string value
+ *   for the key of the post Redis.
+ */
+const del = async (id) => {
+  return prisma.posts.delete({
+    where: { id  }
+  })
+};
 
 /**
  * Get the post object for a given post ID.
@@ -76,15 +65,11 @@ const findAll = async () => {
  * @returns {void}
  */
 const disconnect = async () => {
-  await prisma.$disconnect()
+  prisma.$disconnect()
 }
 
-
-// export {
-//   insert, update, del, findById, findAll, disconnect
-// };
 export {
-  insert, findById, findAll, disconnect
+  insert, update, del, findById, findAll, disconnect
 };
 
 /*

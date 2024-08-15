@@ -157,7 +157,6 @@ const disconnect = async () => {
   redisClient.disconnect()
 }
 
-
 export {
   insert, update, del, findById, findAll, disconnect
 };
