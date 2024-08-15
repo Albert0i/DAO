@@ -515,6 +515,165 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
+        <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html">daos/impl/mysql/posts_dao_mysql_impl.js</a>, <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html#line96">line 96</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - a Promise, resolving to the string value  for the key of the post Redis.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="del"><span class="type-signature">(async) </span>del<span class="signature">(post)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Delete a post.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>post</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">a post object.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line96">line 96</a>
     </li></ul></dd>
     
@@ -715,6 +874,112 @@
     <dd>
         
 <span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="disconnect"><span class="type-signature">(async) </span>disconnect<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Disconnect from database.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html">daos/impl/mysql/posts_dao_mysql_impl.js</a>, <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html#line156">line 156</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
 
 
     </dd>
@@ -1102,7 +1367,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line126">line 126</a>
+        <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html">daos/impl/mysql/posts_dao_mysql_impl.js</a>, <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html#line126">line 126</a>
     </li></ul></dd>
     
 
@@ -1168,7 +1433,7 @@
 
 
 <div class="description">
-    Get an array of all site objects.
+    Get an array of all post objects.
 </div>
 
 
@@ -1212,7 +1477,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_site_dao_redis_impl.js.html">daos/impl/redis/site_dao_redis_impl.js</a>, <a href="daos_impl_redis_site_dao_redis_impl.js.html#line97">line 97</a>
+        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line126">line 126</a>
     </li></ul></dd>
     
 
@@ -1241,7 +1506,7 @@
 
         
 <div class="param-desc">
-    - a Promise, resolving to an array of site objects.
+    - a Promise, resolving to an array of post objects.
 </div>
 
 
@@ -1490,7 +1755,7 @@
     
 
     
-    <h4 class="name" id="findByGeo"><span class="type-signature">(async) </span>findByGeo<span class="signature">(lat, lng, radius, radiusUnit)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="findById"><span class="type-signature">(async) </span>findById<span class="signature">(id)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
     
 
     
@@ -1498,7 +1763,7 @@
 
 
 <div class="description">
-    Get an array of sites within a radius of a given coordinate.This will be implemented in week 3.
+    Get the post object for a given post ID.
 </div>
 
 
@@ -1534,7 +1799,7 @@
 
         <tr>
             
-                <td class="name"><code>lat</code></td>
+                <td class="name"><code>id</code></td>
             
 
             <td class="type">
@@ -1550,79 +1815,7 @@
 
             
 
-            <td class="description last">Latitude of the coordinate to search from.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>lng</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Longitude of the coordinate to search from.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>radius</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Radius in which to search.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>radiusUnit</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">'KM'</span>
-|
-
-<span class="param-type">'MI'</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The unit that the value of radius is in.</td>
+            <td class="description last">a post ID.</td>
         </tr>
 
     
@@ -1663,7 +1856,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_site_dao_redis_impl.js.html">daos/impl/redis/site_dao_redis_impl.js</a>, <a href="daos_impl_redis_site_dao_redis_impl.js.html#line141">line 141</a>
+        <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html">daos/impl/mysql/posts_dao_mysql_impl.js</a>, <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html#line114">line 114</a>
     </li></ul></dd>
     
 
@@ -1692,238 +1885,7 @@
 
         
 <div class="param-desc">
-    - a Promise, resolving to an array of site objects.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="findByGeoWithExcessCapacity"><span class="type-signature">(async) </span>findByGeoWithExcessCapacity<span class="signature">(lat, lng, radius, radiusUnit)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Get an array of sites where capacity exceeds consumption withina radius of a given coordinate.This will be implemented in week 3.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>lat</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Latitude of the coordinate to search from.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>lng</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Longitude of the coordinate to search from.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>radius</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Radius in which to search.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>radiusUnit</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">'KM'</span>
-|
-
-<span class="param-type">'MI'</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The unit that the value of radius is in.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_site_dao_redis_impl.js.html">daos/impl/redis/site_dao_redis_impl.js</a>, <a href="daos_impl_redis_site_dao_redis_impl.js.html#line155">line 155</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - a Promise, resolving to an array of site objects.
+    - a Promise, resolving to a post object.
 </div>
 
 
@@ -2083,165 +2045,6 @@
         
 <div class="param-desc">
     - a Promise, resolving to a post object.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="findById"><span class="type-signature">(async) </span>findById<span class="signature">(id)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Get the site object for a given site ID.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">a site ID.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_site_dao_redis_impl.js.html">daos/impl/redis/site_dao_redis_impl.js</a>, <a href="daos_impl_redis_site_dao_redis_impl.js.html#line82">line 82</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    - a Promise, resolving to a site object.
 </div>
 
 
@@ -2775,7 +2578,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line62">line 62</a>
+        <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html">daos/impl/mysql/posts_dao_mysql_impl.js</a>, <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -2833,7 +2636,7 @@
     
 
     
-    <h4 class="name" id="insert"><span class="type-signature">(async) </span>insert<span class="signature">(site)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="insert"><span class="type-signature">(async) </span>insert<span class="signature">(post)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
     
 
     
@@ -2841,7 +2644,7 @@
 
 
 <div class="description">
-    Insert a new site.
+    Insert a new post.
 </div>
 
 
@@ -2877,7 +2680,7 @@
 
         <tr>
             
-                <td class="name"><code>site</code></td>
+                <td class="name"><code>post</code></td>
             
 
             <td class="type">
@@ -2893,7 +2696,7 @@
 
             
 
-            <td class="description last">a site object.</td>
+            <td class="description last">a post object.</td>
         </tr>
 
     
@@ -2934,7 +2737,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_site_dao_redis_impl.js.html">daos/impl/redis/site_dao_redis_impl.js</a>, <a href="daos_impl_redis_site_dao_redis_impl.js.html#line65">line 65</a>
+        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -2963,7 +2766,7 @@
 
         
 <div class="param-desc">
-    - a Promise, resolving to the string value  for the key of the site Redis.
+    - a Promise, resolving to the string value  for the key of the post Redis.
 </div>
 
 
@@ -3517,6 +3320,165 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
+        <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html">daos/impl/mysql/posts_dao_mysql_impl.js</a>, <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html#line81">line 81</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - a Promise, resolving to the string value  for the key of the post Redis.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="update"><span class="type-signature">(async) </span>update<span class="signature">(post)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Update a post.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>post</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">a post object.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
         <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line81">line 81</a>
     </li></ul></dd>
     
@@ -3744,13 +3706,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addNumbers">addNumbers</a></li><li><a href="global.html#addNumbersAsync">addNumbersAsync</a></li><li><a href="global.html#del">del</a></li><li><a href="global.html#disconnect">disconnect</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAllWithLua">findAllWithLua</a></li><li><a href="global.html#findByGeo">findByGeo</a></li><li><a href="global.html#findByGeoWithExcessCapacity">findByGeoWithExcessCapacity</a></li><li><a href="global.html#findById">findById</a></li><li><a href="global.html#getPostHashKey">getPostHashKey</a></li><li><a href="global.html#getPostIDsKey">getPostIDsKey</a></li><li><a href="global.html#insert">insert</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#loadDao">loadDao</a></li><li><a href="global.html#redisClient">redisClient</a></li><li><a href="global.html#update">update</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addNumbers">addNumbers</a></li><li><a href="global.html#addNumbersAsync">addNumbersAsync</a></li><li><a href="global.html#del">del</a></li><li><a href="global.html#disconnect">disconnect</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAllWithLua">findAllWithLua</a></li><li><a href="global.html#findById">findById</a></li><li><a href="global.html#getPostHashKey">getPostHashKey</a></li><li><a href="global.html#getPostIDsKey">getPostIDsKey</a></li><li><a href="global.html#insert">insert</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#loadDao">loadDao</a></li><li><a href="global.html#redisClient">redisClient</a></li><li><a href="global.html#update">update</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu Aug 15 2024 10:45:32 GMT+0800 (China Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu Aug 15 2024 10:49:46 GMT+0800 (China Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
