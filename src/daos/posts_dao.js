@@ -45,17 +45,10 @@ const findById = async id => impl.findById(id)
 const findAll = async () => impl.findAll()
 
 /**
- * Get an array of all post objects using Lua script. 
- *
- * @returns {Promise} - a Promise, resolving to an array of post objects.
- */
-const findAllEx = async () => impl.findAllEx()
-
-/**
  * Disconnect database connection.
  *
  * @returns {void}
  */
 const disconnect = async () => impl.disconnect()
 
-export { insert, update, del, findById, findAll, findAllEx, disconnect };
+export { insert, update, del, findById, findAll, disconnect };

@@ -13,10 +13,11 @@ async function main() {
     const postHashKey = getPostHashKey(id)
     const postIDsKey = getPostIDsKey()
 
-    await redisClient.hmset(postHashKey, postsData[i])  
-    await redisClient.zadd(postIDsKey, id, postHashKey)
-   }      
-    
+    await redisClient.multi()
+                     .hmset(postHashKey, postsData[i])   // 'OK' 
+                     .zadd(postIDsKey, id, postHashKey)  // 1
+                     .exec()
+   }    
    console.log('Done') 
   }
 

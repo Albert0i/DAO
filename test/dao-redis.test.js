@@ -1,5 +1,4 @@
-//import { redisClient, disconnect } from '../src/daos/impl/redis/redisClient.js'
-import { insert, update, del, findById, findAll, findAllEx, disconnect } from "../src/daos/posts_dao.js"
+import { insert, update, del, findById, findAll, disconnect } from "../src/daos/posts_dao.js"
 
 const testSuiteName = 'post_dao_redis_impl';
 
@@ -36,20 +35,6 @@ test(`${testSuiteName}: findAll posts`, async () => {
       body: "consequatur omnis est praesentium\nducimus non iste\nneque hic deserunt\nvoluptatibus veniam cum et rerum sed"
     }
   const posts = await findAll();
-  const singlePost = posts.filter(post => post.id === data.id);
-  
-  expect(posts.length).toEqual(100);
-  expect(singlePost[0]).toEqual(data)
-});
-
-test(`${testSuiteName}: findAllEx posts`, async () => {
-  const data = {
-    userId: 9,
-    id: 88,
-    title: "sapiente omnis fugit eos",
-    body: "consequatur omnis est praesentium\nducimus non iste\nneque hic deserunt\nvoluptatibus veniam cum et rerum sed"
-  }
-  const posts = await findAllEx();  
   const singlePost = posts.filter(post => post.id === data.id);
   
   expect(posts.length).toEqual(100);

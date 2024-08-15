@@ -1,5 +1,5 @@
 import { redisClient } from './redisClient.js'
-import { load, findAllWithLua } from './scripts/findAll_script.js'
+import { findAllWithLua } from './scripts/findAll_script.js'
 import { getPostHashKey, getPostIDsKey } from './redis_key_generator.js'
 
 /**
@@ -123,37 +123,30 @@ const findById = async (id) => {
  *
  * @returns {Promise} - a Promise, resolving to an array of post objects.
  */
-const findAll = async () => {  
+const findAll = async () => {    
   const postIDsKey = getPostIDsKey() 
-  const ids = await redisClient.zrange(postIDsKey, 0, -1)
-  let words = null; 
-  let id = null
-  let postHash = null; 
   let allPosts = []; 
-  
-  for (let i=0; i < ids.length; i++) {
-    words = ids[i].split(':')
-    id = words[words.length-1]
 
-    postHash = await findById(id);
-    allPosts.push(postHash)
-  }
+  // Method 1 - JS code 
+  // const ids = await redisClient.zrange(postIDsKey, 0, -1)
+  // let words = null; 
+  // let id = null
+  // let postHash = null; 
+  
+  // for (let i=0; i < ids.length; i++) {
+  //   words = ids[i].split(':')
+  //   id = words[words.length-1]
+
+  //   postHash = await findById(id);
+  //   allPosts.push(postHash)
+  // }
+
+  // Method 2 - Lua script 
+  // Script is loaded in redisClient.js 
+  allPosts = retrofit(await findAllWithLua(postIDsKey)) 
 
   return allPosts; 
 };
-
-/**
- * Get an array of all post objects using Lua script.
- *
- * @returns {Promise} - a Promise, resolving to an array of post objects.
- */
-const findAllEx = async () => {  
-  const postIDsKey = getPostIDsKey() 
-  
-  load()
-  const allPosts = await findAllWithLua(postIDsKey) 
-  return retrofit(allPosts)
-}
 
 /**
  * Disconnect from database.
@@ -166,5 +159,5 @@ const disconnect = async () => {
 
 
 export {
-  insert, update, del, findById, findAllEx, findAll, disconnect
+  insert, update, del, findById, findAll, disconnect
 };

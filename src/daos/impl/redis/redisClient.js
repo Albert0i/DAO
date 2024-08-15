@@ -1,4 +1,5 @@
 import { Redis } from 'ioredis'
+import { load } from './scripts/findAll_script.js'
 
 /**
  * Create a Redis instance. 
@@ -10,7 +11,13 @@ const redisClient = new Redis({
   });
 
 /**
- * Close Redis connection 
+ * Load script for findAll beforehand. 
+ */
+load();
+
+/**
+ * Close Redis connection
+ * @returns {null} 
  */
 const disconnect = () => {
   redisClient.disconnect()
