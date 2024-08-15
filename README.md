@@ -136,6 +136,7 @@ export  { loadDao };
 ```
 
 The `import` statement is considered more modern in JavaScript compared to the `require` function. A `DAO_DATASTORE` parameter is used to indicate the datastore implementation to load.
+
 `.env`
 ```
 DAO_DATASTORE=redis
