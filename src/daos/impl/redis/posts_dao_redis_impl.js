@@ -23,6 +23,36 @@ const remap = (postHash) => {
 };
 
 /**
+ * Takes a array of array object representing a Redis hash, and
+ * returns a new object whose structure matches that of the post domain
+ * object.  Also converts fields whose values are numbers back to
+ * numbers as Redis stores all hash key values as strings.
+ *
+ * @param {array} arr - array of array containing hash values from Redis
+ * @returns {array} - array of object containing the values from Redis remapped
+ *  to the shape of a post domain object.
+ * @private
+ */
+function retrofit(arr) {
+  let ret = []
+
+  for (let i=0; i < arr.length; i++ ) {
+      const element = arr[i]
+      let obj = {}
+      for (let j=0; j < element.length; j+=2 ) {
+          const key = element[j]
+          const value = element[j+1]
+          if (key === 'id' || key === 'userId') 
+              obj[key] = parseInt(value, 10)
+          else
+              obj[key] = value
+      }
+      ret.push(obj)
+  }
+  return ret
+}
+
+/**
  * Insert a new post.
  *
  * @param {Object} post - a post object.
@@ -121,7 +151,8 @@ const findAllEx = async () => {
   const postIDsKey = getPostIDsKey() 
   
   load()
-  return findAllWithLua(postIDsKey)
+  const allPosts = await findAllWithLua(postIDsKey) 
+  return retrofit(allPosts)
 }
 
 /**

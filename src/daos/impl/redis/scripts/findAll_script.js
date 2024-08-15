@@ -1,4 +1,5 @@
 import { redisClient } from '../redisClient.js'
+import { getPostIDsKey } from '../redis_key_generator.js'
 
 const script = `
     --
@@ -17,6 +18,11 @@ const script = `
     end
     return posts
 `
+/**
+ * Load lua script for findAllWithLua
+ *
+ * @returns {null} 
+ */
 const load = async () => {
   redisClient.defineCommand("myfunc", {
     numberOfKeys: 1,
@@ -24,8 +30,13 @@ const load = async () => {
   });  
 };
 
-const findAllWithLua = () => {
-  return redisClient.myfunc('DEMO:DAO:posts:ids')
+/**
+ * Get an array of array of all posts objects using Lua script. 
+ *
+ * @returns {Promise} - a Promise, resolving to an array of array of posts.
+ */
+const findAllWithLua = () => {  
+  return redisClient.myfunc(getPostIDsKey())
 }
   
 export { load, findAllWithLua };

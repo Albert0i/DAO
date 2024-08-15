@@ -43,23 +43,15 @@ test(`${testSuiteName}: findAll posts`, async () => {
 });
 
 test(`${testSuiteName}: findAllEx posts`, async () => {
-  const data = [
-    'body',
-    'consequatur omnis est praesentium\n' +
-      'ducimus non iste\n' +
-      'neque hic deserunt\n' +
-      'voluptatibus veniam cum et rerum sed',
-    'title',
-    'sapiente omnis fugit eos',
-    'id',
-    '88',
-    'userId',
-    '9'
-  ]
-  const pos_id = 5
-  const posts = await findAllEx();
-  const singlePost = posts.filter(post => post[pos_id] === data[pos_id]);
-
+  const data = {
+    userId: 9,
+    id: 88,
+    title: "sapiente omnis fugit eos",
+    body: "consequatur omnis est praesentium\nducimus non iste\nneque hic deserunt\nvoluptatibus veniam cum et rerum sed"
+  }
+  const posts = await findAllEx();  
+  const singlePost = posts.filter(post => post.id === data.id);
+  
   expect(posts.length).toEqual(100);
   expect(singlePost[0]).toEqual(data)
 });

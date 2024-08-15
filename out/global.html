@@ -515,7 +515,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line66">line 66</a>
+        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line96">line 96</a>
     </li></ul></dd>
     
 
@@ -784,7 +784,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line132">line 132</a>
+        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line163">line 163</a>
     </li></ul></dd>
     
 
@@ -1084,7 +1084,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line96">line 96</a>
+        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line126">line 126</a>
     </li></ul></dd>
     
 
@@ -1414,7 +1414,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line120">line 120</a>
+        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line150">line 150</a>
     </li></ul></dd>
     
 
@@ -1554,6 +1554,116 @@
         
 <div class="param-desc">
     - a Promise, resolving to an array of post objects.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="findAllWithLua"><span class="type-signature"></span>findAllWithLua<span class="signature">()</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Get an array of array of all posts objects using Lua script.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="daos_impl_redis_scripts_findAll_script.js.html">daos/impl/redis/scripts/findAll_script.js</a>, <a href="daos_impl_redis_scripts_findAll_script.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - a Promise, resolving to an array of array of posts.
 </div>
 
 
@@ -2145,7 +2255,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line84">line 84</a>
+        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line114">line 114</a>
     </li></ul></dd>
     
 
@@ -2867,7 +2977,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line32">line 32</a>
+        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -3243,6 +3353,112 @@
     
 
     
+    <h4 class="name" id="load"><span class="type-signature">(async) </span>load<span class="signature">()</span><span class="type-signature"> &rarr; {null}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Load lua script for findAllWithLua
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="daos_impl_redis_scripts_findAll_script.js.html">daos/impl/redis/scripts/findAll_script.js</a>, <a href="daos_impl_redis_scripts_findAll_script.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">null</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="loadDao"><span class="type-signature"></span>loadDao<span class="signature">(daoName)</span><span class="type-signature"> &rarr; {Object}</span></h4>
     
 
@@ -3503,7 +3719,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line51">line 51</a>
+        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line81">line 81</a>
     </li></ul></dd>
     
 
@@ -3730,13 +3946,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addNumbers">addNumbers</a></li><li><a href="global.html#addNumbersAsync">addNumbersAsync</a></li><li><a href="global.html#del">del</a></li><li><a href="global.html#disconnect">disconnect</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAllEx">findAllEx</a></li><li><a href="global.html#findByGeo">findByGeo</a></li><li><a href="global.html#findByGeoWithExcessCapacity">findByGeoWithExcessCapacity</a></li><li><a href="global.html#findById">findById</a></li><li><a href="global.html#getPostHashKey">getPostHashKey</a></li><li><a href="global.html#getPostIDsKey">getPostIDsKey</a></li><li><a href="global.html#insert">insert</a></li><li><a href="global.html#loadDao">loadDao</a></li><li><a href="global.html#redisClient">redisClient</a></li><li><a href="global.html#update">update</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addNumbers">addNumbers</a></li><li><a href="global.html#addNumbersAsync">addNumbersAsync</a></li><li><a href="global.html#del">del</a></li><li><a href="global.html#disconnect">disconnect</a></li><li><a href="global.html#findAll">findAll</a></li><li><a href="global.html#findAllEx">findAllEx</a></li><li><a href="global.html#findAllWithLua">findAllWithLua</a></li><li><a href="global.html#findByGeo">findByGeo</a></li><li><a href="global.html#findByGeoWithExcessCapacity">findByGeoWithExcessCapacity</a></li><li><a href="global.html#findById">findById</a></li><li><a href="global.html#getPostHashKey">getPostHashKey</a></li><li><a href="global.html#getPostIDsKey">getPostIDsKey</a></li><li><a href="global.html#insert">insert</a></li><li><a href="global.html#load">load</a></li><li><a href="global.html#loadDao">loadDao</a></li><li><a href="global.html#redisClient">redisClient</a></li><li><a href="global.html#update">update</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Wed Aug 14 2024 17:29:56 GMT+0800 (China Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Thu Aug 15 2024 09:55:17 GMT+0800 (China Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
