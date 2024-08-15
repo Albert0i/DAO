@@ -64,10 +64,10 @@ const insert = async (post) => {
   const postHashKey = getPostHashKey(id);
   const postIDsKey = getPostIDsKey()
 
-  return await redisClient.multi()
-                          .hmset(postHashKey, post)           // 'OK' 
-                          .zadd(postIDsKey, id, postHashKey)  // 1
-                          .exec()
+  return redisClient.multi()
+                    .hmset(postHashKey, post)           // 'OK' 
+                    .zadd(postIDsKey, id, postHashKey)  // 1
+                    .exec()
   // [ [ null, 'OK' ], [ null, 1 ] ]
 };
 
@@ -82,7 +82,7 @@ const update = async (post) => {
   const id = post.id
   const postHashKey = getPostHashKey(id);
   
-  return await redisClient.hmset(postHashKey, post);  
+  return redisClient.hmset(postHashKey, post);  
   // OK
 };
 
@@ -97,11 +97,10 @@ const del = async (id) => {
   const postHashKey = getPostHashKey(id);
   const postIDsKey = getPostIDsKey()
 
-  
-  return await redisClient.multi()
-                          .del(postHashKey)               // 1
-                          .zrem(postIDsKey, postHashKey)  // 1
-                          .exec()
+  return redisClient.multi()
+                    .del(postHashKey)               // 1
+                    .zrem(postIDsKey, postHashKey)  // 1
+                    .exec()
   // [ [ null, 1 ], [ null, 1 ] ]
 };
 
