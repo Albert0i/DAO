@@ -116,10 +116,43 @@ The Redis DAO implementations live in the `src/daos/impl/redis` folder. This is 
 You won’t need to change the configuration or modify the `daoloader` when working with the sample project. You do however need to understand where the DAO implementations for Redis can be found, as these files are the focus of the programming challenges throughout this course.
 
 
-#### IV. A Post DAO 
+#### IV. Rework DAO Loader 
+daoloader.js
+```
+import 'dotenv/config'
+
+/**
+ * Load an implementation of a specified DAO.
+ * @param {string} daoName - the name of the DAO to load
+ * @returns {Object} - the DAO implemenation for the currently configured database.
+ */
+const loadDao = (daoName) => {
+  const currentDatabase = process.env.DAO_DATASTORE
+  
+  return import(`./impl/${currentDatabase}/${daoName}_dao_${currentDatabase}_impl.js`)  
+};
+
+export  { loadDao };
+```
+
+The `import` statement is considered more modern in JavaScript compared to the `require` function. 
 
 
-#### V. Bibliography 
+#### V. A Post DAO 
+
+
+#### VI. Redis Implementation 
+
+
+#### VII. MySQL Implementation 
+
+
+#### VIII. Retrospection 
+
+
+#### IX. 
+
+#### X. Bibliography 
 1. [Redis for JavaScript developers](https://redis.io/university/courses/ru102js/)
 2. [util](https://www.npmjs.com/package/util)
 3. [JSDoc](https://jsdoc.app/)
@@ -128,9 +161,8 @@ You won’t need to change the configuration or modify the `daoloader` when work
 
 
 #### Epilogue 
-> 公叔既死，公孫鞅聞秦孝公下令國中求賢者，將修繆公之業，東復侵地，乃遂西入秦，因孝公寵臣景監以求見孝公。 <br /><br />
-> 孝公既見衛鞅，語事良久，孝公時時睡，弗聽。罷而孝公怒景監曰：「子之客妄人耳，安足用邪！」景監以讓衛鞅。衛鞅曰：「吾說公以帝道，其志不開悟矣。」後五日，復求見鞅。鞅復見孝公，益愈，然而未中旨。罷而孝公復讓景監，景監亦讓鞅。鞅曰：「吾說公以王道而未入也。請復見鞅。」鞅復見孝公，孝公善之而未用也。罷而去。孝公謂景監曰：「汝客善，可與語矣。」鞅曰：「吾說公以霸道，其意欲用之矣。誠復見我，我知之矣。」衛鞅復見孝公。公與語，不自知厀之前於席也。語數日不厭。<br /><br />
-> 景監曰：「子何以中吾君？吾君之驩甚也。」鞅曰：「吾說君以帝王之道比三代，而君曰：『久遠，吾不能待。且賢君者，各及其身顯名天下，安能邑邑待數十百年以成帝王乎？』故吾以彊國之術說君，君大說之耳。然亦難以比德於殷周矣。」<br /><br />[《史記‧商君列傳》](https://ctext.org/shiji/shang-jun-lie-zhuan/zh)
+> 孝公既見衛鞅，語事良久，孝公時時睡，弗聽。罷而孝公怒景監曰：「子之客妄人耳，安足用邪！」景監以讓衛鞅。衛鞅曰：「吾說公以帝道，其志不開悟矣。」後五日，復求見鞅。鞅復見孝公，益愈，然而未中旨。罷而孝公復讓景監，景監亦讓鞅。鞅曰：「吾說公以王道而未入也。請復見鞅。」鞅復見孝公，孝公善之而未用也。罷而去。孝公謂景監曰：「汝客善，可與語矣。」鞅曰：「吾說公以霸道，其意欲用之矣。誠復見我，我知之矣。」衛鞅復見孝公。公與語，不自知厀之前於席也。語數日不厭。<br />
+[《史記‧商君列傳》](https://ctext.org/shiji/shang-jun-lie-zhuan/zh)
 
 
 ### EOF (2024/08/16)
