@@ -135,7 +135,13 @@ const loadDao = (daoName) => {
 export  { loadDao };
 ```
 
-The `import` statement is considered more modern in JavaScript compared to the `require` function. 
+The `import` statement is considered more modern in JavaScript compared to the `require` function. A `DAO_DATASTORE` parameter is used to indicate the datastore implementation to load.
+`.env`
+```
+DAO_DATASTORE=redis
+
+REDIS_PREFIX=DEMO:DAO
+```
 
 
 #### V. A Post DAO 
@@ -374,6 +380,13 @@ export {
   insert, update, del, findById, findAll, disconnect
 };
 ```
+
+To test with: 
+```
+npm run seed-redis
+npm test -t dao-redis
+```
+
 ![alt dao redis](img/dao-redis.JPG)
 
 
@@ -453,12 +466,14 @@ const disconnect = async () => {
 export {
   insert, update, del, findById, findAll, disconnect
 };
-
-/*
-   Prisma | CRUD 
-   https://www.prisma.io/docs/orm/prisma-client/queries/crud
-*/
 ```
+
+To test with: 
+```
+npx prisma db seed
+npm test -t dao-redis
+```
+
 ![alt dao mysql](img/dao-mysql.JPG)
 
 
