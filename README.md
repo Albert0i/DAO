@@ -514,9 +514,9 @@ export {
 };
 ```
 
-By dint of ORM, all functions are just *one* line of code, which simply returns an ORM call. This poses a drastic contrast with our previous Redis implementation... 
+By dint of ORM, all functions are just *one* line of code, which simply returns an ORM call. You don't need to write a single line of [SQL](https://en.wikipedia.org/wiki/SQL) code nor risk by tampering the server. This poses a drastic contrast with our previous Redis implementation... But there is a catch, Prisma does have a learning curve. 
 
-Change `DAO_DATASTORE` parameter to `mysql` in `.env`. And test with: 
+Let's change `DAO_DATASTORE` parameter to `mysql` in `.env`. And test with: 
 ```
 npx prisma db seed
 npm test -t dao-mysql
