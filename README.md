@@ -159,7 +159,7 @@ As you can see, DAO [design patterns](https://www.javier8a.com/itc/bd1/articulo.
   }
 ```
 
-The improvised post object has `id`, `userId`, `title` and `body` field, two integers and two strings. Obviously, a more realistic post model should includes `createAt`, `updateAt`, `rating` and `followers` etc. Sample data are converted from [100 posts](https://jsonplaceholder.typicode.com/posts) of [{JSON} Placeholder](https://jsonplaceholder.typicode.com/). 
+The improvised post object has `id`, `userId`, `title` and `body` field, two integers and two strings. Obviously, a more realistic post model should includes `createdAt`, `updatedAt`, `rating` and `followers` etc. Sample data are converted from [100 posts](https://jsonplaceholder.typicode.com/posts) of [{JSON} Placeholder](https://jsonplaceholder.typicode.com/). 
 
 
 - DAO interface: 
