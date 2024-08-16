@@ -404,6 +404,15 @@ export {
 };
 ```
 
+`findById`, `update` and `disconnect` are simple and straightforward. `insert` and `del` operate on Hash and Sorted Set in [transaction](https://redis.io/docs/latest/develop/interact/transactions/) manner. 
+
+`findAll` can be implemented in two ways: 
+
+1. Method 1 - JS code     : Pure JS, more round trips. 
+2. Method 2 - Lua script  : JS + [Lua](https://redis.io/docs/latest/develop/interact/programmability/eval-intro/) script, less round trips. 
+
+
+
 To test with: 
 ```
 npm run seed-redis
