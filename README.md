@@ -432,7 +432,7 @@ model Posts {
 }
 ```
 
-Prisma is mature product which targets multi-databases and ORM. In addition, Prisma has full [SDLC](https://en.wikipedia.org/wiki/Systems_development_life_cycle), both *database-first* and *design-first* bi-directional schema evolution as well as data migration suport. 
+Prisma is a mature product which targets multi-databases and ORM. In addition, Prisma has full [SDLC](https://en.wikipedia.org/wiki/Systems_development_life_cycle), both *database-first* and *design-first* bi-directional schema evolution as well as data migration suport. 
 
 `posts_dao_mysql_impl.js`
 ```
