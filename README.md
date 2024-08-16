@@ -233,6 +233,12 @@ Optionally, invokes `disconnect` will close connection manually.
 
 
 #### VI. Redis Implementation 
+[Redis](https://redis.io/) is schemaless. which means that you should mind your design carefully otherwise it would mess up quickly! 
+
+The first implementation uses [Redis hashes](https://redis.io/docs/latest/develop/data-types/hashes/) to store domain objects, ie. post objects. [Redis sorted sets](https://redis.io/docs/latest/develop/data-types/sorted-sets/) is used as a kind of external index to enable fast access to hashes. Use of Sorted Set instead of [Redis sets](https://redis.io/docs/latest/develop/data-types/sets/) ensures hashes can be accessed in proper order. 
+
+Redis Hash stores value in string format, you have to `remap` them back integer when reading from database, a more complicated `retrofit` is used to convert array of array to array of object. 
+
 `posts_dao_redis_impl.js`
 ```
 import { redisClient } from './redisClient.js'
