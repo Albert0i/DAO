@@ -2,9 +2,7 @@
 
 
 #### Prologue 
-Things, how trivial and minute they are. 
-
-There is no tools fit for every problem, and there is no problem can not be solved. 
+Maybe, one can tell what one needs for now. One can hardly foretell what one needs ten days later, for example. Granted, nobody can tell what other's need, let alone the future need of the other. 
 
 
 #### I. [Introducing Redis DAOs](https://youtu.be/NYbGKZXs33s)
@@ -516,7 +514,7 @@ export {
 };
 ```
 
-By dint of ORM, all functions are just *one* line of code, which simply returns an ORM call. 
+By dint of ORM, all functions are just *one* line of code, which simply returns an ORM call. This poses a drastic contrast with our previous Redis implementation... 
 
 Change `DAO_DATASTORE` parameter to `mysql` in `.env`. And test with: 
 ```
@@ -528,6 +526,11 @@ npm test -t dao-mysql
 
 
 #### VIII. Introspection 
+As you can see, there are always more than one way to tackle the same problem. 
+
+There is no tools fit for every problem, and there is no problem can not be solved. 
+
+Things, how trivial and minute they are... 
 
 
 #### IX. Bibliography 
