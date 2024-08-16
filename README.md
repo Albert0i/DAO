@@ -2,7 +2,7 @@
 
 
 #### Prologue 
-Maybe, one can tell what he needs for now but can hardly figure out what he needs ten days after, for example. Granted, nobody can tell what other's need and let alone the future... 
+Maybe, one can tell what he needs for now but can hardly figure out what he needs ten days after, for example. Granted, nobody can tell what other's need and let alone the need for future... 
 
 
 #### I. [Introducing Redis DAOs](https://youtu.be/NYbGKZXs33s)
