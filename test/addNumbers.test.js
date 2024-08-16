@@ -10,7 +10,6 @@ afterAll(() => {
     bye()
   });
 
-
 test("adds 1 + 1 to equal 3", () => {
     expect(addNumbers(1, 2)).toBe(3)
 })
@@ -31,6 +30,18 @@ test("adds 1 + 1 to equal 3", () => {
     expect(typeof obj.then).toBe('function')
     expect(obj).resolves.toBe(3);
 })
+
+describe('my concurremt', () => {
+
+  test.concurrent('addition of 2 numbers', async () => {
+    expect(5 + 3).toBe(8);
+  });
+  
+  test.concurrent('subtraction 2 numbers', async () => {
+    expect(5 - 3).toBe(2);
+  });
+
+});
 
 /*
    JavaScript Testing with Jest – Crash Course

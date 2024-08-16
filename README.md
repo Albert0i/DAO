@@ -543,19 +543,24 @@ All tools are expedient means to problem-solving. By separating interface and im
 
 
 #### Epilogue 
+All functions are annotated with comments conforming to [JSDoc](https://jsdoc.app/about-getting-started) tag: 
 ```
-《無題》
-序：雨天有感，得詩。
+/**
+ * Represents a book.
+ * @constructor
+ * @param {string} title - The title of the book.
+ * @param {string} author - The author of the book.
+ */
+function Book(title, author) {
+}
+```
 
-人在傘下走，
-匆匆不舉頭，
-絲雨訴心事，
-叮寧直持守，
-吾亦所以告，
-踽踽為糊口，
-歲末甲子近，
-光陰逝難留。
+To generate an HTML website from your source files with:.
 ```
+npm run jsdoc
+```
+
+As you can see, documentation doesn't come for free. 
 
 
 ### EOF (2024/08/16)
