@@ -56,7 +56,7 @@ const findById = async (id) => {
  * @returns {Promise} - a Promise, resolving to an array of post objects.
  */
 const findAll = async () => {    
-  return prisma.posts.findMany({ })
+  return prisma.posts.findMany({ orderBy: { id: 'asc' } })
 };
 
 /**

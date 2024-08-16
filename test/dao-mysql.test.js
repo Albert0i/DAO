@@ -1,9 +1,9 @@
 import { insert, update, del, findById, findAll, disconnect } from "../src/daos/impl/mysql/posts_dao_mysql_impl.js"
 
-const testSuiteName = 'post_dao_redis_impl';
+const testSuiteName = 'post_dao_mysql_impl';
 
 afterAll( async () => { 
-  // Release Redis connection.
+  // Release mysql connection.
   await disconnect()
 } );
 
@@ -34,7 +34,7 @@ test(`${testSuiteName}: findAll posts`, async () => {
       title: "sapiente omnis fugit eos",
       body: "consequatur omnis est praesentium\nducimus non iste\nneque hic deserunt\nvoluptatibus veniam cum et rerum sed"
     }
-  const posts = await findAll();  
+  const posts = await findAll(); 
   const singlePost = posts.filter(post => post.id === data.id);
   
   expect(posts.length).toBe(100);
