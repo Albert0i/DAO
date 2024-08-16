@@ -530,7 +530,7 @@ There are always more than one way to tackle the same problem. In the light of s
 
 In terms of code size, Redis implementation is 161 lines (excluding Lua script); MySQL ORM implementation is 73 lines. The development time in Redis is 3 ~ 4 folds comparing to MySQL ORM approach; 2 ~ 3 folds comparing to MySQL raw SQL approach. This effort can only be offset when project scales and response time is a must. 
 
-By separate interface and implementation, DAO bestows developers a chance to switch back end database. There is no tool fits for every thing, and there is no problem can not be solved. 
+By separating interface and implementation, DAO bestows developers a chance to switch back end database. There is no tool fits for every thing, and there is no problem can not be solved. 
 
 
 #### IX. Bibliography 
