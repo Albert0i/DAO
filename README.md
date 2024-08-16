@@ -533,7 +533,13 @@ In terms of code size, Redis implementation is 161 lines (excluding Lua script);
 All tools are expedient means to problem-solving. By separating interface and implementation, DAO bestows developers a chance to switch between databases. There is no tool fits for every thing, and there is no problem can not be solved. 
 
 
-#### IX. Bibliography 
+#### IX. About test suite
+[Just](https://jestjs.io/docs/api) has provided comprehensive functionalities to write test suite.
+
+![alt test suite](img/test-suite.JPG)
+
+
+#### X. Bibliography 
 1. [Redis for JavaScript developers](https://redis.io/university/courses/ru102js/)
 2. [util](https://www.npmjs.com/package/util)
 3. [JSDoc](https://jsdoc.app/)
