@@ -536,6 +536,10 @@ All tools are expedient means to problem-solving. By separating interface and im
 #### IX. About test suite
 [Just](https://jestjs.io/docs/api) has provided comprehensive functionalities to write test suite.
 
+```
+npm test -t addNumbers
+```
+
 ![alt test suite](img/test-suite.JPG)
 
 
