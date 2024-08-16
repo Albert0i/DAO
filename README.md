@@ -1,4 +1,3 @@
-
 ### DAO [兜](https://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/)
 
 
@@ -116,7 +115,9 @@ The Redis DAO implementations live in the `src/daos/impl/redis` folder. This is 
 You won’t need to change the configuration or modify the `daoloader` when working with the sample project. You do however need to understand where the DAO implementations for Redis can be found, as these files are the focus of the programming challenges throughout this course.
 
 
-#### IV. Rework DAO Loader 
+#### IV. DAO Loader Rework
+We are going to modify `daoloader.js` using [Javascript ES6](https://www.w3schools.com/js/js_es6.asp) `import` syntax and `dotenv` package, 
+
 `daoloader.js`
 ```
 import 'dotenv/config'
@@ -146,7 +147,9 @@ REDIS_PREFIX=DEMO:DAO
 
 
 #### V. A Post DAO 
-- Domain object: 
+As you can see, DAO [design patterns](https://www.javier8a.com/itc/bd1/articulo.pdf) consists of *Domain Objects*, *DAO interface* and *DAO implementation*. 
+
+- Domain objects: 
 ```
   {
     userId: 5,
@@ -156,7 +159,10 @@ REDIS_PREFIX=DEMO:DAO
   }
 ```
 
-- DAO interface (`posts_dao.js`)
+The improvised post object has `id`, `userId`, `title` and `body` field, two integers and two strings. Obviously, a more realistic post model should includes `createAt`, `updateAt`, `rating` and `followers` etc. Sample data are converted from [100 posts](https://jsonplaceholder.typicode.com/posts) of [{JSON} Placeholder](https://jsonplaceholder.typicode.com/). 
+
+
+- DAO interface: 
 ```
 import { loadDao } from "./daoloader.js"
 
@@ -213,6 +219,15 @@ const disconnect = async () => impl.disconnect()
 
 export { insert, update, del, findById, findAll, disconnect };
 ```
+
+As you can see, six functions are exported from `posts_dao.js`:
+
+- `insert`  : Insert a new post.
+- `update`  : Update a post.
+- `del`     : Delete a post.
+- `findById`: Get the post object for a given post ID.
+- `findAll` : Get an array of all post objects.
+- `disconnect` : Disconnect database connection.
 
 
 #### VI. Redis Implementation 
@@ -451,7 +466,7 @@ const findById = async (id) => {
  * @returns {Promise} - a Promise, resolving to an array of post objects.
  */
 const findAll = async () => {    
-  return prisma.posts.findMany({ })
+  return prisma.posts.findMany({ orderBy: { id: 'asc' } })
 };
 
 /**
@@ -492,8 +507,6 @@ npm test -t dao-mysql
 
 
 #### Epilogue 
-> 孝公既見衛鞅，語事良久，孝公時時睡，弗聽。罷而孝公怒景監曰：「子之客妄人耳，安足用邪！」景監以讓衛鞅。衛鞅曰：「吾說公以帝道，其志不開悟矣。」後五日，復求見鞅。鞅復見孝公，益愈，然而未中旨。罷而孝公復讓景監，景監亦讓鞅。鞅曰：「吾說公以王道而未入也。請復見鞅。」鞅復見孝公，孝公善之而未用也。罷而去。孝公謂景監曰：「汝客善，可與語矣。」鞅曰：「吾說公以霸道，其意欲用之矣。誠復見我，我知之矣。」衛鞅復見孝公。公與語，不自知厀之前於席也。語數日不厭。<br />
-[《史記‧商君列傳》](https://ctext.org/shiji/shang-jun-lie-zhuan/zh)
 
 
 ### EOF (2024/08/16)
