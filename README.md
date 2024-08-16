@@ -422,7 +422,7 @@ npm test -t dao-redis
 
 
 #### VII. MySQL Implementation 
-The second implementation is based on [MySQL](https://www.mysql.com/) to store domain objects, ie. post objects and [Prisma](https://www.prisma.io/), which enables [ORM](https://www.prisma.io/docs/getting-started/setup-prisma) capability. 
+The second implementation is based on [MySQL](https://www.mysql.com/), we use table to store domain objects, ie. post objects and [Prisma](https://www.prisma.io/), which enables [ORM](https://www.prisma.io/docs/getting-started/setup-prisma) capability. 
 ```
 model Posts {
   id        Int     @id 
