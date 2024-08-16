@@ -528,7 +528,7 @@ npm test -t dao-mysql
 #### VIII. Introspection 
 There are always more than one way to tackle the same problem. In the light of small scale, one can choose any fast and easy tool, which might not be the best as our project scales. In our tour of DAO, Redis implementation is not necessary fast and MySQL implementation is not necessary slow. 
 
-In terms of code size, Redis implementation is 161 lines (excluding Lua script); MySQL ORM implementation is 73 lines. The development time in Redis is 3 ~ 4 folds comparing to MySQL ORM approach; 2 ~ 3 folds comparing to MySQL raw SQL approach. This effort can only be offset when project scales and response time becomes paramount. 
+In terms of code size, Redis implementation is 161 lines (excluding Lua script); MySQL ORM implementation is 73 lines. The development time in Redis is 3 ~ 4 folds comparing to MySQL ORM approach; 2 ~ 3 folds comparing to MySQL raw SQL approach. This effort can only be offset when project scales and response time becomes a must. 
 
 By separate interface and implementation, DAO bestows developers a chance to switch back end database. There is no tool fits for every thing, and there is no problem can not be solved. 
 
