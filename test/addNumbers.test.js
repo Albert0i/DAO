@@ -1,4 +1,15 @@
-import { addNumbers, addNumbersAsync } from "../src/addNumber"
+import { addNumbers, addNumbersAsync, addNumAsync, banner, bye } from "../src/addNumber"
+
+beforeAll(() => {
+    // Clears the database and adds some testing data.
+    // Jest will wait for this promise to resolve before running tests.
+    banner()
+  });
+
+afterAll(() => {
+    bye()
+  });
+
 
 test("adds 1 + 1 to equal 3", () => {
     expect(addNumbers(1, 2)).toBe(3)
@@ -6,6 +17,19 @@ test("adds 1 + 1 to equal 3", () => {
 
 test("adds 1 + 1 to equal 3", () => {
     expect(addNumbersAsync(1, 2)).resolves.toBe(3);
+})
+
+/*
+   In JavaScript, you can determine if an object is a Promise by checking if it has a then() method. Since Promises in JavaScript have a then() method, this can be used as a heuristic to identify whether an object is a Promise or not.
+
+   function isPromise(obj) {
+        return obj && typeof obj.then === 'function';
+   }
+*/
+test("adds 1 + 1 to equal 3", () => {
+    const obj = addNumAsync(1, 2)
+    expect(typeof obj.then).toBe('function')
+    expect(obj).resolves.toBe(3);
 })
 
 /*
@@ -24,4 +48,7 @@ test("adds 1 + 1 to equal 3", () => {
    https://jsdoc.app/
 
    npm run jsdoc src
+
+   Text Art
+   https://fsymbols.com/text-art/
 */
