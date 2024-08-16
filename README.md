@@ -222,12 +222,12 @@ export { insert, update, del, findById, findAll, disconnect };
 
 As you can see, six functions are exported from `posts_dao.js`:
 
-- `insert`  : Insert a new post.
-- `update`  : Update a post.
-- `del`     : Delete a post.
-- `findById`: Get the post object for a given post ID.
-- `findAll` : Get an array of all post objects.
-- `disconnect` : Disconnect database connection.
+1. `insert`  : Insert a new post.
+2. `update`  : Update a post.
+3. `del`     : Delete a post.
+4. `findById`: Get the post object for a given post ID.
+5. `findAll` : Get an array of all post objects.
+6. `disconnect` : Disconnect database connection.
 
 
 #### VI. Redis Implementation 
