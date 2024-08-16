@@ -516,7 +516,7 @@ export {
 };
 ```
 
-By dint of ORM, all functions are just *one* line of code, simply returning from a ORM call. 
+By dint of ORM, all functions are just *one* line of code, simply return an ORM call. 
 
 Change `DAO_DATASTORE` parameter to `mysql` in `.env`. And test with: 
 ```
