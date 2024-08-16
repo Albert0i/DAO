@@ -538,7 +538,8 @@ By separating interface and implementation, DAO bestows developers a chance to s
 2. [util](https://www.npmjs.com/package/util)
 3. [JSDoc](https://jsdoc.app/)
 4. [jest](https://www.npmjs.com/package/jest)
-5. [THE BIG FOUR](https://www.gutenberg.org/files/70114/70114-h/70114-h.htm)
+5. [Prisma CRUD](https://www.prisma.io/docs/orm/prisma-client/queries/crud#read)
+6. [THE BIG FOUR](https://www.gutenberg.org/files/70114/70114-h/70114-h.htm)
 
 
 #### Epilogue 
