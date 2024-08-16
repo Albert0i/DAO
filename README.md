@@ -560,7 +560,7 @@ To generate an HTML website from your source files with:.
 npm run jsdoc
 ```
 
-As you can see, documentation doesn't come for free. 
+As you can see, [documentation](out/index.html) doesn't come for free. 
 
 
 ### EOF (2024/08/16)
