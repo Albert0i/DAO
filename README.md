@@ -526,9 +526,7 @@ npm test -t dao-mysql
 
 
 #### VIII. Introspection 
-There are always more than one way to tackle the same problem. 
-
-There is no tools fit for every problem, and there is no problem can not be solved. 
+There are always more than one way to tackle the same problem. In the light of the scale, one can choose any fast and easy tool, which might not be the best as our project scales. In our tour of DAO, Redis implementation is not necessary fast and MySQL implementation is not necessary slow. There is no tool fits for every thing, and there is no problem can not be solved. 
 
 Things, how trivial and minute they are... 
 
