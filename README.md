@@ -2,7 +2,7 @@
 
 
 #### Prologue 
-Maybe, one can tell what one needs for now. One can hardly foretell what one needs ten days later, for example. Granted, nobody can tell what other's need, let alone the future need of the other. 
+Maybe, one can tell what one needs for now. One can hardly foretell what one needs ten days later, for example. Granted, nobody can tell what other's need, let alone the future need of the other... 
 
 
 #### I. [Introducing Redis DAOs](https://youtu.be/NYbGKZXs33s)
@@ -526,7 +526,9 @@ npm test -t dao-mysql
 
 
 #### VIII. Introspection 
-There are always more than one way to tackle the same problem. In the light of small scale, one can choose any fast and easy tool, which might not be the best as our project scales. In our tour of DAO, Redis implementation is not necessary fast and MySQL implementation is not necessary slow. There is no tool fits for every thing, and there is no problem can not be solved. 
+There are always more than one way to tackle the same problem. In the light of small scale, one can choose any fast and easy tool, which might not be the best as our project scales. In our tour of DAO, Redis implementation is not necessary fast and MySQL implementation is not necessary slow. In terms of code size, Redis implementation is 161 lines (excluding Lua script); MySQL ORM implementation is 73 lines. The development time in Redis is 3~4 folds comparing with MySQL ORM approach; 2~3 folds comparing with MySQL raw SQL approach. This effort can only be offset when project scales and response time becomes paramount. 
+
+By separate interface and implementation, DAO bestows developers a chance to switch back end database. There is no tool fits for every thing, and there is no problem can not be solved. 
 
 
 #### IX. Bibliography 
