@@ -411,7 +411,6 @@ export {
 1. Method 1 - Pure JS, more round trips; 
 2. Method 2 - JS + [Lua script](https://redis.io/docs/latest/develop/interact/programmability/eval-intro/), less round trips. 
 
-
 To test with: 
 ```
 npm run seed-redis
@@ -517,6 +516,8 @@ export {
 };
 ```
 
+By dint of ORM, all functions are just a line of code, simply returning from a ORM call. 
+
 Change `DAO_DATASTORE` parameter to `mysql` in `.env`. And test with: 
 ```
 npx prisma db seed
@@ -526,13 +527,10 @@ npm test -t dao-mysql
 ![alt dao mysql](img/dao-mysql.JPG)
 
 
-#### VIII. Retrospection 
+#### VIII. Introspection 
 
 
-#### IX. 
-
-
-#### X. Bibliography 
+#### IX. Bibliography 
 1. [Redis for JavaScript developers](https://redis.io/university/courses/ru102js/)
 2. [util](https://www.npmjs.com/package/util)
 3. [JSDoc](https://jsdoc.app/)
