@@ -422,6 +422,18 @@ npm test -t dao-redis
 
 
 #### VII. MySQL Implementation 
+The second implementation is based on [MySQL](https://www.mysql.com/) to store domain objects, ie. post objects and [Prisma](https://www.prisma.io/), which enables [ORM](https://www.prisma.io/docs/getting-started/setup-prisma) capability. 
+```
+model Posts {
+  id        Int     @id 
+  userId    Int
+  title     String
+  body      String @db.Text
+}
+```
+
+Prisma is mature product which targets multi-databases and ORM. In addition, Prisma has full [SDLC](https://en.wikipedia.org/wiki/Systems_development_life_cycle), both *database-first* and *design-first* bi-directional schema evolution as well as data migration suport. 
+
 `posts_dao_mysql_impl.js`
 ```
 import { PrismaClient } from '@prisma/client'
