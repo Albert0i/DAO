@@ -408,9 +408,8 @@ export {
 
 `findAll` can be implemented in two ways: 
 
-1. Method 1 - JS code     : Pure JS, more round trips. 
-2. Method 2 - [Lua script](https://redis.io/docs/latest/develop/interact/programmability/eval-intro/)  : JS + Lua, less round trips. 
-
+1. Method 1 - Pure JS, more round trips. 
+2. Method 2 - JS + [Lua script](https://redis.io/docs/latest/develop/interact/programmability/eval-intro/), less round trips. 
 
 
 To test with: 
