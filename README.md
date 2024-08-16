@@ -526,7 +526,7 @@ npm test -t dao-mysql
 
 
 #### VIII. Introspection 
-As you can see, there are always more than one way to tackle the same problem. 
+There are always more than one way to tackle the same problem. 
 
 There is no tools fit for every problem, and there is no problem can not be solved. 
 
