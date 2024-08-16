@@ -560,7 +560,11 @@ To generate an HTML website from your source files with:.
 npm run jsdoc
 ```
 
-As you can see, [documentation](out/index.html) doesn't come for free. 
+And browse to open `index.html` in the `out` folder. 
+
+![alt jsdoc](img/jsdoc.JPG)
+
+As you can see, documentation doesn't come for free, it has to be built up bit by bit.
 
 
 ### EOF (2024/08/16)
