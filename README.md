@@ -229,7 +229,7 @@ As you can see, six functions are exported from `posts_dao.js`:
 5. `findAll` : Get an array of all post objects.
 6. `disconnect` : Disconnect database connection.
 
-Optionally, make a call to `disconnect` to close connection manually. 
+Optionally, invokes `disconnect` will close connection manually. 
 
 
 #### VI. Redis Implementation 
