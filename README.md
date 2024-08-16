@@ -528,8 +528,6 @@ npm test -t dao-mysql
 #### VIII. Introspection 
 There are always more than one way to tackle the same problem. In the light of small scale, one can choose any fast and easy tool, which might not be the best as our project scales. In our tour of DAO, Redis implementation is not necessary fast and MySQL implementation is not necessary slow. There is no tool fits for every thing, and there is no problem can not be solved. 
 
-Things, how trivial and minute they are... 
-
 
 #### IX. Bibliography 
 1. [Redis for JavaScript developers](https://redis.io/university/courses/ru102js/)
