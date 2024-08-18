@@ -418,7 +418,7 @@ npm test -t dao-redis
 ![alt dao redis](img/dao-redis.JPG)
 
 
-#### VII. MySQL Implementation 
+#### VII. MySQL + ORM Implementation 
 The second implementation uses [MySQL](https://www.mysql.com/) table to store domain objects, ie. post objects and [Prisma](https://www.prisma.io/), which enables [ORM](https://www.prisma.io/docs/getting-started/setup-prisma) capability. 
 ```
 model Posts {
@@ -526,7 +526,7 @@ npm test -t dao-mysql
 
 
 #### VIII. Introspection 
-There are always more than one way to tackle the same problem. In the light of small scale, one can choose any fast and easy tool, which might not be the best as our project scales. In our tour of DAO, Redis implementation is not necessary fast and MySQL implementation is not necessary slow. 
+There are always more than one way to tackle the same problem. In the light of small scale, one can choose any fast and easy tool, which might not be the best as our project scales. In our tour of DAO, Redis implementation is not necessarily fast and MySQL implementation is not necessarily slow. 
 
 In terms of code size, Redis implementation is 161 lines (excluding Lua script); MySQL ORM implementation is 73 lines. The development time in Redis is 3 ~ 4 folds comparing to MySQL ORM approach; 2 ~ 3 folds comparing to MySQL raw SQL approach. This effort can only be offset when project scales and response time is a must. 
 
@@ -534,7 +534,7 @@ All tools are expedient means to problem-solving. By separating interface and im
 
 
 #### IX. About test suite
-[Just](https://jestjs.io/docs/api) has provided comprehensive functionalities to write test suite.
+[Just](https://jestjs.io/docs/api) has provided comprehensive functionalities to write test suites.
 
 ```
 npm test -t addNumbers
