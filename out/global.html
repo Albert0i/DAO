@@ -943,7 +943,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html">daos/impl/mysql/posts_dao_mysql_impl.js</a>, <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html#line67">line 67</a>
+        <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html">daos/impl/mysql/posts_dao_mysql_impl.js</a>, <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html#line79">line 79</a>
     </li></ul></dd>
     
 
@@ -1049,7 +1049,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line155">line 155</a>
+        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line169">line 169</a>
     </li></ul></dd>
     
 
@@ -1155,7 +1155,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_redisClient.js.html">daos/impl/redis/redisClient.js</a>, <a href="daos_impl_redis_redisClient.js.html#line22">line 22</a>
+        <a href="daos_impl_redis_redisClient.js.html">daos/impl/redis/redisClient.js</a>, <a href="daos_impl_redis_redisClient.js.html#line23">line 23</a>
     </li></ul></dd>
     
 
@@ -1261,7 +1261,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_posts_dao.js.html">daos/posts_dao.js</a>, <a href="daos_posts_dao.js.html#line52">line 52</a>
+        <a href="daos_posts_dao.js.html">daos/posts_dao.js</a>, <a href="daos_posts_dao.js.html#line57">line 57</a>
     </li></ul></dd>
     
 
@@ -1315,7 +1315,7 @@
     
 
     
-    <h4 class="name" id="findAll"><span class="type-signature">(async) </span>findAll<span class="signature">()</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="findAll"><span class="type-signature">(async) </span>findAll<span class="signature">(limit<span class="signature-attributes">opt</span>, offset<span class="signature-attributes">opt</span>, id<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
     
 
     
@@ -1323,7 +1323,7 @@
 
 
 <div class="description">
-    Get an array of all post objects.
+    Add optional parameters: limit, offset and id on 2024/08/19.
 </div>
 
 
@@ -1332,6 +1332,153 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>limit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    9999999999
+                
+                </td>
+            
+
+            <td class="description last">number of records to return.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>offset</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">numver of records to skip.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    -1
+                
+                </td>
+            
+
+            <td class="description last">id number to start from, using '>='.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -1367,7 +1514,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html">daos/impl/mysql/posts_dao_mysql_impl.js</a>, <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html#line58">line 58</a>
+        <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html">daos/impl/mysql/posts_dao_mysql_impl.js</a>, <a href="daos_impl_mysql_posts_dao_mysql_impl.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -1425,7 +1572,7 @@
     
 
     
-    <h4 class="name" id="findAll"><span class="type-signature">(async) </span>findAll<span class="signature">()</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="findAll"><span class="type-signature">(async) </span>findAll<span class="signature">(limit<span class="signature-attributes">opt</span>, offset<span class="signature-attributes">opt</span>, id<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
     
 
     
@@ -1433,7 +1580,7 @@
 
 
 <div class="description">
-    Get an array of all post objects.
+    Add optional parameters: limit, offset and id on 2024/08/19.
 </div>
 
 
@@ -1442,6 +1589,153 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>limit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    9999999999
+                
+                </td>
+            
+
+            <td class="description last">number of records to return.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>offset</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">numver of records to skip.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    -1
+                
+                </td>
+            
+
+            <td class="description last">id number to start from, using '>='.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -1477,7 +1771,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line125">line 125</a>
+        <a href="daos_impl_redis_posts_dao_redis_impl.js.html">daos/impl/redis/posts_dao_redis_impl.js</a>, <a href="daos_impl_redis_posts_dao_redis_impl.js.html#line129">line 129</a>
     </li></ul></dd>
     
 
@@ -1535,7 +1829,7 @@
     
 
     
-    <h4 class="name" id="findAll"><span class="type-signature">(async) </span>findAll<span class="signature">()</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="findAll"><span class="type-signature">(async) </span>findAll<span class="signature">(limit<span class="signature-attributes">opt</span>, offset<span class="signature-attributes">opt</span>, id<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
     
 
     
@@ -1543,7 +1837,7 @@
 
 
 <div class="description">
-    Get an array of all post objects.
+    Add optional parameters: limit, offset and id on 2024/08/19.
 </div>
 
 
@@ -1552,6 +1846,153 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>limit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    9999
+                
+                </td>
+            
+
+            <td class="description last">number of records to return.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>offset</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+
+            <td class="description last">numver of records to skip.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    -1
+                
+                </td>
+            
+
+            <td class="description last">id number to start from, using '>='.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -1587,7 +2028,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_posts_dao.js.html">daos/posts_dao.js</a>, <a href="daos_posts_dao.js.html#line45">line 45</a>
+        <a href="daos_posts_dao.js.html">daos/posts_dao.js</a>, <a href="daos_posts_dao.js.html#line50">line 50</a>
     </li></ul></dd>
     
 
@@ -1697,7 +2138,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_scripts_findAll_script.js.html">daos/impl/redis/scripts/findAll_script.js</a>, <a href="daos_impl_redis_scripts_findAll_script.js.html#line38">line 38</a>
+        <a href="daos_impl_redis_scripts_findAll_script.js.html">daos/impl/redis/scripts/findAll_script.js</a>, <a href="daos_impl_redis_scripts_findAll_script.js.html#line55">line 55</a>
     </li></ul></dd>
     
 
@@ -2174,7 +2615,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_posts_dao.js.html">daos/posts_dao.js</a>, <a href="daos_posts_dao.js.html#line38">line 38</a>
+        <a href="daos_posts_dao.js.html">daos/posts_dao.js</a>, <a href="daos_posts_dao.js.html#line39">line 39</a>
     </li></ul></dd>
     
 
@@ -3006,7 +3447,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="daos_impl_redis_scripts_findAll_script.js.html">daos/impl/redis/scripts/findAll_script.js</a>, <a href="daos_impl_redis_scripts_findAll_script.js.html#line26">line 26</a>
+        <a href="daos_impl_redis_scripts_findAll_script.js.html">daos/impl/redis/scripts/findAll_script.js</a>, <a href="daos_impl_redis_scripts_findAll_script.js.html#line43">line 43</a>
     </li></ul></dd>
     
 
@@ -3712,7 +4153,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Fri Aug 16 2024 16:55:06 GMT+0800 (China Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Mon Aug 19 2024 15:05:02 GMT+0800 (China Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
