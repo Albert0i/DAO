@@ -27,17 +27,17 @@ test(`${testSuiteName}: findById with missing post`, async () => {
   expect(post).toBe(null)
 });
 
-test(`${testSuiteName}: findAll posts`, async () => {
+test(`${testSuiteName}: findAll posts, first 20`, async () => {
   const data = {
-      userId: 9,
-      id: 88,
-      title: "sapiente omnis fugit eos",
-      body: "consequatur omnis est praesentium\nducimus non iste\nneque hic deserunt\nvoluptatibus veniam cum et rerum sed"
+      userId: 2,
+      id: 18,
+      title: "voluptate et itaque vero tempora molestiae",
+      body: "eveniet quo quis\nlaborum totam consequatur non dolor\nut et est repudiandae\nest voluptatem vel debitis et magnam"
     }
-  const posts = await findAll(); 
+  const posts = await findAll(20); 
   const singlePost = posts.filter(post => post.id === data.id);
   
-  expect(posts.length).toBe(100);
+  expect(posts.length).toBe(20);
   expect(singlePost[0]).toEqual(data)
 });
 
