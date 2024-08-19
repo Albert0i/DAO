@@ -1,6 +1,6 @@
 import { insert, update, del, findById, findAll, disconnect } from "../src/daos/posts_dao.js"
 
-const testSuiteName = 'post_dao';
+const testSuiteName = `post_dao using ${process.env.DAO_DATASTORE}`;
 
 afterAll( async () => { 
   // Release mysql connection.
