@@ -34,15 +34,20 @@ const del = async post => impl.del(post)
  *
  * @param {number} id - a post ID.
  * @returns {Promise} - a Promise, resolving to a post object.
+ * 
  */
 const findById = async id => impl.findById(id)
 
 /**
  * Get an array of all post objects.
  *
+ * @param {number} [limit = 9999999999] - number of records to return. 
+ * @param {number} [offset = 0] - numver of records to skip.
+ * @param {number} [id = -1] - id number to start from, using '>='. 
  * @returns {Promise} - a Promise, resolving to an array of post objects.
+ * @description Add optional parameters: limit, offset and id on 2024/08/19. 
  */
-const findAll = async () => impl.findAll()
+const findAll = async (limit = 9999999999, offset = 0, id = -1) => impl.findAll(limit, offset, id)
 
 /**
  * Disconnect database connection.
