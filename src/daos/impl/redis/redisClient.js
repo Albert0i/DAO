@@ -8,6 +8,7 @@ import { load } from './scripts/findAll_script.js'
 const redisClient = new Redis({
     port: 7000, // Redis port
     host: "127.0.0.1", // a Redis instance.
+    showFriendlyErrorStack: true
   });
 
 /**

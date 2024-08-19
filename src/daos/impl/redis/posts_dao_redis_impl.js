@@ -120,29 +120,42 @@ const findById = async (id) => {
 /**
  * Get an array of all post objects.
  *
+ * @param {number} [limit = 9999999999] - number of records to return. 
+ * @param {number} [offset = 0] - numver of records to skip.
+ * @param {number} [id = -1] - id number to start from, using '>='. 
  * @returns {Promise} - a Promise, resolving to an array of post objects.
+ * @description Add optional parameters: limit, offset and id on 2024/08/19. 
  */
-const findAll = async () => {    
+const findAll = async (limit, offset, id) => {    
   const postIDsKey = getPostIDsKey() 
   let allPosts = []; 
 
-  // Method 1 - JS code 
-  // const ids = await redisClient.zrange(postIDsKey, 0, -1)
-  // let words = null; 
-  // let id = null
-  // let postHash = null; 
-  
-  // for (let i=0; i < ids.length; i++) {
-  //   words = ids[i].split(':')
-  //   id = words[words.length-1]
+  // Method 1 - JS code
+  let ids  
+  if (id===0) {
+    // Start from an offset
+    ids = await redisClient.zrange(postIDsKey, offset, offset + limit - 1)
+  }
+  else {
+    // Start from a specific id 
+    ids = await redisClient.zrange(postIDsKey, `${id}`, '+INF', 'BYSCORE', 'LIMIT', offset, limit) 
+  }
 
-  //   postHash = await findById(id);
-  //   allPosts.push(postHash)
-  // }
+  let words = null; 
+  let postid = null
+  let postHash = null; 
+  
+  for (let i=0; i < ids.length; i++) {
+    words = ids[i].split(':')
+    postid = words[words.length-1]
+
+    postHash = await findById(postid);
+    allPosts.push(postHash)
+  }
 
   // Method 2 - Lua script 
   // Script is loaded in redisClient.js 
-  allPosts = retrofit(await findAllWithLua(postIDsKey)) 
+  //allPosts = retrofit(await findAllWithLua(postIDsKey)) 
 
   return allPosts; 
 };

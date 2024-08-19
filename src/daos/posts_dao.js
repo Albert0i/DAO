@@ -47,7 +47,7 @@ const findById = async id => impl.findById(id)
  * @returns {Promise} - a Promise, resolving to an array of post objects.
  * @description Add optional parameters: limit, offset and id on 2024/08/19. 
  */
-const findAll = async (limit = 9999999999, offset = 0, id = -1) => impl.findAll(limit, offset, id)
+const findAll = async (limit = 9999, offset = 0, id = 0) => impl.findAll(limit, offset, id)
 
 /**
  * Disconnect database connection.
