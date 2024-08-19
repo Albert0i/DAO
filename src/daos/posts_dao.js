@@ -41,7 +41,7 @@ const findById = async id => impl.findById(id)
 /**
  * Get an array of all post objects.
  *
- * @param {number} [limit = 9999999999] - number of records to return. 
+ * @param {number} [limit = 9999] - number of records to return. 
  * @param {number} [offset = 0] - numver of records to skip.
  * @param {number} [id = -1] - id number to start from, using '>='. 
  * @returns {Promise} - a Promise, resolving to an array of post objects.

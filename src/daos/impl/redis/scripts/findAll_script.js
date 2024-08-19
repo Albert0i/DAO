@@ -1,14 +1,31 @@
 import { redisClient } from '../redisClient.js'
-import { getPostIDsKey } from '../redis_key_generator.js'
 
 const script = `
     --
     -- Get an table of all post hash.
+    -- 
     -- @param {string} KEYS[1] - The key to operate on. 
+    -- @param {number} ARGV[1] - number of records to return. 
+    -- @param {number} ARGV[2] - numver of records to skip.
+    -- @param {number} ARGV[3] - id number to start from, using '>='. 
     -- @returns {table} The table of all post hash.
+    -- @description Add optional parameters: limit, offset and id on 2024/08/19. 
     -- 
     local key = KEYS[1]
-    local ids = redis.call('ZRANGE', key,  0, -1)
+    local limit = ARGV[1]
+    local offset = ARGV[2]
+    local id = ARGV[3]
+    -- local ids = redis.call('ZRANGE', key,  0, -1)
+    local ids 
+
+    if id==0 then 
+      -- Start from an offset
+      ids = redis.call("ZRANGE", key, offset, offset + limit - 1)
+    else
+      -- Start from a specific id 
+      ids = redis.call('ZRANGE', key, id, '+INF', 'BYSCORE', 'LIMIT', offset, limit)
+    end
+
     local hash = {}
     local posts = {}
 
@@ -35,8 +52,8 @@ const load = async () => {
  *
  * @returns {Promise} - a Promise, resolving to an array of array of posts.
  */
-const findAllWithLua = () => {  
-  return redisClient.myfunc(getPostIDsKey())
+const findAllWithLua = (key, limit, offset, id) => {  
+  return redisClient.myfunc(key, limit, offset, id)
 }
   
 export { load, findAllWithLua };

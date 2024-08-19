@@ -131,31 +131,32 @@ const findAll = async (limit, offset, id) => {
   let allPosts = []; 
 
   // Method 1 - JS code
-  let ids  
-  if (id===0) {
-    // Start from an offset
-    ids = await redisClient.zrange(postIDsKey, offset, offset + limit - 1)
-  }
-  else {
-    // Start from a specific id 
-    ids = await redisClient.zrange(postIDsKey, `${id}`, '+INF', 'BYSCORE', 'LIMIT', offset, limit) 
-  }
+  // let ids  
+  // if (id===0) {
+  //   // Start from an offset
+  //   ids = await redisClient.zrange(postIDsKey, offset, offset + limit - 1)
+  // }
+  // else {
+  //   // Start from a specific id 
+  //   ids = await redisClient.zrange(postIDsKey, `${id}`, '+INF', 'BYSCORE', 'LIMIT', offset, limit) 
+  // }
 
-  let words = null; 
-  let postid = null
-  let postHash = null; 
+  // let words = null; 
+  // let postid = null
+  // let postHash = null; 
   
-  for (let i=0; i < ids.length; i++) {
-    words = ids[i].split(':')
-    postid = words[words.length-1]
+  // for (let i=0; i < ids.length; i++) {
+  //   words = ids[i].split(':')
+  //   postid = words[words.length-1]
 
-    postHash = await findById(postid);
-    allPosts.push(postHash)
-  }
+  //   postHash = await findById(postid);
+  //   allPosts.push(postHash)
+  // }
 
   // Method 2 - Lua script 
   // Script is loaded in redisClient.js 
   //allPosts = retrofit(await findAllWithLua(postIDsKey)) 
+  allPosts = retrofit(await findAllWithLua(postIDsKey, limit, offset, id)) 
 
   return allPosts; 
 };
