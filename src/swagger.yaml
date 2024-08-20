@@ -1,0 +1,130 @@
+openapi: 3.0.0
+info:
+  title: Posts API
+  description: Posts Demo API
+  contact:
+    name: Alberto Iong
+    email: albert0i@hotmail.com
+  version: 1.0.0
+servers: 
+  - url: http://localhost:3000
+  - url: http://127.0.0.1:3000
+
+# GET    /posts
+# POST   /posts
+paths: 
+  /api/posts:
+    get: 
+      description: Get all posts
+      responses:
+        200: 
+          description: Success response
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/posts"
+
+    post:
+      description: Add a new post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/post_main" 
+      responses:
+        201: 
+          description: Post successfully added 
+
+# GET    /posts/:id
+# PUT    /posts/:id
+# DELETE /posts/:id
+  /api/posts/{id}:
+    get: 
+      description: Get a post
+      parameters: 
+        - $ref: "#/components/parameters/post_id"
+      responses:
+        200: 
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/post"
+
+    put: 
+      description: Update a post
+      parameters: 
+        - $ref: "#/components/parameters/post_id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/post_main" 
+      responses:
+        200: 
+          description: Post successfully updated
+
+    # patch: 
+    #   description: Update a post
+    #   parameters: 
+    #     - $ref: "#/components/parameters/post_id"
+    #   requestBody:
+    #     content:
+    #       application/json:
+    #         schema:
+    #           $ref: "#/components/schemas/post_main" 
+    #   responses:
+    #     200: 
+    #       description: Post successfully updated
+
+    delete: 
+      description: Delete a post
+      parameters: 
+        - $ref: "#/components/parameters/post_id"
+      responses:
+        200: 
+          description: Post successfully deleted
+
+components:
+  parameters:
+    post_id:
+      in: path
+      name: id      
+      required: true
+      description: The ID of the post to interact with
+      schema:
+        type: integer
+        example: 66
+
+  schemas:
+    post_id:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 66
+    post_main:
+      type: object
+      properties:
+        userId:
+          type: integer
+          example: 11
+        title: 
+          type: string
+          example: Post title
+        body:
+          type: string
+          example: Post body     
+    post:
+      allOf:
+        - $ref: "#/components/schemas/post_id"
+        - $ref: "#/components/schemas/post_main"
+    posts:
+      type: array
+      items:
+        $ref: "#/components/schemas/post"
+
+#
+# Swagger Editor  
+# https://editor.swagger.io/
+#
