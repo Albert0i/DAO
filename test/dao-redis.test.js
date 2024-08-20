@@ -1,4 +1,4 @@
-import { insert, update, del, findById, findAll, disconnect } from "../src/daos/posts_dao.js"
+import { insert, update, del, findById, findAll, disconnect } from "../src/daos/impl/redis/posts_dao_redis_impl"
 
 const testSuiteName = 'post_dao_redis_impl';
 
@@ -14,15 +14,13 @@ test(`${testSuiteName}: findById with existing post`, async () => {
         title: "repudiandae ea animi iusto",
         body: "officia veritatis tenetur vero qui itaque\nsint non ratione\nsed et ut asperiores iusto eos molestiae nostrum\nveritatis quibusdam et nemo iusto saepe"
       }
-    const id = 66
-    const post = await findById(id);
+    const post = await findById(data.id);
     
     expect(post).toEqual(data)
   })
 
 test(`${testSuiteName}: findById with missing post`, async () => {
-  const id = 999
-  const post = await findById(id);
+  const post = await findById(9999);
   
   expect(post).toBe(null);
 });

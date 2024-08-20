@@ -1,5 +1,7 @@
+import 'dotenv/config'
 import { redisClient } from './redisClient.js'
-import { findAllWithLua } from './scripts/findAll_script.js'
+import { findAll as findAllWithLua } from './scripts/findAll_script.js'
+import { autoIncrement as autoIncrementWithLua } from './scripts/autoIncrement_script.js'
 import { getPostHashKey, getPostIDsKey } from './redis_key_generator.js'
 
 /**
@@ -60,15 +62,17 @@ function retrofit(arr) {
  *   for the key of the post Redis.
  */
 const insert = async (post) => {
-  const id = post.id
+  const key = process.env.REDIS_PREFIX + ':posts'
+  const id = await autoIncrementWithLua(key)
   const postHashKey = getPostHashKey(id);
   const postIDsKey = getPostIDsKey()
 
   return redisClient.multi()
                     .hmset(postHashKey, post)           // 'OK' 
                     .zadd(postIDsKey, id, postHashKey)  // 1
+                    .get(key + ':auto_increment')       // <new id>
                     .exec()
-  // [ [ null, 'OK' ], [ null, 1 ] ]
+  // [ [ null, 'OK' ], [ null, 1 ], [ null, <new id> ] ]
 };
 
 /**
@@ -162,6 +166,18 @@ const findAll = async (limit = 9999, offset = 0, id = 0) => {
 };
 
 /**
+ * auto increment of a key
+ *
+ * @param {string} key - a key to operate.
+ * @returns {Promise} - a Promise, resolving to the string value
+ *   for the key of the post Redis.
+ */
+const autoIncrement = async (key) => {
+
+  return autoIncrementWithLua(key)  
+};
+
+/**
  * Disconnect from database.
  *
  * @returns {void}
@@ -171,5 +187,5 @@ const disconnect = async () => {
 }
 
 export {
-  insert, update, del, findById, findAll, disconnect
+  insert, update, del, findById, findAll, autoIncrement, disconnect
 };

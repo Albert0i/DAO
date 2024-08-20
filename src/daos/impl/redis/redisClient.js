@@ -1,5 +1,6 @@
 import { Redis } from 'ioredis'
-import { load } from './scripts/findAll_script.js'
+import { load as loadFindALL } from './scripts/findAll_script.js'
+import { load as loadAutoIncrement } from './scripts/autoIncrement_script.js'
 
 /**
  * Create a Redis instance. 
@@ -12,9 +13,10 @@ const redisClient = new Redis({
   });
 
 /**
- * Load script for findAll beforehand. 
+ * Load scripts beforehand. 
  */
-load();
+loadFindALL();
+loadAutoIncrement();
 
 /**
  * Close Redis connection

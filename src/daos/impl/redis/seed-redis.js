@@ -1,5 +1,7 @@
+import 'dotenv/config'
 import { redisClient } from './redisClient.js'
 import { getPostHashKey, getPostIDsKey } from './redis_key_generator.js'
+import { autoIncrement } from '../redis/posts_dao_redis_impl.js'
 import { postsData } from '../../../../data/postsData.js'
 
 async function main() {
@@ -9,12 +11,17 @@ async function main() {
 
    // Seed new data 
    for (let i = 0; i < postsData.length; i++) {
-    const id = postsData[i].id
+    const id = await autoIncrement(process.env.REDIS_PREFIX + ':posts')
     const postHashKey = getPostHashKey(id)
     const postIDsKey = getPostIDsKey()
 
     await redisClient.multi()
-                     .hmset(postHashKey, postsData[i])   // 'OK' 
+                     .hmset(postHashKey, { 
+                                            id, 
+                                            userId: postsData[i].userId, 
+                                            title: postsData[i].title, 
+                                            body: postsData[i].body 
+                                         })   // 'OK' 
                      .zadd(postIDsKey, id, postHashKey)  // 1
                      .exec()
    }    
