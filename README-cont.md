@@ -9,10 +9,10 @@
 #### II. Refining `findALL` 
 
 
-#### III. auto_increment 
+#### III. [AUTO_INCREMENT](https://dev.mysql.com/doc/refman/8.4/en/example-auto-increment.html)
 
 
-#### IV. Swagger 
+#### IV. [Swagger](https://www.npmjs.com/package/swagger-ui-express)
 
 
 #### Epilogue 
