@@ -1,6 +1,7 @@
 import 'dotenv/config'
-
 import express from 'express'
+import { banner } from './banner.js'
+
 const port = process.env.PORT || 3000;
 
 /* import routers */
@@ -15,5 +16,6 @@ app.use('/api/v1/posts', postRouter)
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  banner()
+  console.log(`Running on http://localhost:${port}`);
 });
