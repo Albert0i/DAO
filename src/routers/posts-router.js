@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { Router } from 'express'
-import { insert, update, del, findById, findAll, disconnect } from '../daos/posts_dao.js'
+import { insert, update, del, findById, findAll } from '../daos/posts_dao.js'
 
 export const router = Router()
 

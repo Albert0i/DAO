@@ -3,6 +3,7 @@ import express from 'express'
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs'
 import { banner } from './banner.js'
+import { disconnect } from './daos/posts_dao.js'
 
 const port = process.env.PORT || 3000;
 
@@ -26,3 +27,5 @@ app.listen(port, () => {
   console.log(`Running on http://localhost:${port}`);
   console.log(`Datastore is ${process.env.DAO_DATASTORE}`)
 });
+
+disconnect()
