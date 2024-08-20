@@ -14,15 +14,13 @@ test(`${testSuiteName}: findById with existing post`, async () => {
         title: "repudiandae ea animi iusto",
         body: "officia veritatis tenetur vero qui itaque\nsint non ratione\nsed et ut asperiores iusto eos molestiae nostrum\nveritatis quibusdam et nemo iusto saepe"
       }
-    const id = 66
-    const post = await findById(id);
+    const post = await findById(data.id);
     
     expect(post).toEqual(data)
   })
 
 test(`${testSuiteName}: findById with missing post`, async () => {
-  const id = 999
-  const post = await findById(id);
+  const post = await findById(9999);
 
   expect(post).toBe(null)
 });
@@ -102,13 +100,17 @@ describe(`${testSuiteName}: findAll with optional parameters`, () => {
 
 test(`${testSuiteName}: insert a post`, async () => {
   const data = {
+      id: 101, 
       userId: 999,
-      id: 999,
       title: "《史記‧商君列傳》",
       body: "公叔既死，公孫鞅聞秦孝公下令國中求賢者，將修繆公之業，東復侵地，乃遂西入秦，因孝公寵臣景監以求見孝公。"
     }
   
-  const result = await insert(data);
+  const result = await insert({ 
+                                userId: data.userId,
+                                title: data.title, 
+                                body: data.body 
+                              });
   expect(result).toEqual(data);
   
   const post = await findById(data.id)
@@ -118,7 +120,7 @@ test(`${testSuiteName}: insert a post`, async () => {
 test(`${testSuiteName}: update a post`, async () => {
   const data = {
       userId: 999,
-      id: 999,
+      id: 101,
       title: "死人頭",
       body: "鞅曰：「吾說君以帝王之道比三代，而君曰：『久遠，吾不能待。且賢君者，各及其身顯名天下，安能邑邑待數十百年以成帝王乎？』故吾以彊國之術說君，君大說之耳。然亦難以比德於殷周矣。」"
     }
@@ -133,7 +135,7 @@ test(`${testSuiteName}: update a post`, async () => {
 test(`${testSuiteName}: delete a post`, async () => {
   const data = {
     userId: 999,
-    id: 999,
+    id: 101,
     title: "死人頭",
     body: "鞅曰：「吾說君以帝王之道比三代，而君曰：『久遠，吾不能待。且賢君者，各及其身顯名天下，安能邑邑待數十百年以成帝王乎？』故吾以彊國之術說君，君大說之耳。然亦難以比德於殷周矣。」"
   }

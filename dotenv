@@ -7,7 +7,7 @@
 
 DATABASE_URL=mysql://root:root@localhost:3306/movieDB
 
-DAO_DATASTORE=redis
-#DAO_DATASTORE=mysql
+#DAO_DATASTORE=redis
+DAO_DATASTORE=mysql
 
 REDIS_PREFIX=DEMO:DAO

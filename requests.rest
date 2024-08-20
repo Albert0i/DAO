@@ -19,7 +19,6 @@ POST http://localhost:3000/api/v1/posts
 Content-Type: application/json
 
 {
-  "id": 101, 
   "userId": 111, 
   "title": "Stars", 
   "body": "Stars, staring and shinning on us over centries, can only be seen in dark nights. Those little silvery dots bear memories from the most remote era dating from the very creation of universe. \n\nIn secular and religious belief, there exists two kinds of stars. One that bring much fortune while the other fortell bad lucks, or presentiment of disasters."

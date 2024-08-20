@@ -126,7 +126,7 @@ const findById = async (id) => {
  * @returns {Promise} - a Promise, resolving to an array of post objects.
  * @description Add optional parameters: limit, offset and id on 2024/08/19. 
  */
-const findAll = async (limit, offset, id) => {    
+const findAll = async (limit = 9999, offset = 0, id = 0) => {    
   const postIDsKey = getPostIDsKey() 
   let allPosts = []; 
 

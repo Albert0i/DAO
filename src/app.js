@@ -24,4 +24,5 @@ app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.listen(port, () => {
   banner()
   console.log(`Running on http://localhost:${port}`);
+  console.log(`Datastore is ${process.env.DAO_DATASTORE}`)
 });

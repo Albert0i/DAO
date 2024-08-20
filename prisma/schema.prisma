@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Posts {
-  id        Int     @id 
+  id        Int     @id @default(autoincrement())
   userId    Int
   title     String
   body      String @db.Text

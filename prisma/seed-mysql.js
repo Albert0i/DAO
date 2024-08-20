@@ -10,9 +10,12 @@ async function main() {
 
   // Seed new data 
   for (let i = 0; i < postsData.length; i++) 
-    await prisma.posts.create({ data: postsData[i] })
-  
-  console.log('Done') 
+    await prisma.posts.create({ data: { 
+                                        userId: postsData[i].userId, 
+                                        title: postsData[i].title, 
+                                        body: postsData[i].body 
+                                      } })
+    console.log('Done') 
   }
 
 main()

@@ -9,14 +9,8 @@ const prisma = new PrismaClient()
  * @returns {Promise} - a Promise, resolving to the string value
  *   for the key of the post Redis.
  */
-const insert = async (post) => {  
-  // Check before insert ! 
-  if (await prisma.posts.findUnique({ where: { id: parseInt(post.id, 10) } })) {
-    return null
-  }
-  else {
-    return prisma.posts.create({ data: post })  
-  }
+const insert = async (post) => {    
+  return prisma.posts.create({ data: post })  
 }
 
 /**
