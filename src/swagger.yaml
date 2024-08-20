@@ -13,7 +13,7 @@ servers:
 # GET    /posts
 # POST   /posts
 paths: 
-  /api/posts:
+  /api/v1/posts:
     get: 
       description: Get all posts
       responses:
@@ -38,7 +38,7 @@ paths:
 # GET    /posts/:id
 # PUT    /posts/:id
 # DELETE /posts/:id
-  /api/posts/{id}:
+  /api/v1/posts/{id}:
     get: 
       description: Get a post
       parameters: 
