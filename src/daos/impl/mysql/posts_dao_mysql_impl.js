@@ -9,8 +9,8 @@ const prisma = new PrismaClient()
  * @returns {Promise} - a Promise, resolving to the string value
  *   for the key of the post Redis.
  */
-const insert = async (post) => {
-  return prisma.posts.create({ data: post })
+const insert = async (post) => {  
+  return prisma.posts.create({ data: post })  
 }
 
 /**
@@ -36,7 +36,7 @@ const update = async (post) => {
  */
 const del = async (id) => {
   return prisma.posts.delete({
-    where: { id  }
+    where: { id: parseInt(id, 10) }
   })
 };
 
@@ -47,7 +47,7 @@ const del = async (id) => {
  * @returns {Promise} - a Promise, resolving to a post object.
  */
 const findById = async (id) => {
-  return prisma.posts.findUnique({ where: { id } })
+  return prisma.posts.findUnique({ where: { id: parseInt(id, 10) } })
 };
 
 /**
@@ -63,7 +63,7 @@ const findAll = async (limit, offset, id) => {
   //return prisma.posts.findMany({ orderBy: { id: 'asc' } })
   return prisma.posts.findMany({ 
         where: { id: {
-                  gte: id
+                  gte: parseInt(id, 10)
                } }, 
         orderBy: { id: 'asc' }, 
         skip: offset, 
