@@ -27,8 +27,8 @@ router.post('/', async (req, res) => {
   res.status(result ? 201 : 400).send(result)
 })
 
-router.put('/', async(req, res) => {
-  const result = await update(req.body)
+router.put('/:id', async(req, res) => {
+  const result = await update({...req.body, id: req.params.id})
 
   res.status(result ? 200 : 400).send(result)
 })
