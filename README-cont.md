@@ -6,13 +6,13 @@
 #### I. DAO Server
 
 
-#### II. Refining findALL 
+#### II. Refining `findALL` 
 
 
 #### III. auto_increment 
 
 
-#### IV. Swagger support 
+#### IV. Swagger 
 
 
 #### Epilogue 
