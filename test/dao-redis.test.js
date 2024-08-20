@@ -103,13 +103,13 @@ describe(`${testSuiteName}: findAll with optional parameters`, () => {
 test(`${testSuiteName}: insert a post`, async () => {
   const data = {
       userId: 999,
-      id: 999,
+      id: 101,
       title: "《史記‧商君列傳》",
       body: "公叔既死，公孫鞅聞秦孝公下令國中求賢者，將修繆公之業，東復侵地，乃遂西入秦，因孝公寵臣景監以求見孝公。"
     }
   
   const result = await insert(data);
-  expect([ [ null, 'OK' ], [ null, 1 ] ]).toEqual(expect.arrayContaining(result));
+  expect([ [ null, 'OK' ], [ null, 1 ], [ null, '101' ] ]).toEqual(expect.arrayContaining(result));
   
   const post = findById(data.id)
   expect(post).resolves.toEqual(data);
@@ -131,7 +131,7 @@ test(`${testSuiteName}: update a post`, async () => {
 });
 
 test(`${testSuiteName}: delete a post`, async () => {
-  const id = 999
+  const id = 101
   
   const result = await del(id);
   expect([ [ null, 1 ], [ null, 1 ] ]).toEqual(expect.arrayContaining(result));
