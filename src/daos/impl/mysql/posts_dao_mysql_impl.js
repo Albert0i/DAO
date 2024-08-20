@@ -10,7 +10,13 @@ const prisma = new PrismaClient()
  *   for the key of the post Redis.
  */
 const insert = async (post) => {  
-  return prisma.posts.create({ data: post })  
+  // Check before insert ! 
+  if (await prisma.posts.findUnique({ where: { id: parseInt(post.id, 10) } })) {
+    return null
+  }
+  else {
+    return prisma.posts.create({ data: post })  
+  }
 }
 
 /**
@@ -21,10 +27,16 @@ const insert = async (post) => {
  *   for the key of the post Redis.
  */
 const update = async (post) => {
-  return prisma.posts.update({
-    where: { id: post.id },
-    data: post
-  })
+  // Check before update ! 
+  if (await prisma.posts.findUnique({ where: { id: parseInt(post.id, 10) } })) {
+    return prisma.posts.update({
+      where: { id: parseInt(post.id, 10) },
+      data: post
+    })
+  }
+  else {
+    return null
+  }
 };
 
 /**
@@ -35,9 +47,15 @@ const update = async (post) => {
  *   for the key of the post Redis.
  */
 const del = async (id) => {
-  return prisma.posts.delete({
-    where: { id: parseInt(id, 10) }
-  })
+  // Check before delete ! 
+  if (await prisma.posts.findUnique({ where: { id: parseInt(id, 10) } })) {
+    return prisma.posts.delete({
+      where: { id: parseInt(id, 10) }
+    })
+  }
+  else {
+    return null
+  }
 };
 
 /**
@@ -66,8 +84,8 @@ const findAll = async (limit, offset, id) => {
                   gte: parseInt(id, 10)
                } }, 
         orderBy: { id: 'asc' }, 
-        skip: offset, 
-        take: limit
+        skip: parseInt(offset, 10), 
+        take: parseInt(limit, 10)
   })
 };
 

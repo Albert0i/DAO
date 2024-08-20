@@ -24,17 +24,17 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const result = await insert(req.body)
   
-  res.status(201).send(result)
+  res.status(result ? 201 : 400).send(result)
 })
 
 router.put('/', async(req, res) => {
   const result = await update(req.body)
 
-  res.status(200).send(result)
+  res.status(result ? 200 : 400).send(result)
 })
 
 router.delete('/:id', async (req, res) => {
   const result = await del(req.params.id)
   
-  res.status(204).send(result)
+  res.status(result ? 204 : 400).send(result)
 })
