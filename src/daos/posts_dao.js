@@ -43,7 +43,7 @@ const findById = async id => impl.findById(id)
  *
  * @param {number} [limit = 9999] - number of records to return. 
  * @param {number} [offset = 0] - numver of records to skip.
- * @param {number} [id = -1] - id number to start from, using '>='. 
+ * @param {number} [id = 0] - id number to start from, using '>='. 
  * @returns {Promise} - a Promise, resolving to an array of post objects.
  * @description Add optional parameters: limit, offset and id on 2024/08/19. 
  */

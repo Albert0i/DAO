@@ -11,3 +11,5 @@ DATABASE_URL=mysql://root:root@localhost:3306/movieDB
 DAO_DATASTORE=mysql
 
 REDIS_PREFIX=DEMO:DAO
+
+NODE_ENV=development

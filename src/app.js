@@ -5,11 +5,10 @@ import YAML from 'yamljs'
 import { banner } from './banner.js'
 import { disconnect } from './daos/posts_dao.js'
 
-const port = process.env.PORT || 3000;
-
 /* import routers */
 import { router as postRouter } from './routers/posts-router.js'
 
+const port = process.env.PORT || 3000;
 /* create an express app and use JSON */
 const app = new express()
 app.use(express.json())

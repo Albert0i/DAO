@@ -45,7 +45,135 @@ DELETE    /api/v1/posts/:id
 Where [`posts-router.js`](https://github.com/Albert0i/DAO/blob/main/src/routers/posts-router.js) is nothing but parameters passing and manipulation of http [status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). 
 
 
-#### II. Refining `findALL` 
+#### II. Refining `findALL` in MySQL + ORM 
+Modern RDBMS supports `OFFSET` and `LIMIT` in [SELECT](https://dev.mysql.com/doc/refman/8.4/en/select.html) Statement. The `OFFSET` clause allows one to return only those elements of a result set that come after a specified offset. The `LIMIT` clause is used to specify the number of records to return, which is useful on large table with thousands of records. Returning a large number of records can impact performance. 
+
+We are going to amend `findAll` in `posts_dao.js`:  
+```
+/**
+ * Get an array of all post objects.
+ *
+ * @param {number} [limit = 9999] - number of records to return. 
+ * @param {number} [offset = 0] - numver of records to skip.
+ * @param {number} [id = -1] - id number to start from, using '>='. 
+ * @returns {Promise} - a Promise, resolving to an array of post objects.
+ * @description Add optional parameters: limit, offset and id on 2024/08/19. 
+ */
+const findAll = async (limit = 9999, offset = 0, id = 0) => impl.findAll(limit, offset, id)
+```
+
+And implements in MySQL and Redis thereupon. By dint of capability of ORM, it takes only a couple of minutes to accomplish. 
+
+Before: 
+```
+const findAll = async (limit = 9999, offset = 0, id = 0) => {
+  return prisma.posts.findMany({ orderBy: { id: 'asc' } })
+};
+```
+
+After: 
+```
+const findAll = async (limit = 9999, offset = 0, id = 0) => {
+  //return prisma.posts.findMany({ orderBy: { id: 'asc' } })
+  return prisma.posts.findMany({ 
+        where: { id: {
+                  gte: parseInt(id, 10)
+               } }, 
+        orderBy: { id: 'asc' }, 
+        skip: parseInt(offset, 10), 
+        take: parseInt(limit, 10)
+  })
+};
+```
+
+If you are dubious what happens under the hook. Use the `PrismaClient` [log](https://www.prisma.io/docs/orm/reference/prisma-client-reference#log) parameter to configure [log levels](https://www.prisma.io/docs/orm/reference/prisma-client-reference#log-levels), including warnings, errors, and information about the queries sent to the database.
+```
+const prisma = new PrismaClient({
+  log: [{
+    emit: 'event',
+    level: 'query',
+  }]
+})
+
+if (process.env.NODE_ENV === "development")
+  {
+    prisma.$on('query', (e) => {
+      console.log('Query: ' + e.query)
+      console.log('Params: ' + e.params)
+      console.log('Duration: ' + e.duration + 'ms')
+    })
+  }
+```
+
+To get all posts: 
+```
+GET http://localhost:3000/api/v1/posts
+```
+
+SQL generated: 
+```
+Query: SELECT `movieDB`.`Posts`.`id`, `movieDB`.`Posts`.`userId`, `movieDB`.`Posts`.`title`, `movieDB`.`Posts`.`body` FROM `movieDB`.`Posts` WHERE `movieDB`.`Posts`.`id` >= ? ORDER BY `movieDB`.`Posts`.`id` ASC LIMIT ? OFFSET ?
+Params: [0,9999,0]
+Duration: 0ms
+```
+
+To get all posts with optional parameters: 
+```
+GET http://localhost:3000/api/v1/posts?limit=3&offset=1&id=98
+```
+
+SQL generated: 
+```
+Query: SELECT `movieDB`.`Posts`.`id`, `movieDB`.`Posts`.`userId`, `movieDB`.`Posts`.`title`, `movieDB`.`Posts`.`body` FROM `movieDB`.`Posts` WHERE `movieDB`.`Posts`.`id` >= ? ORDER BY `movieDB`.`Posts`.`id` ASC LIMIT ? OFFSET ?
+Params: [98,3,1]
+Duration: 0ms
+```
+
+Not very smart SQLs but it works... 
+
+
+#### III. Refining `findALL` in Redis
+The pure JS code is for reference only. We focus on JS + Lua script approach. 
+
+Before:
+```
+  // Method 2 - Lua script 
+  // Script is loaded in redisClient.js 
+  allPosts = retrofit(await findAllWithLua(postIDsKey)) 
+``` 
+
+After:
+```
+  // Method 2 - Lua script 
+  // Script is loaded in redisClient.js 
+  allPosts = retrofit(await findAllWithLua(postIDsKey, limit, offset, id)) 
+```
+
+The solution hinges on `ZRANGE` on external index. This requires insight understanding of object model. 
+```
+  local key = KEYS[1]
+  local limit = ARGV[1]
+  local offset = ARGV[2]
+  local id = ARGV[3]
+  local ids 
+
+  if id==0 then 
+    -- Start from an offset
+    ids = redis.call("ZRANGE", key, offset, offset + limit - 1)
+  else
+    -- Start from a specific id 
+    ids = redis.call('ZRANGE', key, id, '+INF', 'BYSCORE', 'LIMIT', offset, limit)
+  end
+
+  local hash = {}
+  local posts = {}
+
+  for i = 1, #ids do
+      hash = redis.call('HGETALL', ids[i])
+      table.insert(posts, hash)
+  end
+  return posts
+```
 
 
 #### III. [AUTO_INCREMENT](https://dev.mysql.com/doc/refman/8.4/en/example-auto-increment.html)
