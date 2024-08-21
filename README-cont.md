@@ -7,9 +7,9 @@ No project is flawless,
 
 
 #### I. DAO Server
-To leverage `post_dao`, we are going to wrap it into a DAO server using [express](https://www.npmjs.com/package/express). 
+To leverage `post_dao`, we are going to wrap it into a DAO server using [express](https://expressjs.com/). 
 
-app.js
+[`app.js`](https://github.com/Albert0i/DAO/blob/main/src/app.js)
 ```
 import 'dotenv/config'
 import express from 'express'
@@ -31,6 +31,18 @@ app.listen(port, () => {
   console.log(`Datastore is ${process.env.DAO_DATASTORE}`)
 });
 ```
+
+The following routes are provided by DAO server on `http://localhost:3000`: 
+```
+OPTIONS   /api/v1/posts
+GET       /api/v1/posts
+GET       /api/v1/posts/:id
+POST      /api/v1/posts
+PUT       /api/v1/posts/:id
+DELETE    /api/v1/posts/:id
+```
+
+Where [`posts-router.js`](https://github.com/Albert0i/DAO/blob/main/src/routers/posts-router.js) is nothing but parameters passing and manipulation of http [status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). 
 
 
 #### II. Refining `findALL` 
