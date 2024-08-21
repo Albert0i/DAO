@@ -194,6 +194,7 @@ The solution hinges on [`ZRANGE`](https://redis.io/docs/latest/commands/zrange/)
 > When you insert any other value into an AUTO_INCREMENT column, the column is set to that value and the sequence is reset so that the next automatically generated value follows sequentially from the largest column value. 
 
 Let get started to modify post model: 
+
 Before:
 ```
 model Posts {
