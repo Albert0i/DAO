@@ -7,13 +7,12 @@ No project is flawless,
 
 
 #### I. DAO Server
-To leverage `post_dao`, we are going to wrap into a DAO server using [express](https://www.npmjs.com/package/express). 
+To leverage `post_dao`, we are going to wrap it into a DAO server using [express](https://www.npmjs.com/package/express). 
 
 app.js
 ```
 import 'dotenv/config'
 import express from 'express'
-import { banner } from './banner.js'
 import { disconnect } from './daos/posts_dao.js'
 
 const port = process.env.PORT || 3000;
@@ -30,7 +29,6 @@ app.use('/api/v1/posts', postRouter)
 
 // Start the server
 app.listen(port, () => {
-  banner()
   console.log(`Running on http://localhost:${port}`);
   console.log(`Datastore is ${process.env.DAO_DATASTORE}`)
 });
