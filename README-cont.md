@@ -187,6 +187,11 @@ The solution hinges on [`ZRANGE`](https://redis.io/docs/latest/commands/zrange/)
 
 
 #### IV. [AUTO_INCREMENT](https://dev.mysql.com/doc/refman/8.4/en/example-auto-increment.html) in MySQL + ORM
+> The AUTO_INCREMENT attribute can be used to generate a unique identity for new rows: 
+
+> You can also explicitly assign 0 to the column to generate sequence numbers, unless the [NO_AUTO_VALUE_ON_ZERO](https://dev.mysql.com/doc/refman/8.4/en/sql-mode.html#sqlmode_no_auto_value_on_zero) SQL mode is enabled. For example:
+
+> When you insert any other value into an AUTO_INCREMENT column, the column is set to that value and the sequence is reset so that the next automatically generated value follows sequentially from the largest column value. 
 
 
 #### V. [AUTO_INCREMENT](https://dev.mysql.com/doc/refman/8.4/en/example-auto-increment.html) in Redis 
