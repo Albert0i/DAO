@@ -249,7 +249,31 @@ There is no such thing as auto increment in Redis. We are going to create our ow
     return redis.call("INCR", KEYS[1]..':auto_increment')
 ```
 
-Change to `insert` in `posts_dao_mysql_impl.js` is required. 
+Modify `seed-redis.js` so as not to include `id` value. 
+```
+  for (let i = 0; i < postsData.length; i++) {
+      const id = await autoIncrement(process.env.REDIS_PREFIX + ':posts')
+      const postHashKey = getPostHashKey(id)
+      const postIDsKey = getPostIDsKey()
+
+      await redisClient.multi()
+                      .hmset(postHashKey, { 
+                                              id, 
+                                              userId: postsData[i].userId, 
+                                              title: postsData[i].title, 
+                                              body: postsData[i].body 
+                                          })   // 'OK' 
+                      .zadd(postIDsKey, id, postHashKey)  // 1
+                      .exec()
+   }
+```
+ 
+Re-seed database with: 
+```
+npm run seed-redis
+```
+
+Change `insert` in `posts_dao_mysql_impl.js` is required. 
 ```
 const insert = async (post) => {
   const key = process.env.REDIS_PREFIX + ':posts'
@@ -265,6 +289,8 @@ const insert = async (post) => {
   // [ [ null, 'OK' ], [ null, 1 ], [ null, <new id> ] ]
 };
 ```
+
+Done! 
 
 
 #### VI. Implementing `findPost` in MySQL + ORM
