@@ -186,13 +186,19 @@ The solution hinges on `ZRANGE` on external index to determine retrieval range. 
 ```
 
 
-#### III. [AUTO_INCREMENT](https://dev.mysql.com/doc/refman/8.4/en/example-auto-increment.html)
+#### IV. [AUTO_INCREMENT](https://dev.mysql.com/doc/refman/8.4/en/example-auto-increment.html) in MySQL + ORM
 
 
-#### IV. implementing `findPost`
+#### V. [AUTO_INCREMENT](https://dev.mysql.com/doc/refman/8.4/en/example-auto-increment.html) in Redis 
 
 
-#### V. [Swagger](https://www.npmjs.com/package/swagger-ui-express)
+#### VI. Implementing `findPost` in MySQL + ORM
+
+
+#### VII. Implementing `findPost` in Redis
+
+
+#### VIII. [Swagger](https://www.npmjs.com/package/swagger-ui-express)
 
 
 #### Epilogue 
