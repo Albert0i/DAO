@@ -161,28 +161,28 @@ After:
 
 The solution hinges on [`ZRANGE`](https://redis.io/docs/latest/commands/zrange/) on external index to determine retrieval range. This requires insight understanding on object model. We deliberately use the `id` as score in sorted set to facilitate subsequent access. [`ZRANGE`](https://redis.io/docs/latest/commands/zrange/) can perform different types of range queries: by index (rank), by the score, or by lexicographical order. 
 ```
-  local key = KEYS[1]
-  local limit = ARGV[1]
-  local offset = ARGV[2]
-  local id = ARGV[3]
-  local ids 
+    local key = KEYS[1]
+    local limit = ARGV[1]
+    local offset = ARGV[2]
+    local id = ARGV[3]
+    local ids 
 
-  if id==0 then 
-    -- Start from an offset
-    ids = redis.call("ZRANGE", key, offset, offset + limit - 1)
-  else
-    -- Start from a specific id 
-    ids = redis.call('ZRANGE', key, id, '+INF', 'BYSCORE', 'LIMIT', offset, limit)
-  end
+    if id==0 then 
+      -- Start from an offset
+      ids = redis.call("ZRANGE", key, offset, offset + limit - 1)
+    else
+      -- Start from a specific id 
+      ids = redis.call('ZRANGE', key, id, '+INF', 'BYSCORE', 'LIMIT', offset, limit)
+    end
 
-  local hash = {}
-  local posts = {}
+    local hash = {}
+    local posts = {}
 
-  for i = 1, #ids do
-      hash = redis.call('HGETALL', ids[i])
-      table.insert(posts, hash)
-  end
-  return posts
+    for i = 1, #ids do
+        hash = redis.call('HGETALL', ids[i])
+        table.insert(posts, hash)
+    end
+    return posts
 ```
 
 
@@ -235,10 +235,36 @@ Re-seed database with:
 npx prisma db seed
 ```
 
-That's all! 
+No need to change `insert` in `posts_dao_mysql_impl.js`. That's all! 
 
 
 #### V. [AUTO_INCREMENT](https://dev.mysql.com/doc/refman/8.4/en/example-auto-increment.html) in Redis 
+There is no such thing as auto increment in Redis. We are going to create our own in Lua script. 
+```
+    --
+    -- Get an auto increment number of a key.
+    -- 
+    -- @param {string} KEYS[1] - The key to operate on. 
+    -- 
+    return redis.call("INCR", KEYS[1]..':auto_increment')
+```
+
+Change to `insert` in `posts_dao_mysql_impl.js` is required. 
+```
+const insert = async (post) => {
+  const key = process.env.REDIS_PREFIX + ':posts'
+  const id = await autoIncrementWithLua(key)
+  const postHashKey = getPostHashKey(id);
+  const postIDsKey = getPostIDsKey()
+
+  return redisClient.multi()
+                    .hmset(postHashKey, post)           // 'OK' 
+                    .zadd(postIDsKey, id, postHashKey)  // 1
+                    .get(key + ':auto_increment')       // <new id>
+                    .exec()
+  // [ [ null, 'OK' ], [ null, 1 ], [ null, <new id> ] ]
+};
+```
 
 
 #### VI. Implementing `findPost` in MySQL + ORM
