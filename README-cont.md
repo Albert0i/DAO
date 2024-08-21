@@ -112,7 +112,12 @@ GET http://localhost:3000/api/v1/posts
 
 SQL generated: 
 ```
-Query: SELECT `movieDB`.`Posts`.`id`, `movieDB`.`Posts`.`userId`, `movieDB`.`Posts`.`title`, `movieDB`.`Posts`.`body` FROM `movieDB`.`Posts` WHERE `movieDB`.`Posts`.`id` >= ? ORDER BY `movieDB`.`Posts`.`id` ASC LIMIT ? OFFSET ?
+Query: SELECT `movieDB`.`Posts`.`id`, `movieDB`.`Posts`.`userId`, `movieDB`.`Posts`.`title`, `movieDB`.`Posts`.`body` 
+FROM `movieDB`.`Posts` 
+WHERE `movieDB`.`Posts`.`id` >= ? 
+ORDER BY `movieDB`.`Posts`.`id` ASC 
+LIMIT ? OFFSET ?
+
 Params: [0,9999,0]
 Duration: 0ms
 ```
@@ -124,7 +129,12 @@ GET http://localhost:3000/api/v1/posts?limit=3&offset=1&id=98
 
 SQL generated: 
 ```
-Query: SELECT `movieDB`.`Posts`.`id`, `movieDB`.`Posts`.`userId`, `movieDB`.`Posts`.`title`, `movieDB`.`Posts`.`body` FROM `movieDB`.`Posts` WHERE `movieDB`.`Posts`.`id` >= ? ORDER BY `movieDB`.`Posts`.`id` ASC LIMIT ? OFFSET ?
+Query: SELECT `movieDB`.`Posts`.`id`, `movieDB`.`Posts`.`userId`, `movieDB`.`Posts`.`title`, `movieDB`.`Posts`.`body` 
+FROM `movieDB`.`Posts` 
+WHERE `movieDB`.`Posts`.`id` >= ? 
+ORDER BY `movieDB`.`Posts`.`id` ASC 
+LIMIT ? OFFSET ?
+
 Params: [98,3,1]
 Duration: 0ms
 ```
