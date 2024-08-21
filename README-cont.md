@@ -13,7 +13,6 @@ app.js
 ```
 import 'dotenv/config'
 import express from 'express'
-import { disconnect } from './daos/posts_dao.js'
 
 const port = process.env.PORT || 3000;
 
