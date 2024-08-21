@@ -86,7 +86,7 @@ const findAll = async (limit = 9999, offset = 0, id = 0) => {
 };
 ```
 
-If you are dubious what happens under the hook. Use the `PrismaClient` [log](https://www.prisma.io/docs/orm/reference/prisma-client-reference#log) parameter to configure [log levels](https://www.prisma.io/docs/orm/reference/prisma-client-reference#log-levels), including warnings, errors, and information about the queries sent to the database.
+Prisma has comprehensive [CRUD](https://www.prisma.io/docs/orm/prisma-client/queries/crud) operations at your disposal. If you are dubious what happens under the hook. Use the `PrismaClient` [log](https://www.prisma.io/docs/orm/reference/prisma-client-reference#log) parameter to configure [log levels](https://www.prisma.io/docs/orm/reference/prisma-client-reference#log-levels), including warnings, errors, and information about the queries sent to the database.
 ```
 const prisma = new PrismaClient({
   log: [{
@@ -139,7 +139,7 @@ Params: [98,3,1]
 Duration: 0ms
 ```
 
-Aha, not very smart but it works... 
+Aha, not typically smart but it works... ORM is on your fingertips... 
 
 
 #### III. Refining `findALL` in Redis
@@ -159,7 +159,7 @@ After:
   allPosts = retrofit(await findAllWithLua(postIDsKey, limit, offset, id)) 
 ```
 
-The solution hinges on [`ZRANGE`](https://redis.io/docs/latest/commands/zrange/) on external index to determine retrieval range. This requires insight understanding of object model. 
+The solution hinges on [`ZRANGE`](https://redis.io/docs/latest/commands/zrange/) on external index to determine retrieval range. This requires insight understanding on object model. We deliberately use the `id` as score in sorted set to facilitate subsequent access. [`ZRANGE`](https://redis.io/docs/latest/commands/zrange/) can perform different types of range queries: by index (rank), by the score, or by lexicographical order. 
 ```
   local key = KEYS[1]
   local limit = ARGV[1]
