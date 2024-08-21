@@ -159,7 +159,7 @@ After:
   allPosts = retrofit(await findAllWithLua(postIDsKey, limit, offset, id)) 
 ```
 
-The solution hinges on `ZRANGE` on external index to determine retrieval range. This requires insight understanding of object model. 
+The solution hinges on [`ZRANGE`](https://redis.io/docs/latest/commands/zrange/) on external index to determine retrieval range. This requires insight understanding of object model. 
 ```
   local key = KEYS[1]
   local limit = ARGV[1]
