@@ -129,7 +129,7 @@ Params: [98,3,1]
 Duration: 0ms
 ```
 
-Not very smart SQLs but it works... 
+Aha, not very smart but it works... 
 
 
 #### III. Refining `findALL` in Redis
