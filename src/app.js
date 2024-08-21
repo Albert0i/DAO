@@ -28,4 +28,8 @@ app.listen(port, () => {
   console.log(`Datastore is ${process.env.DAO_DATASTORE}`)
 });
 
-disconnect()
+// Trap Ctrl+C to gracefully shutdown the server
+process.on('SIGINT', () => {
+  disconnect()
+  console.log(`Ctrl+C pressed. Closing ${process.env.DAO_DATASTORE} connection...`);
+});
