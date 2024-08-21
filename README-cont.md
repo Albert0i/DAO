@@ -193,6 +193,49 @@ The solution hinges on [`ZRANGE`](https://redis.io/docs/latest/commands/zrange/)
 
 > When you insert any other value into an AUTO_INCREMENT column, the column is set to that value and the sequence is reset so that the next automatically generated value follows sequentially from the largest column value. 
 
+Let get started to modify post model: 
+Before:
+```
+model Posts {
+  id        Int     @id 
+  userId    Int
+  title     String
+  body      String @db.Text
+}
+```
+
+After:
+```
+model Posts {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  title     String
+  body      String @db.Text
+}
+```
+
+Just a few keystrokes should suffice. Re-create post table with:
+```
+npx prisma db push 
+```
+
+Modify `seed-mysql.js` so as not to include `id` value. 
+```
+  for (let i = 0; i < postsData.length; i++) 
+      await prisma.posts.create({ data: { 
+                                          userId: postsData[i].userId, 
+                                          title: postsData[i].title, 
+                                          body: postsData[i].body 
+                                        } })
+```
+
+Re-seed database with: 
+```
+npx prisma db seed
+```
+
+That's all! 
+
 
 #### V. [AUTO_INCREMENT](https://dev.mysql.com/doc/refman/8.4/en/example-auto-increment.html) in Redis 
 
