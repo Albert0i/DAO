@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -18,6 +19,10 @@ model Posts {
   userId    Int
   title     String
   body      String @db.Text
+
+  // Enable full text search on these fields
+  @@fulltext([title])
+  @@fulltext([body])
 }
 
 // 

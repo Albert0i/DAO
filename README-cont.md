@@ -220,6 +220,8 @@ A few keystrokes should suffice. Re-create post table with:
 npx prisma db push 
 ```
 
+![alt posts structure 1](img/posts-structure-1.JPG)
+
 Modify `seed-mysql.js` so as not to include `id` value. 
 ```
   for (let i = 0; i < postsData.length; i++) 
@@ -294,6 +296,30 @@ Done!
 
 
 #### VI. Implementing `findPost` in MySQL + ORM
+```
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+model Posts {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  title     String
+  body      String @db.Text
+
+  // Enable full text search on these fields
+  @@fulltext([title])
+  @@fulltext([body])
+}
+```
+
+```
+npx prisma db push 
+npx prisma db seed
+```
+
+![alt posts structure 2](img/posts-structure-2.JPG)
 
 
 #### VII. Implementing `findPost` in Redis
