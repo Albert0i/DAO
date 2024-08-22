@@ -383,6 +383,11 @@ With the help of ORM, we are subjected to less impact in treading on new feature
 
 
 #### VII. Implementing `findPost` in Redis
+Redis is merely in-memory datastore featuring data structures such as string, list, set, sorted set, hash... etc. There's no point in implementing our own full-text search by reading hash by hash, checking value by value. Although it is completely possible but it's not efficient after all. 
+
+> RediSearch is a [Redis module](https://redis.io/modules) that provides querying, secondary indexing, and full-text search for Redis. To use RediSearch, you first declare indexes on your Redis data. You can then use the RediSearch query language to query that data.
+
+Currently, RediSearch only support hash and json data type and not all Redis installation necessarily has this module. 
 
 
 #### VIII. [Swagger](https://www.npmjs.com/package/swagger-ui-express)

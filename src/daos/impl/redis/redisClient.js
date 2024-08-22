@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { Redis } from 'ioredis'
 import { load as loadFindALL } from './scripts/findAll_script.js'
 import { load as loadAutoIncrement } from './scripts/autoIncrement_script.js'
@@ -7,9 +8,11 @@ import { load as loadAutoIncrement } from './scripts/autoIncrement_script.js'
  * @returns {redisClient} The Redis Client instance 
  */
 const redisClient = new Redis({
-    port: 7000, // Redis port
-    host: "127.0.0.1", // a Redis instance.
-    showFriendlyErrorStack: true
+    port: process.env.REDIS_PORT,         // Redis port
+    host: process.env.REDIS_HOST,         // Redis host
+    password: process.env.REDIS_PASSWORD, // Redis password 
+
+    showFriendlyErrorStack: true          // Optimize the error stack displayed
   });
 
 /**
