@@ -410,6 +410,9 @@ There is no seed to re-seed the data. Continue to test with [FT.SEARCH](https://
 ```
 FT.SEARCH DEMO:DAO:posts:index exercitationem
 ```
+
+![alt FT.SEARCH](img/FT.SEARCH.JPG)
+
 If you are interested to know more, the [RU203 · Querying, indexing, and full-text search](https://redis.io/university/courses/ru203/) is a good start. 
 
 
