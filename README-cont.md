@@ -298,7 +298,9 @@ Done!
 #### VI. Implementing `findPost` in MySQL + ORM
 Instead of reading through page and page of posts, modern web site provides [Full-Text Search](https://dev.mysql.com/doc/refman/8.0/en/fulltext-search.html) facility to narrow down posts to be displayed. MySQL has support for full-text indexing and searching:
 
-> Full-text searching is performed using [MATCH() AGAINST()](https://dev.mysql.com/doc/refman/8.0/en/fulltext-search.html#function_match) syntax. [MATCH()](https://dev.mysql.com/doc/refman/8.0/en/fulltext-search.html#function_match) takes a comma-separated list that names the columns to be searched. AGAINST takes a string to search for, and an optional modifier that indicates what type of search to perform. The search string must be a string value that is constant during query evaluation. This rules out, for example, a table column because that can differ for each row.
+> Full-text searching is performed using [MATCH() AGAINST()](https://dev.mysql.com/doc/refman/8.0/en/fulltext-search.html#function_match) syntax. [MATCH()](https://dev.mysql.com/doc/refman/8.0/en/fulltext-search.html#function_match) takes a comma-separated list that names the columns to be searched. 
+
+> [AGAINST](https://dev.mysql.com/doc/refman/8.0/en/fulltext-search.html#function_match) takes a string to search for, and an optional modifier that indicates what type of search to perform. The search string must be a string value that is constant during query evaluation. This rules out, for example, a table column because that can differ for each row.
 
 > Some examples of such queries are shown here:
 ```
