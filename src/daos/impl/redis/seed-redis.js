@@ -24,7 +24,9 @@ async function main() {
                                          })   // 'OK' 
                      .zadd(postIDsKey, id, postHashKey)  // 1
                      .exec()
-   }    
+   }
+   // FT.CREATE DEMO:DAO:posts:index ON HASH PREFIX 1 DEMO:DAO:posts: SCHEMA id NUMERIC SORTABLE userId NUMERIC SORTABLE title TEXT SORTABLE body TEXT SORTABLE 
+   await redisClient.call('FT.CREATE', 'DEMO:DAO:posts:index', 'ON', 'HASH', 'PREFIX', '1', 'DEMO:DAO:posts:', 'SCHEMA', 'id', 'NUMERIC', 'SORTABLE', 'userId', 'NUMERIC', 'SORTABLE', 'title', 'TEXT', 'SORTABLE', 'body', 'TEXT', 'SORTABLE');
    console.log('Done') 
   }
 
