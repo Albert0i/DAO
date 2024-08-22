@@ -215,7 +215,7 @@ model Posts {
 }
 ```
 
-A few keystrokes should suffice. Re-create post table with:
+A few keystrokes will suffice. Re-create post table with:
 ```
 npx prisma db push 
 ```
