@@ -275,7 +275,7 @@ Re-seed database with:
 npm run seed-redis
 ```
 
-Change `insert` in `posts_dao_mysql_impl.js` is required. 
+Change `insert` in `posts_dao_mysql_impl.js`. 
 ```
 const insert = async (post) => {
   const key = process.env.REDIS_PREFIX + ':posts'
