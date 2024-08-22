@@ -389,6 +389,29 @@ Redis is merely in-memory datastore featuring data structures such as string, li
 
 Currently, RediSearch only support hash and json data type and not all Redis installation necessarily has this module. 
 
+First, enabling full-text search in Redis by creating an index with [FT.CREATE](https://redis.io/docs/latest/commands/ft.create/):
+```
+FT.CREATE DEMO:DAO:posts:index ON 
+    HASH PREFIX 1 DEMO:DAO:posts: SCHEMA 
+    id NUMERIC SORTABLE 
+    userId NUMERIC SORTABLE 
+    title TEXT SORTABLE 
+    body TEXT SORTABLE 
+```
+
+Second, check with: 
+```
+FT.INFO DEMO:DAO:posts:index
+```
+![alt FT.INFO](img/FT.INFO.JPG)
+
+There is no seed to re-seed the data. Continue to test with [FT.SEARCH](https://redis.io/docs/latest/commands/ft.search/): 
+
+```
+FT.SEARCH DEMO:DAO:posts:index exercitationem
+```
+If you are interested to know more, the [RU203 · Querying, indexing, and full-text search](https://redis.io/university/courses/ru203/) is a good start. 
+
 
 #### VIII. [Swagger](https://www.npmjs.com/package/swagger-ui-express)
 
