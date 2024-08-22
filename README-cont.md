@@ -379,7 +379,7 @@ describe(`${testSuiteName}: findPosts`, () => {
 
 ![alt findPosts MySQL](img/findPosts-MySQL.JPG)
 
-With the help of ORM layer, we are subjected to less impact on using new feature provided by underlaying RDBMS. If you do you see the usefulness of Prisma till now, you should have your brain checked in hospital nearby, i suggest. 
+With the help of ORM, we are subjected to less impact in treading on new feature provided by underlaying RDBMS. If you can not see usefulness so far, you should have your brain checked in hospital nearby, i suggest. 
 
 
 #### VII. Implementing `findPost` in Redis
