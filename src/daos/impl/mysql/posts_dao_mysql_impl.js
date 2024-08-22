@@ -99,6 +99,29 @@ const findAll = async (limit = 9999, offset = 0, id = 0) => {
   })
 };
 
+
+/**
+ * Get an array of all post objects, full-text search on title and body. 
+ *
+ * @param {string} keywords - key words to be search for. 
+ * @returns {Promise} - a Promise, resolving to an array of post objects.
+ * @description Add full-text on title and body, on 2024/08/22. 
+ */
+const findPosts = async (keywords) => {
+  // All posts that contain the keywords in title or body
+  return prisma.posts.findMany({
+    where: { 
+            title: {
+              search: keywords    
+            }, 
+            body: {
+              search: keywords,
+            },
+          }
+  })
+}
+
+
 /**
  * Disconnect from database.
  *
@@ -109,7 +132,7 @@ const disconnect = async () => {
 }
 
 export {
-  insert, update, del, findById, findAll, disconnect
+  insert, update, del, findById, findAll, findPosts, disconnect
 };
 
 /*

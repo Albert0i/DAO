@@ -302,19 +302,9 @@ Instead of reading through page and page of posts, modern web site provides [Ful
 
 > [AGAINST](https://dev.mysql.com/doc/refman/8.0/en/fulltext-search.html#function_match) takes a string to search for, and an optional modifier that indicates what type of search to perform. The search string must be a string value that is constant during query evaluation. This rules out, for example, a table column because that can differ for each row.
 
-> Some examples of such queries are shown here:
-```
-# MATCH() in SELECT list...
-SELECT MATCH (a) AGAINST ('abc') FROM t GROUP BY a WITH ROLLUP;
-SELECT 1 FROM t GROUP BY a, MATCH (a) AGAINST ('abc') WITH ROLLUP;
+> Prisma Client supports [full-text search](https://www.prisma.io/docs/orm/prisma-client/queries/full-text-search) for **PostgreSQL** databases in versions 2.30.0 and later, and **MySQL** databases in versions 3.8.0 and later. With full-text search enabled, you can add search functionality to your application by searching for text within a database column.
 
-# ...in HAVING clause...
-SELECT 1 FROM t GROUP BY a WITH ROLLUP HAVING MATCH (a) AGAINST ('abc');
-
-# ...and in ORDER BY clause
-SELECT 1 FROM t GROUP BY a WITH ROLLUP ORDER BY MATCH (a) AGAINST ('abc');
-```
-
+First, enabling full-text search in MySQL by updating post model: 
 ```
 generator client {
   provider = "prisma-client-js"
@@ -328,17 +318,63 @@ model Posts {
   body      String @db.Text
 
   // Enable full text search on these fields
-  @@fulltext([title])
-  @@fulltext([body])
+  @@fulltext([title, body])
+  @@fulltext([body, title])
 }
 ```
 
+Second, re-generate prisma client, re-create post table and re-seed posts data with: 
 ```
+npx prisma generate
 npx prisma db push 
 npx prisma db seed
 ```
 
 ![alt posts structure 2](img/posts-structure-2.JPG)
+
+Third, modify `posts_dao.js` by augmenting `findPosts`.
+```
+/**
+ * Get an array of all post objects, full-text search on title and body. 
+ *
+ * @param {string} keywords - key words to be search for. 
+ * @returns {Promise} - a Promise, resolving to an array of post objects.
+ * @description Add full-text on title and body, on 2024/08/22. 
+ */
+const findPosts = async (keywords) => impl.findPosts(keywords)
+```
+
+Lastly, implement `findPosts` in `posts_dao_mysql_impl.js` accordingly. 
+```
+const findPosts = async (keywords) => {
+  // All posts that contain the keywords in title or body
+  return prisma.posts.findMany({
+    where: { 
+            title: {
+              search: keywords    
+            }, 
+            body: {
+              search: keywords,
+            },
+          }
+  })
+}
+```
+Our test suite shows that it's working as expected: 
+```
+describe(`${testSuiteName}: findPosts`, () => {
+  const keywords = 'exercitationem'
+  test(`${testSuiteName}: findPosts with '${keywords}'`, async () => {
+    const posts = await findPosts(keywords)
+    expect(posts.length).toBe(9)
+
+    for (let i = 0; i < posts.length; i++) {
+      expect(posts[i].body.indexOf(keywords) !== 0 || 
+             posts[i].body.indexOf(keywords) !== 0).toBe(true)
+    }
+  })
+})
+```
 
 
 #### VII. Implementing `findPost` in Redis

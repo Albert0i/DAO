@@ -49,6 +49,17 @@ const findById = async id => impl.findById(id)
  */
 const findAll = async (limit = 9999, offset = 0, id = 0) => impl.findAll(limit, offset, id)
 
+
+/**
+ * Get an array of all post objects, full-text search on title and body. 
+ *
+ * @param {string} keywords - key words to be search for. 
+ * @returns {Promise} - a Promise, resolving to an array of post objects.
+ * @description Add full-text on title and body, on 2024/08/22. 
+ */
+const findPosts = async (keywords) => impl.findPosts(keywords)
+
+
 /**
  * Disconnect database connection.
  *
@@ -56,4 +67,4 @@ const findAll = async (limit = 9999, offset = 0, id = 0) => impl.findAll(limit, 
  */
 const disconnect = async () => impl.disconnect()
 
-export { insert, update, del, findById, findAll, disconnect };
+export { insert, update, del, findById, findAll, findPosts, disconnect };

@@ -21,8 +21,8 @@ model Posts {
   body      String @db.Text
 
   // Enable full text search on these fields
-  @@fulltext([title])
-  @@fulltext([body])
+  @@fulltext([title, body])
+  @@fulltext([body, title])
 }
 
 // 

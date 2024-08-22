@@ -8,7 +8,10 @@ Content-Type: application/json
 
 ### Get all posts with optional parameters 
 GET http://localhost:3000/api/v1/posts?limit=3&offset=1&id=98
-Content-Type: application/json
+Content-Type: applicatio
+
+### Find posts 
+
 
 ### Get single post
 GET http://localhost:3000/api/v1/posts/66

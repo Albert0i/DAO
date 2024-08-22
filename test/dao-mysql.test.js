@@ -1,4 +1,4 @@
-import { insert, update, del, findById, findAll, disconnect } from "../src/daos/impl/mysql/posts_dao_mysql_impl.js"
+import { insert, update, del, findById, findAll, findPosts, disconnect } from "../src/daos/impl/mysql/posts_dao_mysql_impl.js"
 
 const testSuiteName = 'post_dao_mysql_impl';
 
@@ -96,6 +96,22 @@ describe(`${testSuiteName}: findAll with optional parameters`, () => {
     });
 })
 // End add (2024/08/19)
+
+
+// Begin add (2024/08/22)
+describe(`${testSuiteName}: findPosts`, () => {
+  const keywords = 'exercitationem'
+  test(`${testSuiteName}: findPosts with '${keywords}'`, async () => {
+    const posts = await findPosts(keywords)
+    expect(posts.length).toBe(9)
+
+    for (let i = 0; i < posts.length; i++) {
+      expect(posts[i].body.indexOf(keywords) !== 0 || 
+             posts[i].body.indexOf(keywords) !== 0).toBe(true)
+    }
+  })
+})
+// End add (2024/08/22)
 
 
 test(`${testSuiteName}: insert a post`, async () => {
