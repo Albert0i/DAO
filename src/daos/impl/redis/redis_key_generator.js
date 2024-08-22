@@ -37,4 +37,13 @@ const getPostHashKey = postId => getKey(`posts:${postId}`);
  */
 const getPostIDsKey = () => getKey('posts:ids');
 
-export { getPostHashKey, getPostIDsKey };
+/**
+ * Returns the Redis post index name.
+ *
+ * Key name: prefix:posts:index
+  *
+ * @returns - the Redis key name used for the post index .
+ */
+const getPostIndexName = () => getKey('posts:index')
+
+export { getPostHashKey, getPostIDsKey, getPostIndexName };

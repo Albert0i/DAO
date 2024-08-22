@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { redisClient } from './redisClient.js'
 import { findAll as findAllWithLua } from './scripts/findAll_script.js'
 import { autoIncrement as autoIncrementWithLua } from './scripts/autoIncrement_script.js'
-import { getPostHashKey, getPostIDsKey } from './redis_key_generator.js'
+import { getPostHashKey, getPostIDsKey, getPostIndexName } from './redis_key_generator.js'
 
 /**
  * Takes a key/value pairs object representing a Redis hash, and
@@ -173,9 +173,25 @@ const findAll = async (limit = 9999, offset = 0, id = 0) => {
  *   for the key of the post Redis.
  */
 const autoIncrement = async (key) => {
-
   return autoIncrementWithLua(key)  
 };
+
+
+/**
+ * Get an array of all post objects, full-text search on title and body. 
+ *
+ * @param {string} keywords - key words to be search for. 
+ * @returns {Promise} - a Promise, resolving to an array of post objects.
+ * @description Add full-text on title and body, on 2024/08/22. 
+ */
+const findPosts = async (keywords) => {
+  // All posts that contain the keywords in title or body
+  const result = await redisClient.call('FT.SEARCH', getPostIndexName(), keywords);
+  const allPosts = retrofit(result.filter(item => (typeof item) === "object"));
+
+  return allPosts
+}
+
 
 /**
  * Disconnect from database.
@@ -187,5 +203,5 @@ const disconnect = async () => {
 }
 
 export {
-  insert, update, del, findById, findAll, autoIncrement, disconnect
+  insert, update, del, findById, findAll, findPosts, autoIncrement, disconnect
 };

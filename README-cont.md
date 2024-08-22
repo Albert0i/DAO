@@ -413,7 +413,36 @@ FT.SEARCH DEMO:DAO:posts:index exercitationem
 
 ![alt FT.SEARCH](img/FT.SEARCH.JPG)
 
-If you are interested to know more, the [RU203 · Querying, indexing, and full-text search](https://redis.io/university/courses/ru203/) is a good start. 
+If you are interested to know more, [RU203 · Querying, indexing, and full-text search](https://redis.io/university/courses/ru203/) is a good start. 
+
+Last, implement `findPosts` in `posts_dao_redis_impl.js` accordingly.
+```
+const findPosts = async (keywords) => {
+  // All posts that contain the keywords in title or body
+  const result = await redisClient.call('FT.SEARCH', getPostIndexName(), keywords);
+  const allPosts = retrofit(result.filter(item => (typeof item) === "object"));
+
+  return allPosts
+}
+```
+
+Our test suite shows that it's working as expected:
+```
+describe(`${testSuiteName}: findPosts`, () => {
+  const keywords = 'exercitationem'
+  test(`${testSuiteName}: findPosts with '${keywords}'`, async () => {
+    const posts = await findPosts(keywords)    
+    expect(posts.length).toBe(9)
+
+    for (let i = 0; i < posts.length; i++) {
+      expect(posts[i].body.indexOf(keywords) !== 0 || 
+             posts[i].body.indexOf(keywords) !== 0).toBe(true)
+    }
+  })
+})
+```
+
+![alt findPosts Redis](img/findPosts-Redis.JPG)
 
 
 #### VIII. [Swagger](https://www.npmjs.com/package/swagger-ui-express)

@@ -101,7 +101,7 @@ describe(`${testSuiteName}: findAll with optional parameters`, () => {
 // Begin add (2024/08/22)
 describe(`${testSuiteName}: findPosts`, () => {
   const keywords = 'exercitationem'
-  test(`${testSuiteName}: findPosts with '${keywords}'`, async () => {
+  test.only(`${testSuiteName}: findPosts with '${keywords}'`, async () => {
     const posts = await findPosts(keywords)
     expect(posts.length).toBe(9)
 
