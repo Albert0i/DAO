@@ -344,7 +344,7 @@ Third, modify `posts_dao.js` by augmenting `findPosts`.
 const findPosts = async (keywords) => impl.findPosts(keywords)
 ```
 
-Lastly, implement `findPosts` in `posts_dao_mysql_impl.js` accordingly. 
+Last, implement `findPosts` in `posts_dao_mysql_impl.js` accordingly. 
 ```
 const findPosts = async (keywords) => {
   // All posts that contain the keywords in title or body
@@ -360,6 +360,7 @@ const findPosts = async (keywords) => {
   })
 }
 ```
+
 Our test suite shows that it's working as expected: 
 ```
 describe(`${testSuiteName}: findPosts`, () => {
@@ -375,6 +376,8 @@ describe(`${testSuiteName}: findPosts`, () => {
   })
 })
 ```
+
+![alt findPosts MySQL](img/findPosts-MySQL.JPG)
 
 
 #### VII. Implementing `findPost` in Redis
