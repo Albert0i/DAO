@@ -470,15 +470,20 @@ router.get('/find/:keywords', async (req, res) => {
 })
 ```
 
+![alt DAO Server](img/DAO-Server.JPG)
+
 And try 
 ```
 http://localhost:3000/api/v1/posts/find/exercitationem
 ```
+Add [Swagger](https://www.npmjs.com/package/swagger-ui-express) and browse to:
+```
+http://localhost:3000/api/v1/docs/
+```
+
+![alt Post API](img/Posts-API.JPG)
+
 Yeah! 
-
-
-[Swagger](https://www.npmjs.com/package/swagger-ui-express)
-
 
 #### Epilogue 
 nodemon     json-server     PM2
