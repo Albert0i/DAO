@@ -5,8 +5,8 @@
 Some programmers are used to scrutinize things in minute level. Inconsistent nomenclature, abundance of variables, asymmetric layout and ineffective implementation are agonizing. Striking a balance between *what is need* and *what can do* is always a dilemma. Code, once written, has to be changed again and again, hardly comes to consummation. 
 ```
 Reality is imperfect; 
-perfection is unrealistic. 
-No code is flawless.
+Perfection is unrealistic. 
+No life is flawless.
 ```
 
 
