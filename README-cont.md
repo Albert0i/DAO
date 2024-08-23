@@ -459,11 +459,11 @@ describe(`${testSuiteName}: findPosts`, () => {
 
 ![alt findPosts Redis](img/findPosts-Redis.JPG)
 
-All along the way in our Redis implementation, we have employed `string`, `hash` and `sorted set` and `RediSearch` module. Whereas there are still `list`, `set`, `Geo`, `Pub/Sub`, `Stream` and other modules. Those data structures are simple to understand and yet can orchestrate complicated interactivity. 
+All along the way in our Redis implementation, we have employed `string`, `hash` and `sorted set` and `RediSearch` module. Whereas there are still `list`, `set`, `Geo`, `Pub/Sub`, `Stream` and other modules. Those data structures are easy to understand and yet can orchestrate complicated interactivity. 
 
 `RediSearch` is specially designed to facilitate querying and aggregation. For the first time you saw `findPosts` has fewer lines of code in Redis than in MySQL + ORM. Check [here](https://redis.io/docs/latest/develop/reference/modules/), if you are interested in creating your own Redis module. 
 
-IMHO, MySQL is business-oriented and Redis is noncommercial-oriented. That's it is awkward and clumsy to implement relational *things* such AUTO_INCREMENT. 
+IMHO, MySQL is business-oriented and Redis is noncommercial-oriented. That's why it seems awkward and clumsy in implementing relational *things* such AUTO_INCREMENT. 
 
 
 #### VIII. To wrap up 
