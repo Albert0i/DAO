@@ -247,7 +247,7 @@ No need to change `insert` in `posts_dao_mysql_impl.js`. That's all!
 
 
 #### V. [AUTO_INCREMENT](https://dev.mysql.com/doc/refman/8.4/en/example-auto-increment.html) in Redis 
-There is no such thing as auto increment in Redis. We are going to create our own in Lua script. 
+There is no such thing as AUTO_INCREMENT in Redis. We are going to create our own in Lua script, of course. 
 ```
     --
     -- Get an auto increment number of a key.
