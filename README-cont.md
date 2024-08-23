@@ -402,7 +402,7 @@ Redis is in-memory datastore featuring data structures such as `string`, `list`,
 
 > RediSearch is a [Redis module](https://redis.io/modules) that provides querying, secondary indexing, and full-text search for Redis. To use RediSearch, you first declare indexes on your Redis data. You can then use the RediSearch query language to query that data.
 
-Currently, RediSearch supports hash and json data type and not all Redis installation necessarily has equipped this module. 
+Currently, RediSearch supports hash and JSON data type and not all Redis installation necessarily has equipped this module. 
 
 First, enabling full-text search in Redis by creating an index with [FT.CREATE](https://redis.io/docs/latest/commands/ft.create/):
 ```
