@@ -19,8 +19,11 @@ paths:
       parameters:      
         - in: path
           name: keywords
-          type: string 
-          example: exercitationem
+          required: true
+          description: text to be search for on title or body
+          schema: 
+            type: string 
+            example: exercitationem
       responses:
         200: 
           description: Success response
@@ -32,6 +35,28 @@ paths:
   /api/v1/posts:
     get: 
       description: Get all posts
+      parameters:
+        - in: query
+          name: offset
+          required: false
+          description: Number of posts to skip 
+          schema:
+            type: integer
+            example: 20 
+        - in: query
+          name: limit
+          required: false
+          description: Number of posts to return
+          schema:
+            type: integer
+            example: 5 
+        - in: query
+          name: id
+          required: false
+          description: Posts id to start from 
+          schema:
+            type: integer
+            example: 88 
       responses:
         200: 
           description: Success response
