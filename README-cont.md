@@ -189,7 +189,7 @@ The solution hinges on [`ZRANGE`](https://redis.io/docs/latest/commands/zrange/)
     return posts
 ```
 
-The use of Lua script is meant to cut down round tips. Both versions bear the similar logic. 
+The use of Lua script is meant to cut down round tips. Both versions bear similar logic. 
 
 
 #### IV. [AUTO_INCREMENT](https://dev.mysql.com/doc/refman/8.4/en/example-auto-increment.html) in MySQL + ORM
