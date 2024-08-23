@@ -1,4 +1,4 @@
-### DAO [兜](https://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/) cont. 
+### DAO [兜](https://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/) (cont.)
 
 
 #### Prologue 
