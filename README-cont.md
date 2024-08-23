@@ -143,11 +143,11 @@ Params: [98,3,1]
 Duration: 0ms
 ```
 
-Aha, not typically smart but it works... ORM is on your fingertips... 
+Aha, not typically smart but it works! ORM is by your side...
 
 
 #### III. Refining `findALL` in Redis
-The pure JS code is for reference only. We focus on JS + Lua script approach. 
+The pure JS code is left for reference. We focus on JS + Lua script approach. 
 
 Before:
 ```
