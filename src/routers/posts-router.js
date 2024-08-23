@@ -1,12 +1,21 @@
 import 'dotenv/config'
 import { Router } from 'express'
-import { insert, update, del, findById, findAll } from '../daos/posts_dao.js'
+import { insert, update, del, findById, findAll, findPosts } from '../daos/posts_dao.js'
 
 export const router = Router()
 
 router.options('/', async(req, res) => {
   res.status(200).send({ 'DAO_DATASTORE': process.env.DAO_DATASTORE})
 })
+
+// Begin fix (2024/08/23)
+router.get('/find/:keywords', async (req, res) => {
+  const { keywords } = req.params
+  const posts = await findPosts(keywords)
+  
+  res.status(200).send(posts)
+})
+// End fix (2024/08/23)
 
 router.get('/', async (req, res) => {
   const { limit, offset, id } = req.query

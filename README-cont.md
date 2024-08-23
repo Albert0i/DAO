@@ -378,6 +378,15 @@ describe(`${testSuiteName}: findPosts`, () => {
 
 ![alt findPosts MySQL](img/findPosts-MySQL.JPG)
 
+SQL Generated: 
+```
+Query: SELECT `movieDB`.`Posts`.`id`, `movieDB`.`Posts`.`userId`, `movieDB`.`Posts`.`title`, `movieDB`.`Posts`.`body` 
+FROM `movieDB`.`Posts` 
+WHERE MATCH (`movieDB`.`Posts`.`body`,`movieDB`.`Posts`.`title`)AGAINST (? IN BOOLEAN MODE)
+Params: ["exercitationem"]
+Duration: 1ms
+```
+
 With the help of ORM, we are subjected to less impact in treading on new feature provided by underlaying RDBMS. If you do not see usefulness so far, you should have your brain checked in hospital nearby, i suggest. 
 
 
@@ -451,6 +460,22 @@ IMHO, MySQL is business-oriented and Redis is noncommercial-oriented. That's it 
 
 
 #### VIII. To wrap up 
+Add new route to DAO server. 
+```
+router.get('/find/:keywords', async (req, res) => {
+  const { keywords } = req.params
+  const posts = await findPosts(keywords)
+  
+  res.status(200).send(posts)
+})
+```
+
+And try 
+```
+http://localhost:3000/api/v1/posts/find/exercitationem
+```
+Yeah! 
+
 
 [Swagger](https://www.npmjs.com/package/swagger-ui-express)
 
