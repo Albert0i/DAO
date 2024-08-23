@@ -66,7 +66,7 @@ We are going to amend `findAll` in `posts_dao.js`:
 const findAll = async (limit = 9999, offset = 0, id = 0) => impl.findAll(limit, offset, id)
 ```
 
-And implements in MySQL and Redis thereupon. By dint of capability of ORM, it takes only a couple of minutes to accomplish. 
+And implements in MySQL and Redis thereupon. By dint of ORM, it takes a couple of minutes to accomplish. 
 
 Before: 
 ```
