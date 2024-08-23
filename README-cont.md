@@ -2,7 +2,11 @@
 
 
 #### Prologue 
-Reality is imperfect; perfection is unrealistic. No code is flawless... 
+Some programmers are used to scrutinize things in minute level. Inconsistent nomenclature, abundance of variables, asymmetric layout and ineffective implementation are agonizing. Striking a balance between *what is need* and *what can do* is always a dilemma. Code, once written, has to be changed again and again, hardly comes to consummation. 
+
+Reality is imperfect; 
+perfection is unrealistic. 
+No code is flawless.
 
 
 #### I. DAO Server
@@ -485,8 +489,9 @@ http://localhost:3000/api/v1/docs/
 
 Yeah! 
 
+
 #### Epilogue 
-Documentation is done *threefold*: 
+Documentation doesn't come for free, no documentation is surplus. We have done *threefold* in this issue. 
 
 1. `jsdoc` is used to generate static function descriptions in `out/index.html` folder;
 2. `jest` is used to write test suite as well as demonstrate how to invoke API in `test` folder;
