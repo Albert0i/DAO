@@ -199,7 +199,7 @@ The use of Lua script is meant to cut down round tips. Both versions bear simila
 
 > When you insert any other value into an AUTO_INCREMENT column, the column is set to that value and the sequence is reset so that the next automatically generated value follows sequentially from the largest column value. 
 
-Let get started to modify post model: 
+Let's get started to modify post model: 
 
 Before:
 ```
