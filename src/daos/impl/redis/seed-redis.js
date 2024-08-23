@@ -6,8 +6,8 @@ import { postsData } from '../../../../data/postsData.js'
 
 async function main() {
    // Erase old data... 
-   await redisClient.flushdb()
-   console.log('Data flushed')
+   //await redisClient.flushdb()   
+   //console.log('Data flushed')
 
    // Seed new data 
    for (let i = 0; i < postsData.length; i++) {

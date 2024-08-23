@@ -12,7 +12,8 @@ const redisClient = new Redis({
     host: process.env.REDIS_HOST,         // Redis host
     password: process.env.REDIS_PASSWORD, // Redis password 
 
-    showFriendlyErrorStack: true          // Optimize the error stack displayed
+    showFriendlyErrorStack: true,         // Optimize the error stack displayed
+    db: 0,                                // Logical database (0~15), defaults to 0
   });
 
 /**

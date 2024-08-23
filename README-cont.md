@@ -2,8 +2,7 @@
 
 
 #### Prologue 
-Reality is imperfect; perfection is unrealistic. 
-No project is flawless, 
+Reality is imperfect; perfection is unrealistic. No code is flawless... 
 
 
 #### I. DAO Server
@@ -444,8 +443,16 @@ describe(`${testSuiteName}: findPosts`, () => {
 
 ![alt findPosts Redis](img/findPosts-Redis.JPG)
 
+All along in our Redis implementation, we have employed `string`, `hash` and `sorted set` and `RediSearch` module. Whereas there are `list`, `set`, `Geo`, `Pub/Sub`, `Stream` and other modules. Those data structures are simple to understand and yet can orchestrate complicated interactivity. 
 
-#### VIII. [Swagger](https://www.npmjs.com/package/swagger-ui-express)
+`RediSearch` is specially designed to facilitate querying and aggregation. For the first time you can see `findPosts` operation has fewer lines of code in Redis than in MySQL + ORM. Check [here](https://redis.io/docs/latest/develop/reference/modules/), i you are interested in creating your own Redis module. 
+
+IMHO, MySQL is business-oriented and Redis is noncommercial-oriented. That's why you saw awkwardness clumsy in implementing relational things such auto_increment etc. 
+
+
+#### VIII. To wrap up 
+
+[Swagger](https://www.npmjs.com/package/swagger-ui-express)
 
 
 #### Epilogue 
