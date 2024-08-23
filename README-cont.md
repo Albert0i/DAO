@@ -298,7 +298,7 @@ const insert = async (post) => {
 };
 ```
 
-A call to `autoIncrementWithLua` will do, add `get` before `exec` returns the new id in pipeline result. 
+A call to `autoIncrementWithLua` will do, a `get` before `exec` returns the new id in pipeline result. 
 
 
 #### VI. Implementing `findPost` in MySQL + ORM
