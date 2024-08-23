@@ -486,9 +486,11 @@ http://localhost:3000/api/v1/docs/
 Yeah! 
 
 #### Epilogue 
-nodemon     json-server     PM2
-mongoose    prisma          ioredis
-jest        jsdos           swagger 
+Documentation is done threefold: 
+
+1. `jsdoc` is used to generate static function descriptions in `out/index.html` folder;
+2. `jest` is used to write test suite as well as demonstrate how to invoke API in `test` folder;
+3. `swaggerswagger-ui-express` is used to host Posts API so that you can play with on `http://localhost:3000/api/v1/docs/`. 
 
 
 ### EOF (2024/08/23)
