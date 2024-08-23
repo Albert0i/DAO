@@ -467,7 +467,7 @@ IMHO, MySQL is business-oriented and Redis is noncommercial-oriented. That's why
 
 
 #### VIII. To wrap up 
-Add new route to DAO server. 
+Add new route to DAO server in `posts-router.js`. 
 ```
 router.get('/find/:keywords', async (req, res) => {
   const { keywords } = req.params
@@ -483,6 +483,7 @@ And try
 ```
 http://localhost:3000/api/v1/posts/find/exercitationem
 ```
+
 Add [Swagger](https://www.npmjs.com/package/swagger-ui-express) and browse to:
 ```
 http://localhost:3000/api/v1/docs/
