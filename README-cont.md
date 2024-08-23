@@ -486,7 +486,7 @@ http://localhost:3000/api/v1/docs/
 Yeah! 
 
 #### Epilogue 
-Documentation is done threefold: 
+Documentation is done *threefold*: 
 
 1. `jsdoc` is used to generate static function descriptions in `out/index.html` folder;
 2. `jest` is used to write test suite as well as demonstrate how to invoke API in `test` folder;
