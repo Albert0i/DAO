@@ -39,21 +39,21 @@ paths:
         - in: query
           name: offset
           required: false
-          description: Number of posts to skip 
+          description: Number of posts to skip, default 0 
           schema:
             type: integer
             example: 20 
         - in: query
           name: limit
           required: false
-          description: Number of posts to return
+          description: Number of posts to return, default 9999
           schema:
             type: integer
             example: 5 
         - in: query
           name: id
           required: false
-          description: Posts id to start from 
+          description: Posts id to start from, default 0
           schema:
             type: integer
             example: 88 
