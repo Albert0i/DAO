@@ -34,7 +34,7 @@ In this unit, we'll see how to implement the fixed window rate limiter. And in t
 
 ![alt hit interface](img/hit-interface.png)
 
-It consists of a single function called `hit`, which takes two arguments: `name`, a string that uniquely identifies the thing being rate limited. You'll likely pass in a user ID or an API token here, indicating which user is hitting the service, and `opts`, an object containing two keys, which are `interval`, a minute interval, and `maxHits`, the number of hits allowed within the minute interval. The `hit` function returns a promise that resolves to the number of hits remaining or -1 if the user has exceeded the rate limit for the time interval. Now open up `rate_limiter_dao_redis_impl.js`. 
+It consists of a single function called `hit`, which takes two arguments: `name`, a string that uniquely identifies the thing being rate limited. You'll likely pass in a user ID or an API token here, indicating which user is hitting the service, and `opts`, an object containing two keys, which are `interval`, a minute interval, and `maxHits`, the number of hits allowed within the minute interval. The `hit` function returns a promise that resolves to the number of hits remaining or 0 if the user has exceeded the rate limit for the time interval. Now open up `rate_limiter_dao_redis_impl.js`. 
 
 ![alt hit impl](img/hit-impl.png)
 
