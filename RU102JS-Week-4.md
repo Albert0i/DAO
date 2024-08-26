@@ -145,18 +145,53 @@ The moment the producer adds an element to the list, that element will be return
 
 ![alt brpop 2](img/brpop-1.png)
 
-Let's see how this blocking approach works in practice. Here we are using the BRPOP command, which is the blocking version of RPOP. Just as a reminder, the RPOP command removes and returns the last element in the list. In this example, our application's Redis client will block and wait for a value to appear in the list named messages. The extra parameter is a timeout in seconds. So after 10 seconds, the client will be unblocked and return nil if no value is pushed onto the list in that time. Using a value of zero here will block the client indefinitely until a value appears. So now, our application's client is blocked and can't be used for other Redis commands.
+Let's see how this blocking approach works in practice. Here we are using the `BRPOP` command, which is the blocking version of `RPOP`. Just as a reminder, the `RPOP` command removes and returns the last element in the list. In this example, our application's Redis client will block and wait for a value to appear in the list named messages. The extra parameter is a timeout in seconds. So after 10 seconds, the client will be unblocked and return nil if no value is pushed onto the list in that time. Using a value of zero here will block the client indefinitely until a value appears. So now, our application's client is blocked and can't be used for other Redis commands. 
 
-It is important to note, at this point, that this doesn't mean that the Redis server itself is blocked. Other clients can still send commands to it. Using the second client, I am now sending an LPUSH command to add an element, in this case, the string, "goodbye", to the list. This unblocks our consuming client, which returns the value "goodbye". We can also see the time in seconds that the client was blocked for. Using blocking commands prevents applications from needing to implement a polling strategy and saves the server from executing commands unnecessarily.
+![alt blocking 1](img/blocking-1.png)
 
-The server informs the blocked client when the value it was waiting for has been set. The client can use the timeout option to give up after a period of time, if necessary, so that it doesn't wait forever. Blocking commands do add the slight overhead of managing more than one connection to Redis, in the case where your application needs to send other commands while its client is blocking. 
+It is important to note, at this point, that this doesn't mean that the Redis server itself is blocked. Other clients can still send commands to it. 
 
-Let's see what that looks like with node_redis. Here I'm view the file blocking_commands.js in the examples folder. This uses the list data type and a blocking command to implement a simple queue. This is the producer function. It runs every second, pushing a number onto the head of a Redis list. I'm using the LPUSH command to do this, incrementing the value of the number pushed each time. After 20 iterations, the producer will stop pushing numbers onto the list and quit. At the other end of our queue is a blocking consumer function. This function uses its own separate node_redis client. We need this so that the producer can keep sending commands to Redis while the consumer blocks, waiting for values to appear in the queue. The consumer sits in a loop, sending the BRPOP command to retrieve the value from the tail of our list when one exists. It blocks for two seconds, then times out if no value has been added. The consumer function maintains a counter of the number of consecutive timeouts, exiting after 5 retries if no new value is added to the list. Here I'm starting the consumer, then starting the producer five seconds later.
+Using the second client, I am now sending an LPUSH command to add an element, in this case, the string, "goodbye", to the list. This unblocks our consuming client, which returns the value "goodbye". We can also see the time in seconds that the client was blocked for. 
 
-Let's see what happens when we run the code. The consumer starts first. No value is added to the list within it's 2-second timeout period, so it reports that the queue is empty and blocks again. This continues until the producer starts adding values to the list. The consumer's blocking BRPOP command then returns a value rather than timing out. Once the producer has generated 20 values, it shuts down. The consumer pops the 20th value off of the list and blocks again, waiting for a new value to appear. As the producer has shut down, no more values are added. The consumer's BRPOP command times out, and it reports that the queue is empty. After finding an empty list five consecutive times, the consumer also shuts down and closes its node_redis client. If you'd like to study this code in more detail yourself, it's available in a file named blocking_commands.js in the examples folder. Redis provides blocking commands for a variety of data structures.
+![alt blocking 2](img/blocking-2.png)
 
-These include lists, of course, sorted sets, streams,
-and the publish/subscribe features. So in this unit, we saw how blocking commands work as a more efficient alternative to polling and how to implement a basic blocking queue with the list data type. Do keep in mind that within any Node.js application using node_redis, you'll need one client instance per blocking use case. This is the only time you'll need to initialize more than one client in a Node.js node_redis application.
+Using blocking commands prevents applications from needing to implement a polling strategy and saves the server from executing commands unnecessarily. The server informs the blocked client when the value it was waiting for has been set. The client can use the timeout option to give up after a period of time, if necessary, so that it doesn't wait forever. 
+
+Blocking commands do add the slight overhead of managing more than one connection to Redis, in the case where your application needs to send other commands while its client is blocking. 
+
+![alt notes on blocking](img/notes-on-blocking.png)
+
+Let's see what that looks like with node_redis. Here I'm view the file `blocking_commands.js` in the examples folder. This uses the list data type and a blocking command to implement a simple queue. This is the producer function. It runs every second, pushing a number onto the head of a Redis list. I'm using the `LPUSH` command to do this, incrementing the value of the number pushed each time. 
+
+![alt producer 1](img/producer-1.png)
+
+After 20 iterations, the producer will stop pushing numbers onto the list and quit. 
+
+![alt producer 2](img/producer-2.png)
+
+At the other end of our queue is a blocking consumer function. This function uses its own separate node_redis client. We need this so that the producer can keep sending commands to Redis while the consumer blocks, waiting for values to appear in the queue. 
+
+![alt consumer 1](img/consumer-1.png)
+
+The consumer sits in a loop, sending the `BRPOP` command to retrieve the value from the tail of our list when one exists. It blocks for two seconds, then times out if no value has been added. The consumer function maintains a counter of the number of consecutive timeouts, exiting after 5 retries if no new value is added to the list. 
+
+![alt consumer 2](img/consumer-2.png)
+
+Here I'm starting the consumer, then starting the producer five seconds later. 
+
+![alt producer consumer](img/producer-consumer.png)
+
+Let's see what happens when we run the code. The consumer starts first. No value is added to the list within it's 2-second timeout period, so it reports that the queue is empty and blocks again. This continues until the producer starts adding values to the list. The consumer's blocking `BRPOP` command then returns a value rather than timing out. Once the producer has generated 20 values, it shuts down. The consumer pops the 20th value off of the list and blocks again, waiting for a new value to appear. As the producer has shut down, no more values are added. The consumer's `BRPOP` command times out, and it reports that the queue is empty. After finding an empty list five consecutive times, the consumer also shuts down and closes its node_redis client. 
+
+![alt producer consumer run](img/producer-consumer-run.png)
+
+If you'd like to study this code in more detail yourself, it's available in a file named `blocking_commands.js` in the `examples` folder. 
+
+Redis provides blocking commands for a variety of data structures. These include `lists`, of course, `sorted sets`, `streams`, and the `publish/subscribe` features. 
+
+![alt redis blocking commands](img/redis-blocking-commands.png)
+
+So in this unit, we saw how blocking commands work as a more efficient alternative to polling and how to implement a basic blocking queue with the list data type. Do keep in mind that within any Node.js application using node_redis, you'll need one client instance per blocking use case. This is the only time you'll need to initialize more than one client in a Node.js node_redis application.
 
 
 #### IV. [Error Handling](https://youtu.be/SdFIl5oSeVI)
