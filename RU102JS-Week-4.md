@@ -181,7 +181,9 @@ Here I'm starting the consumer, then starting the producer five seconds later.
 
 ![alt producer consumer](img/producer-consumer.png)
 
-Let's see what happens when we run the code. The consumer starts first. No value is added to the list within it's 2-second timeout period, so it reports that the queue is empty and blocks again. This continues until the producer starts adding values to the list. The consumer's blocking `BRPOP` command then returns a value rather than timing out. Once the producer has generated 20 values, it shuts down. The consumer pops the 20th value off of the list and blocks again, waiting for a new value to appear. As the producer has shut down, no more values are added. The consumer's `BRPOP` command times out, and it reports that the queue is empty. After finding an empty list five consecutive times, the consumer also shuts down and closes its node_redis client. 
+Let's see what happens when we run the code. The consumer starts first. No value is added to the list within it's 2-second timeout period, so it reports that the queue is empty and blocks again. This continues until the producer starts adding values to the list. The consumer's blocking `BRPOP` command then returns a value rather than timing out. 
+
+Once the producer has generated 20 values, it shuts down. The consumer pops the 20th value off of the list and blocks again, waiting for a new value to appear. As the producer has shut down, no more values are added. The consumer's `BRPOP` command times out, and it reports that the queue is empty. After finding an empty list five consecutive times, the consumer also shuts down and closes its node_redis client. 
 
 ![alt producer consumer run](img/producer-consumer-run.png)
 
