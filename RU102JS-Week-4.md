@@ -4,7 +4,7 @@
 
 
 #### Prologue 
-Everybody is story-teller, i mean most of us. One relates stories of others, one relates stories of oneself. Chances are one gets a couple of audiences and more often than not the *only* audience is oneself. Just like one can has many nodding acquaintances but to aught one could confide... 
+Everybody is story-teller, i mean most of us. One relates stories of others, one relates stories of oneself. Chances are one gets a couple of audiences and more often than not the *only* audience is oneself. Just like one can have many nodding acquaintances but to aught one could confide... 
 
 I am just a dull and ordinary man who cherish for anything valuable. The following material is taken from [RU102JS- Redis for JavaScript developers](https://redis.io/university/courses/ru102js/) Week 4. 
 
