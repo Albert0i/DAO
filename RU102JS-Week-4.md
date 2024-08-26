@@ -191,7 +191,9 @@ Redis provides blocking commands for a variety of data structures. These include
 
 ![alt redis blocking commands](img/redis-blocking-commands.png)
 
-So in this unit, we saw how blocking commands work as a more efficient alternative to polling and how to implement a basic blocking queue with the list data type. Do keep in mind that within any Node.js application using node_redis, you'll need one client instance per blocking use case. This is the only time you'll need to initialize more than one client in a Node.js node_redis application.
+So in this unit, we saw how blocking commands work as a more efficient alternative to polling and how to implement a basic blocking queue with the list data type. 
+
+Do keep in mind that within any Node.js application using node_redis, you'll need one client instance per blocking use case. This is the only time you'll need to initialize more than one client in a Node.js node_redis application.
 
 
 #### IV. [Error Handling](https://youtu.be/SdFIl5oSeVI)
