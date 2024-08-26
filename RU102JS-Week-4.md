@@ -60,6 +60,13 @@ However, if you need more precision, you'll want a sliding window-based rate lim
 #### II. [Programming Challenge #7 Review](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/6ec86ea00f894ac9bba46a829af4e28e/b5271ee833654fb6aab2601b92978662/)
 This final challenge was to build a sliding window rate limiter in the `hitSlidingWindow` method of the `sliding_ratelimiter_dao_redis_impl.js` module.
 
+Hints: for key naming, your key should take the form `[limiter]:[windowSize]:[name]:[maxHits]`. The key for the sliding window rate limiter doesn't need a minute block; instead you'll include the window size in the name to make it unique. Don't forget to use the `getKey` function in the key generator to ensure that your key is properly prefixed and will be cleaned up after the test suite finishes.
+
+1. Add an entry to a sorted set with the current timestamp, in milliseconds, as its score. You can put whatever data you like for the member's value, but it should be unique. You could write something like `[timestamp]-[ip-address] or [timestamp-random-number]`.
+2. Remove all entries from the sorted set that are older than `(CURRENT_TIMESTAMP - WINDOW_SIZE)`. Here, `CURRENT_TIMESTAMP` is measured in milliseconds, and `WINDOW_SIZE` is the number of milliseconds in your window. You can use the `ZREMRANGEBYSCORE` command to do this. This is how you'll slide the window forward in time. Running this command ensures that the only elements in the sorted set will be those that fall within the sliding window.
+3. Now run the `ZCARD` command on the sorted set. This will return the number of elements in the set, which is now equal to the number of requests in the sliding window.
+You should perform these three operations inside a transaction. You can then compare the return value of `ZCARD` with your `maxHits` value to determine whether to return -1 or the number of hits remaining within the window.
+
 Here's a completed implementation to compare with your own.
 
 ```
