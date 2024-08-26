@@ -10,23 +10,51 @@ I am just a dull and ordinary man who cherish for anything valuable. The followi
 
 
 #### I. [Building a Rate Limiter](https://youtu.be/let90x9uR_g)
-In this unit, we're going to use Redis and Node.js to build a simple rate limiter. **A rate limiter keeps track of the number of requests a user is making and prevents careless users and malicious actors from making too many requests.** This is especially important when an API exposes *expensive* operations. If you're hosting an API that does image processing, for example, you want to make sure that users don't overwhelm your servers. A rate limiter can prevent this. There are many ways to build a rate limiter. Two common techniques are the fixed window and the sliding window.
+In this unit, we're going to use Redis and Node.js to build a simple rate limiter. **A rate limiter keeps track of the number of requests a user is making and prevents careless users and malicious actors from making too many requests.** This is especially important when an API exposes *expensive* operations. If you're hosting an API that does image processing, for example, you want to make sure that users don't overwhelm your servers. A rate limiter can prevent this. 
 
-- A **fixed window rate limiter** counts all requests within a specific time interval. So as its name implies, you can stipulate that a user not make more than five requests in any one-minute fixed interval. Here each tick mark represents a request. So within the 12:01 interval, the user can make up to 5 requests. Within the 12:02 interval, the user can make another five requests. In both cases, the user will be rate limited on the sixth request within the fixed one-minute bucket. 
+![alt rate limiter](img/rate-limiter.png)
 
-- In a **sliding window rate limiter**, you can stipulate that a user not make more than five requests in any given 60-second interval, regardless of minute boundaries. So perhaps the user makes three requests at 12:00 and 30 seconds and three more requests at 12:01 and 15 seconds. In that case, the user will be rate limited, even though their six requests crossed the minute boundary.
+There are many ways to build a rate limiter. Two common techniques are the fixed window and the sliding window.
 
-A fixed window rate limiter is a bit easier to implement but less precise. A sliding window rate limiter is more precise but trickier to implement, uses a bit more space, and is slightly less time-efficient. In this unit, we'll see how to implement the fixed window rate limiter. And in the upcoming challenge, you'll build your own sliding window rate limiter. In `rate_limiter_dao.js`, we've defined the rate-limiting interface.
+![alt rate limiter techniques](img/rate-limiter-techniques.png)
 
-It consists of a single function called hit, which takes two arguments: name, a string that uniquely identifies the thing being rate limited. You'll likely pass in a user ID or an API token here, indicating which user is hitting the service, and opts, an object containing two keys, which are interval, a minute interval, and maxHits, the number of hits allowed within the minute interval. The hit function returns a promise that resolves to the number of hits remaining or zero if the user has exceeded the rate limit for the time interval. Now open up rate_limiter_dao_redis_impl.js. You can see here that our hit function is actually implemented in a function named hitFixedWindow. Turning to the implementation of the hitFixedWindow function, you'll see that we first get the name of the key storing the number of hits. 
+A fixed window rate limiter counts all requests within a specific time interval. So as its name implies, you can stipulate that a user not make more than five requests in any one-minute fixed interval. Here each tick mark represents a request. So within the 12:01 interval, the user can make up to 5 requests. Within the 12:02 interval, the user can make another five requests. In both cases, the user will be rate limited on the sixth request within the fixed one-minute bucket. 
 
-This key naming is important, so let's take a moment to review it. The schema for a key looks like this. We have the text limiter followed by the name of the rate limiter, which will usually contain the user ID or access token I just mentioned. And that's followed by the minute block, which is the minute of the day or the block of minutes in the day that constitutes the fixed window. 
+![alt fixed window](img/fixed-window.png)
 
-Finally, this is followed by the max number of hits for that interval. So here we create a pipeline. Then we atomically increment the value at the rate-limiting key by 1 using the INCR command. We set a time to live on the key with the EXPIRE command since we won't need the key once its interval is complete. We call exec on the pipeline to send the commands to Redis. Then we check to see if the number of hits is greater than the maximum allowed. If it is, we've reached the rate limit for this time period and return 0. If not, we return the number of hits remaining before the rate-limiting takes effect.
+In a sliding window rate limiter, you can stipulate that a user not make more than five requests in any given 60-second interval, regardless of minute boundaries. So perhaps the user makes three requests at 12:00 and 30 seconds and three more requests at 12:01 and 15 seconds. In that case, the user will be rate limited, even though their six requests crossed the minute boundary.
+
+![alt sliding window](img/sliding-window.png)
+
+A fixed window rate limiter is a bit easier to implement but less precise. A sliding window rate limiter is more precise but trickier to implement, uses a bit more space, and is slightly less time-efficient. 
+
+![alt rate limiter comparison](img/rate-limiter-comparison.png)
+
+In this unit, we'll see how to implement the fixed window rate limiter. And in the upcoming challenge, you'll build your own sliding window rate limiter. In `rate_limiter_dao.js`, we've defined the rate-limiting interface. 
+
+![alt hit interface](img/hit-interface.png)
+
+It consists of a single function called `hit`, which takes two arguments: `name`, a string that uniquely identifies the thing being rate limited. You'll likely pass in a user ID or an API token here, indicating which user is hitting the service, and `opts`, an object containing two keys, which are `interval`, a minute interval, and `maxHits`, the number of hits allowed within the minute interval. The `hit` function returns a promise that resolves to the number of hits remaining or -1 if the user has exceeded the rate limit for the time interval. Now open up `rate_limiter_dao_redis_impl.js`. 
+
+![alt hit impl](img/hit-impl.png)
+
+You can see here that our `hit` function is actually implemented in a function named `hitFixedWindow`. Turning to the implementation of the `hitFixedWindow` function, you'll see that we first get the name of the key storing the number of hits. This key naming is important, so let's take a moment to review it. 
+
+![alt fixed window key naming](img/fixed-window-key-naming.png)
+
+The schema for a key looks like this. We have the text limiter followed by the name of the rate limiter, which will usually contain the user ID or access token I just mentioned. And that's followed by the minute block, which is the minute of the day or the block of minutes in the day that constitutes the fixed window. Finally, this is followed by the max number of hits for that interval. 
+
+So here we create a pipeline. Then we atomically increment the value at the rate-limiting key by 1 using the `INCR` command. We set a time to live on the key with the `EXPIRE` command since we won't need the key once its interval is complete. We call exec on the pipeline to send the commands to Redis. Then we check to see if the number of hits is greater than the maximum allowed. If it is, we've reached the rate limit for this time period and return -1. If not, we return the number of hits remaining before the rate-limiting takes effect.
+
+![alt hit limit](img/hit-limit.png)
 
 So we just saw how to build a fixed window rate limiter using Node.js and Redis. There are quite a few advantages to this approach. It's space-efficient, consisting of a counter stored in a single Redis key. It runs in constant time, employing two O(1) commands, INCR and EXPIRE. And it uses a pipeline, ensuring only one roundtrip to Redis. This design will work for a lot of use cases.
 
+![alt fixed window rate limiter](img/fixed-window-rate-limiter.png)
+
 However, if you need more precision, you'll want a sliding window-based rate limiter. And in the next challenge, you'll get the chance to build one.
+
+![alt sliding window rate limiter](img/sliding-window-rate-limiter.png)
 
 
 #### II. [Programming Challenge #7](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/6ec86ea00f894ac9bba46a829af4e28e/b5271ee833654fb6aab2601b92978662/)
