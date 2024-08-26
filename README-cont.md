@@ -1,5 +1,7 @@
 ### DAO [兜](https://humanum.arts.cuhk.edu.hk/Lexis/lexi-can/) (cont.)
 
+> ...to penetrate a man's personality, to know exactly what he will do under any given circumstances—that is the beginning of success. It is a duel between us, and whilst he is constantly giving away his mentality to me, I endeavour to let him know little or nothing of mine. He is in the light, I in the shade. 
+
 
 #### Prologue 
 Some programmers are used to scrutinize things in minute level. Inconsistent nomenclature, abundance of variables, asymmetric layout and ineffective implementation are agonizing. Striking a balance between *what is need* and *what can do* is always a dilemma. Code, once written, has to be changed again and again, hardly comes to consummation. 
