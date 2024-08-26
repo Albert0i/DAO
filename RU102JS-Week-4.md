@@ -125,13 +125,25 @@ The `${now}-${Math.random()}` is *smoke and mirrors* to captivate the audience w
 
 
 #### III. [Blocking Commands](https://youtu.be/3AZTTWE0FGQ)
-Some Redis commands are known as blocking commands. These commands will block a client waiting for a result if one is not immediately available. While a node_redis client is blocked, it cannot send other commands to Redis. In this unit, we'll take a look at how to use blocking commands to implement a simple queue with node_redis. 
+Some Redis commands are known as *blocking* commands. These commands will block a client waiting for a result if one is not immediately available. While a node_redis client is blocked, it cannot send other commands to Redis. In this unit, we'll take a look at how to use blocking commands to implement a simple queue with node_redis. 
 
 ![alt blocking commands](img/blocking-commands.png)
 
-When might we choose to use a blocking command? Blocking commands are often used as a more efficient solution over polling the Redis server. What do we mean by polling? Suppose we have a Redis list and suppose we have two clients interacting with this list. One client is producing items onto the list, and a second client is consuming items from the same list, treating the list like a queue. Using standard list commands, the consuming client must periodically check the list for new values, perhaps giving up after a certain number of attempts. In other words, the consumer is never directly notified of new values in the list. Instead, it's constantly asking Redis whether there are any new values.
+When might we choose to use a blocking command? Blocking commands are often used as a more efficient solution over polling the Redis server. What do we mean by polling? 
 
-This process is known as polling, and it's inefficient for a couple of reasons. First, the consuming client may make numerous unnecessary requests to the server, as the value it's looking for might not be there. Second, if it's important that the client get the value from the server as soon as it becomes available, then the client needs to make requests very frequently. If many consuming clients are polling the server, then the problem gets worse as the number of commands being sent increases with every new client added. Now let's consider a blocking approach instead. With blocking, the client will make a request to Redis for new values in the list as before. And if a new value exists, then it will be returned immediately. However, if no new value exists yet, then the consumer will be blocked on reading an element from the list. The moment the producer adds an element to the list, that element will be returned to the client and the client will unblock.
+Suppose we have a Redis list and suppose we have two clients interacting with this list. One client is producing items onto the list, and a second client is consuming items from the same list, treating the list like a queue. Using standard list commands, the consuming client must periodically check the list for new values, perhaps giving up after a certain number of attempts. In other words, the consumer is never directly notified of new values in the list. Instead, it's constantly asking Redis whether there are any new values. This process is known as *polling*, and it's inefficient for a couple of reasons. 
+
+![alt polling](img/polling.png)
+
+First, the consuming client may make numerous unnecessary requests to the server, as the value it's looking for might not be there. Second, if it's important that the client get the value from the server as soon as it becomes available, then the client needs to make requests very frequently. If many consuming clients are polling the server, then the problem gets worse as the number of commands being sent increases with every new client added. 
+
+Now let's consider a blocking approach instead. With blocking, the client will make a request to Redis for new values in the list as before. And if a new value exists, then it will be returned immediately. However, if no new value exists yet, then the consumer will be blocked on reading an element from the list. 
+
+![alt brpop 1](img/brpop-1.png)
+
+The moment the producer adds an element to the list, that element will be returned to the client and the client will unblock.
+
+![alt brpop 2](img/brpop-1.png)
 
 Let's see how this blocking approach works in practice. Here we are using the BRPOP command, which is the blocking version of RPOP. Just as a reminder, the RPOP command removes and returns the last element in the list. In this example, our application's Redis client will block and wait for a value to appear in the list named messages. The extra parameter is a timeout in seconds. So after 10 seconds, the client will be unblocked and return nil if no value is pushed onto the list in that time. Using a value of zero here will block the client indefinitely until a value appears. So now, our application's client is blocked and can't be used for other Redis commands.
 
