@@ -10,136 +10,21 @@ I am just an ordinary dull old man who cherish for anything valuable. The follow
 
 
 #### I. [Redis Clients Overview](https://youtu.be/GwYozTVZrZQ)
-We've seen how easy it is to get up
-and running with Node.js and Redis by studying a basic "Hello World"
-program.
-Before starting work on a larger project,
-let's first take a look at the role
-that a Redis client plays in an application's architecture.
-We'll then learn about the client implementations
-available to Node.js developers.
-Finally, I'll explain why we've chosen
-to use the node_redis client for this course.
-So to start, let's talk about what all Redis
-clients have in common.
-A Redis client library has to do three things.
-First, it needs to manage connections between the client
-and the server.
-Second, it has to implement the Redis wire protocol,
-and third, a Redis client needs to provide
-a usable, language-specific API.
-Let's look at each of these ideas in a bit more detail.
-The first job of a Redis client library
-is to manage the connections between your application
-and your Redis deployment.
-As you know, Redis is a database server.
-Clients must connect to Redis over a network
-and almost always use TCP sockets to do so.
-The Redis client library manages the lifecycle of these sockets,
-creating, configuring, and destroying them as appropriate.
-Clients may also have special code
-for pooling these connections for reuse.
-As both Node.js and Redis share a single-threaded programming
-model, pooling is not usually a concern for Node.js developers.
-The second job of a Redis client is
-to implement the Redis protocol.
-This protocol, formally known as RESP or the Redis Serialization
-Protocol, is the language that clients use
-to speak to the Redis server.
-We'll see some examples of how this protocol works
-in Chapter 4.
-If you're interested right now, there's
-a detailed specification of the protocol on the Redis.io
-website.
-You can see that here.
-Now, on top of the protocol, Redis clients
-must also implement the Redis API.
-This typically means that the clients
-expose all of the available Redis commands.
-When new commands are added to Redis, such as those added
-in Redis 5.0 to support Redis Streams,
-these commands need to be added to the Redis clients as well.
-The final job of a Redis client is
-to provide a language-specific API to Redis.
-This usually boils down to conversions
-between Redis types and their language-specific counterparts.
-For instance, imagine a Redis hash.
-You probably know that a Redis hash is a set of key value pairs.
-So it's effectively an associative array,
-but how that's represented by a programming language
-is language-specific.
-In Java, a Redis hash translates most naturally into a map.
-In Python, it's a dictionary, and for JavaScript, it's
-an object.
-So for each of these languages, the Redis client
-deserializes a Redis type into a programming
-language-specific type.
-This makes Redis data easy to work with in most programming
-languages.
-So now we know what the role of a Redis client is.
-Let's look at the available clients for Node.js.
-on redis.io, you'll find a directory of clients organized
-by programming language.
-For Node.js, there's quite a few different options available.
-Those with a star by their names are recommended
-by the Redis community.
-The smiley face icons indicate clients
-that have had a release or update in the last six months.
-As we can see, two clients have both the star and smiley face
-icons.
-They are ioredis and node_redis.
-ioredis is a high performance full-feature client providing
-a clean and easy to learn API.
-Its strengths include a flexible system
-for mapping Redis responses to JavaScript types,
-including ES6 maps and sets and a useful abstraction
-for managing Lua scripts.
-It is well documented and actively maintained.
-The second recommended client is node_redis.
-It is also a highly performant client
-that supports all Redis functionality.
-We've chosen node_redis for this course,
-because it's the most commonly used.
-And chances are, if you have an existing Node.js codebase
-accessing Redis, then this is likely the client
-you're already using.
-In common with ioredis, node_redis
-provides an intuitive mapping between Redis commands
-and client API functions.
-This client is easily extensible.
-Should a new Redis version be released
-that includes additional commands,
-you can use these immediately without having
-to wait for a client update.
-We'll leverage this feature later in the course, when
-we introduce the new RedisTimeSeries module
-and start using commands that are only present when
-this module is loaded.
-For this course, we'll move forward with node_redis.
-However, don't forget that ioredis
-is also a community-recommended choice,
-and you should consider which of the two
-is the best match for your specific project needs.
-For example, if you know you'll be
-managing lots of Lua scripts in your application,
-ioredis's script management functionality
-may make it the right choice for you.
-If you're using one of these clients,
-then later wish to migrate to the other,
-this should be a fairly straightforward task.
-Both clients have very similar philosophies and APIs
-and their differences are well-documented.
-Should your Redis journey include
-working with a Redis Enterprise cluster at some point,
-be assured that both recommended clients support this.
-In this unit, we discussed the role of a Redis client
-and we've seen how to find recommended client
-implementations.
-We saw that there are two recommended clients for use
-with Node.js--
-node_redis and ioredis.
-In this course, we'll be using node_redis,
-as it is the most commonly used client with Node.js.
+We've seen how easy it is to get up and running with Node.js and Redis by studying a basic "Hello World" program. Before starting work on a larger project, let's first take a look at the role that a Redis client plays in an application's architecture. We'll then learn about the client implementations available to Node.js developers. Finally, I'll explain why we've chosen to use the node_redis client for this course. So to start, let's talk about what all Redis clients have in common. A Redis client library has to do three things. First, it needs to manage connections between the client and the server.
+
+Second, it has to implement the Redis wire protocol, and third, a Redis client needs to provide a usable, language-specific API. Let's look at each of these ideas in a bit more detail. The first job of a Redis client library is to manage the connections between your application and your Redis deployment. As you know, Redis is a database server. Clients must connect to Redis over a network and almost always use TCP sockets to do so. The Redis client library manages the lifecycle of these sockets, creating, configuring, and destroying them as appropriate. Clients may also have special code for pooling these connections for reuse. As both Node.js and Redis share a single-threaded programming model, pooling is not usually a concern for Node.js developers. The second job of a Redis client is to implement the Redis protocol. This protocol, formally known as RESP or the Redis Serialization Protocol, is the language that clients use to speak to the Redis server. We'll see some examples of how this protocol works in Chapter 4. 
+
+If you're interested right now, there's a detailed specification of the protocol on the Redis.io website. You can see that here. Now, on top of the protocol, Redis clients must also implement the Redis API. This typically means that the clients expose all of the available Redis commands. When new commands are added to Redis, such as those added in Redis 5.0 to support Redis Streams, these commands need to be added to the Redis clients as well.
+
+The final job of a Redis client is to provide a language-specific API to Redis. This usually boils down to conversions between Redis types and their language-specific counterparts. For instance, imagine a Redis hash. You probably know that a Redis hash is a set of key value pairs. So it's effectively an associative array, but how that's represented by a programming language is language-specific. In Java, a Redis hash translates most naturally into a map. In Python, it's a dictionary, and for JavaScript, it's an object. So for each of these languages, the Redis client deserializes a Redis type into a programming language-specific type. This makes Redis data easy to work with in most programming languages. So now we know what the role of a Redis client is. Let's look at the available clients for Node.js. on redis.io, you'll find a directory of clients organized by programming language. For Node.js, there's quite a few different options available. Those with a star by their names are recommended by the Redis community. The smiley face icons indicate clients that have had a release or update in the last six months. As we can see, two clients have both the star and smiley face icons.
+
+They are ioredis and node_redis. ioredis is a high performance full-feature client providing a clean and easy to learn API. Its strengths include a flexible system for mapping Redis responses to JavaScript types, including ES6 maps and sets and a useful abstraction for managing Lua scripts. It is well documented and actively maintained. The second recommended client is node_redis. It is also a highly performant client that supports all Redis functionality. We've chosen node_redis for this course, because it's the most commonly used. And chances are, if you have an existing Node.js codebase accessing Redis, then this is likely the client you're already using. In common with ioredis, node_redis provides an intuitive mapping between Redis commands and client API functions.
+
+This client is easily extensible. Should a new Redis version be released that includes additional commands, you can use these immediately without having to wait for a client update. We'll leverage this feature later in the course, when we introduce the new RedisTimeSeries module and start using commands that are only present when this module is loaded. For this course, we'll move forward with node_redis. However, don't forget that ioredis is also a community-recommended choice, and you should consider which of the two is the best match for your specific project needs.
+
+For example, if you know you'll be managing lots of Lua scripts in your application, ioredis's script management functionality may make it the right choice for you. If you're using one of these clients, then later wish to migrate to the other, this should be a fairly straightforward task. Both clients have very similar philosophies and APIs and their differences are well-documented. Should your Redis journey include working with a Redis Enterprise cluster at some point, be assured that both recommended clients support this.
+
+In this unit, we discussed the role of a Redis client and we've seen how to find recommended client implementations. We saw that there are two recommended clients for use with Node.js-- node_redis and ioredis. In this course, we'll be using node_redis, as it is the most commonly used client with Node.js.
 
 
 #### II. [Building a Rate Limiter](https://youtu.be/let90x9uR_g)
@@ -359,141 +244,9 @@ In this unit, we discovered how to handle errors that can arise from sending inv
 
 
 #### VI. [Performance Considerations](https://youtu.be/lekMouwJay0)
-Video transcript
-Start of transcript. Skip to the end.
-To say that performance is important is an understatement.
-After all, Redis was built for developers requiring
-sub-millisecond data access.
-Of course, performance is also a wide ranging topic,
-and in this unit we're going to stick
-to performance considerations for the application developer.
-These considerations can be divided
-into three main categories.
-The first concerns network latency, the second
-concerns the time complexity of Redis commands,
-and the last relates to atomicity and blocking.
-We've already discussed latency at length,
-but let's review the main points.
-First, you should use pipelining whenever
-you need to run more than one Redis command
-and don't need an immediate response to those commands.
-Pipelining cuts down on the number of round trips
-your client makes to the Redis server.
-It also results in less context switching on the server
-side and fewer syscalls.
-This is especially important when
-you're potentially making tens of calls to the Redis server.
-For example, in this findAll function,
-we first fetch a set of keys, and then for each key,
-we call HGETALL.
-This is the scenario you need to watch out for.
-In general, when running commands in a loop,
-you should strongly consider wrapping the loop in a pipeline
-like so.
-Let's now talk about the time complexity of Redis commands.
-In general, it's important to be aware of the time complexity
-of the commands you're running.
-You can find the time complexity of every Redis command
-on the Redis.io website.
-Constant time commands are the most efficient and, happily,
-quite a few Redis commands fall into the O(1) complexity
-bucket.
-These include GET, SET, HGET, HSET, LPUSH, LPOP, SADD,
-SREM, and many others.
-You generally don't have to worry about the performance
-of these commands.
-Logarithmic time commands are also very efficient
-and generally should not cause concern.
-You'll see these commands described as O(log(n)).
-We can see why these commands are
-efficient with a little math.
-Log base 2 of 10,000 is only about 13,
-and log base 2 of a million is only about 20.
-Many of the sorted set commands, such as ZADD and ZRANK,
-are O(log(n)).
-So running ZADD on a sorted set with a million elements
-has a time complexity of O(20).
-It's the linear time commands, the commands marked O(n),
-that you should be careful with.
-But even here, it all depends on the value of n.
-For example, let's look at the LRANGE example.
-You may recall this code from earlier in the course.
-Here, we're calling LRANGE to return
-all the elements of a list.
-If the list contains 50 elements,
-then this command has time complexity of O(50),
-and Redis can execute such a command
-in a matter of microseconds.
-But if the list contains a million elements,
-then we're at O(1,000,000), which is
-a completely different story.
-Running O(n) commands where n is large
-is a problem for two reasons.
-First, these commands can take a relatively long time
-to complete.
-This is because they use a lot of CPU
-and they tend to return a lot of data,
-which takes time to buffer.
-Second, because Redis is mostly single threaded,
-no other commands will be executed
-while these long-running commands are running.
-All other client commands will be queued up
-until the current command is done running.
-So to take an example, on my development laptop running
-an LRANGE to retrieve all the elements in a four million
-element list takes the Redis server about 300 milliseconds
-or close to a third of a second.
-So if we have 1,000 clients all issuing commands
-against the Redis server and one client issues
-a command that takes 300 milliseconds for the server
-to process, then those 1,000 client commands
-will all queue up behind that long-running command,
-and they'll all have to wait for at least 300 milliseconds
-before each of them is served.
-There are a few O(n) commands that you should almost never
-run in production.
-The most notorious of these is the KEYS command,
-which returns all of the keys on the server matching a given
-pattern.
-As an example, running KEYS * on a key space of four million
-keys on my development laptop occupies the server for four
-seconds.
-And it's common for Redis servers
-to host hundreds of millions of keys.
-So we recommend never running the KEYS command
-on a production server.
-And if you build extremely large lists or hashes with thousands
-of elements, then you should probably also avoid
-LRANGE and HGETALL as well.
-It's a good practice to disable such commands altogether.
-See the links on this page for documentation
-on disabling commands.
-OK, so to round out this chapter,
-let's review atomicity and blocking,
-specifically as they relate to transactions and Lua scripts.
-In Redis, transactions and Lua scripts
-both run atomically and block, which
-means that while they're running,
-no other commands can run.
-So you'll always need to keep this in mind
-when using these features.
-When running a transaction or Lua script,
-consider the time complexity of the commands
-you plan to run, and understand the cost of
-running thousands of commands within a transaction or Lua
-script.
-If you don't need transactional semantics,
-use a pipeline, which doesn't block for the duration of its run.
-Redis is a high-performance data store
-that keeps all of its data in memory.
-But you still have a responsibility
-to understand the cost of network round-trips,
-time complexity of the commands you're running,
-and the cardinality of your data structures.
-You'll get the most out of Redis by paying attention
-to these considerations as you design your data access
-strategies.
-End of transcript. Skip to the start.
+To say that performance is important is an understatement. After all, Redis was built for developers requiring sub-millisecond data access. Of course, performance is also a wide ranging topic, and in this unit we're going to stick to performance considerations for the application developer. These considerations can be divided into three main categories. The first concerns network latency, the second concerns the time complexity of Redis commands, and the last relates to atomicity and blocking. We've already discussed latency at length, but let's review the main points. First, you should use pipelining whenever you need to run more than one Redis command and don't need an immediate response to those commands. Pipelining cuts down on the number of round trips your client makes to the Redis server. It also results in less context switching on the server side and fewer syscalls. This is especially important when you're potentially making tens of calls to the Redis server. For example, in this findAll function, we first fetch a set of keys, and then for each key, we call HGETALL. This is the scenario you need to watch out for. In general, when running commands in a loop, you should strongly consider wrapping the loop in a pipeline like so. Let's now talk about the time complexity of Redis commands. In general, it's important to be aware of the time complexity of the commands you're running. You can find the time complexity of every Redis command on the Redis.io website. Constant time commands are the most efficient and, happily, quite a few Redis commands fall into the O(1) complexity bucket. These include GET, SET, HGET, HSET, LPUSH, LPOP, SADD, SREM, and many others. You generally don't have to worry about the performance of these commands. Logarithmic time commands are also very efficient and generally should not cause concern. You'll see these commands described as O(log(n)). We can see why these commands are efficient with a little math. Log base 2 of 10,000 is only about 13, and log base 2 of a million is only about 20. Many of the sorted set commands, such as ZADD and ZRANK, are O(log(n)). So running ZADD on a sorted set with a million elements has a time complexity of O(20). It's the linear time commands, the commands marked O(n), that you should be careful with. But even here, it all depends on the value of n. For example, let's look at the LRANGE example. You may recall this code from earlier in the course. Here, we're calling LRANGE to return all the elements of a list. If the list contains 50 elements, then this command has time complexity of O(50), and Redis can execute such a command in a matter of microseconds. But if the list contains a million elements, then we're at O(1,000,000), which is a completely different story. Running O(n) commands where n is large is a problem for two reasons. First, these commands can take a relatively long time to complete. This is because they use a lot of CPU and they tend to return a lot of data, which takes time to buffer. Second, because Redis is mostly single threaded, no other commands will be executed while these long-running commands are running. All other client commands will be queued up until the current command is done running. So to take an example, on my development laptop running an LRANGE to retrieve all the elements in a four million element list takes the Redis server about 300 milliseconds or close to a third of a second. So if we have 1,000 clients all issuing commands against the Redis server and one client issues a command that takes 300 milliseconds for the server to process, then those 1,000 client commands will all queue up behind that long-running command, and they'll all have to wait for at least 300 milliseconds before each of them is served. There are a few O(n) commands that you should almost never run in production. The most notorious of these is the KEYS command, which returns all of the keys on the server matching a given pattern. As an example, running KEYS * on a key space of four million keys on my development laptop occupies the server for four seconds. And it's common for Redis servers to host hundreds of millions of keys. So we recommend never running the KEYS command on a production server. And if you build extremely large lists or hashes with thousands of elements, then you should probably also avoid LRANGE and HGETALL as well. It's a good practice to disable such commands altogether. See the links on this page for documentation on disabling commands. OK, so to round out this chapter, let's review atomicity and blocking, specifically as they relate to transactions and Lua scripts. In Redis, transactions and Lua scripts both run atomically and block, which means that while they're running, no other commands can run. So you'll always need to keep this in mind when using these features. When running a transaction or Lua script, consider the time complexity of the commands you plan to run, and understand the cost of running thousands of commands within a transaction or Lua script.
+
+If you don't need transactional semantics, use a pipeline, which doesn't block for the duration of its run. Redis is a high-performance data store that keeps all of its data in memory. But you still have a responsibility to understand the cost of network round-trips, time complexity of the commands you're running, and the cardinality of your data structures. You'll get the most out of Redis by paying attention to these considerations as you design your data access strategies.
 
 
 #### VII. [Debugging](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/26a1adfb13d8404cb4cecd0079bfb2a6/5a5948815f1d411bab34b6021b7c8291/?child=first)
