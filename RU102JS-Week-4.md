@@ -10,21 +10,51 @@ I am just an ordinary dull old man who cherish for anything valuable. The follow
 
 
 #### I. [Redis Clients Overview](https://youtu.be/GwYozTVZrZQ)
-We've seen how easy it is to get up and running with Node.js and Redis by studying a basic "Hello World" program. Before starting work on a larger project, let's first take a look at the role that a Redis client plays in an application's architecture. We'll then learn about the client implementations available to Node.js developers. Finally, I'll explain why we've chosen to use the node_redis client for this course. So to start, let's talk about what all Redis clients have in common. A Redis client library has to do three things. First, it needs to manage connections between the client and the server.
+We've seen how easy it is to get up and running with Node.js and Redis by studying a basic "Hello World" program. Before starting work on a larger project, let's first take a look at the role that a Redis client plays in an application's architecture. We'll then learn about the client implementations available to Node.js developers. Finally, I'll explain why we've chosen to use the node_redis client for this course. 
 
-Second, it has to implement the Redis wire protocol, and third, a Redis client needs to provide a usable, language-specific API. Let's look at each of these ideas in a bit more detail. The first job of a Redis client library is to manage the connections between your application and your Redis deployment. As you know, Redis is a database server. Clients must connect to Redis over a network and almost always use TCP sockets to do so. The Redis client library manages the lifecycle of these sockets, creating, configuring, and destroying them as appropriate. Clients may also have special code for pooling these connections for reuse. As both Node.js and Redis share a single-threaded programming model, pooling is not usually a concern for Node.js developers. The second job of a Redis client is to implement the Redis protocol. This protocol, formally known as RESP or the Redis Serialization Protocol, is the language that clients use to speak to the Redis server. We'll see some examples of how this protocol works in Chapter 4. 
+![alt redisClient overview](img/redisClient-overview.png)
 
-If you're interested right now, there's a detailed specification of the protocol on the Redis.io website. You can see that here. Now, on top of the protocol, Redis clients must also implement the Redis API. This typically means that the clients expose all of the available Redis commands. When new commands are added to Redis, such as those added in Redis 5.0 to support Redis Streams, these commands need to be added to the Redis clients as well.
+So to start, let's talk about what all Redis clients have in common. A Redis client library has to do three things. First, it needs to manage connections between the client and the server. Second, it has to implement the Redis wire protocol, and third, a Redis client needs to provide a usable, language-specific API. 
 
-The final job of a Redis client is to provide a language-specific API to Redis. This usually boils down to conversions between Redis types and their language-specific counterparts. For instance, imagine a Redis hash. You probably know that a Redis hash is a set of key value pairs. So it's effectively an associative array, but how that's represented by a programming language is language-specific. In Java, a Redis hash translates most naturally into a map. In Python, it's a dictionary, and for JavaScript, it's an object. So for each of these languages, the Redis client deserializes a Redis type into a programming language-specific type. This makes Redis data easy to work with in most programming languages. So now we know what the role of a Redis client is. Let's look at the available clients for Node.js. on redis.io, you'll find a directory of clients organized by programming language. For Node.js, there's quite a few different options available. Those with a star by their names are recommended by the Redis community. The smiley face icons indicate clients that have had a release or update in the last six months. As we can see, two clients have both the star and smiley face icons.
+Let's look at each of these ideas in a bit more detail. The first job of a Redis client library is to manage the connections between your application and your Redis deployment. 
 
-They are ioredis and node_redis. ioredis is a high performance full-feature client providing a clean and easy to learn API. Its strengths include a flexible system for mapping Redis responses to JavaScript types, including ES6 maps and sets and a useful abstraction for managing Lua scripts. It is well documented and actively maintained. The second recommended client is node_redis. It is also a highly performant client that supports all Redis functionality. We've chosen node_redis for this course, because it's the most commonly used. And chances are, if you have an existing Node.js codebase accessing Redis, then this is likely the client you're already using. In common with ioredis, node_redis provides an intuitive mapping between Redis commands and client API functions.
+![alt redis connection](img/redis-connection.png)
 
-This client is easily extensible. Should a new Redis version be released that includes additional commands, you can use these immediately without having to wait for a client update. We'll leverage this feature later in the course, when we introduce the new RedisTimeSeries module and start using commands that are only present when this module is loaded. For this course, we'll move forward with node_redis. However, don't forget that ioredis is also a community-recommended choice, and you should consider which of the two is the best match for your specific project needs.
+As you know, Redis is a database server. Clients must connect to Redis over a network and almost always use TCP sockets to do so. The Redis client library manages the lifecycle of these sockets, creating, configuring, and destroying them as appropriate. 
 
-For example, if you know you'll be managing lots of Lua scripts in your application, ioredis's script management functionality may make it the right choice for you. If you're using one of these clients, then later wish to migrate to the other, this should be a fairly straightforward task. Both clients have very similar philosophies and APIs and their differences are well-documented. Should your Redis journey include working with a Redis Enterprise cluster at some point, be assured that both recommended clients support this.
+Clients may also have special code for pooling these connections for reuse. As both Node.js and Redis share a single-threaded programming model, pooling is not usually a concern for Node.js developers. 
+
+The second job of a Redis client is to implement the Redis protocol. This protocol, formally known as `RESP` or the Redis Serialization Protocol, is the language that clients use to speak to the Redis server. We'll see some examples of how this protocol works in Chapter 4. 
+
+![alt redis RESP](img/redis-RESP.png)
+
+If you're interested right now, there's a detailed specification of the protocol on the Redis.io website. You can see that [here](https://redis.io/docs/latest/develop/reference/protocol-spec/). 
+
+Now, on top of the protocol, Redis clients must also implement the Redis API. This typically means that the clients expose all of the available Redis commands. When new commands are added to Redis, such as those added in Redis 5.0 to support Redis Streams, these commands need to be added to the Redis clients as well.
+
+The final job of a Redis client is to provide a language-specific API to Redis. This usually boils down to conversions between Redis types and their language-specific counterparts. For instance, imagine a Redis hash. You probably know that a Redis hash is a set of key value pairs. So it's effectively an associative array, but how that's represented by a programming language is language-specific. In Java, a Redis hash translates most naturally into a map. In Python, it's a dictionary, and for JavaScript, it's an object. 
+
+![alt redis language map](img/redis-language-map.png)
+
+So for each of these languages, the Redis client deserializes a Redis type into a programming language-specific type. This makes Redis data easy to work with in most programming languages. 
+
+So now we know what the role of a Redis client is. Let's look at the available clients for Node.js. on [redis.io](https://redis.io/clients#nodejs), you'll find a directory of clients organized by programming language. For Node.js, there's quite a few different options available. Those with a star by their names are recommended by the Redis community. The smiley face icons indicate clients that have had a release or update in the last six months. As we can see, two clients have both the star and smiley face icons.
+
+They are **ioredis** and **node_redis**.  ioredis is a high performance full-feature client providing a clean and easy to learn API. Its strengths include a flexible system for mapping Redis responses to JavaScript types, including ES6 maps and sets and a useful abstraction for managing Lua scripts. It is well documented and actively maintained. 
+
+The second recommended client is node_redis. It is also a highly performant client that supports all Redis functionality. We've chosen node_redis for this course, because it's the most commonly used. And chances are, if you have an existing Node.js codebase accessing Redis, then this is likely the client you're already using. 
+
+In common with ioredis, node_redis provides an intuitive mapping between Redis commands and client API functions. This client is easily extensible. Should a new Redis version be released that includes additional commands, you can use these immediately without having to wait for a client update. We'll leverage this feature later in the course, when we introduce the new RedisTimeSeries module and start using commands that are only present when this module is loaded. 
+
+For this course, we'll move forward with node_redis. However, don't forget that ioredis is also a community-recommended choice, and you should consider which of the two is the best match for your specific project needs.
+
+![alt redis client nodejs](img/redisClient-nodejs.png)
+
+For example, if you know you'll be managing lots of Lua scripts in your application, ioredis's script management functionality *may* make it the right choice for you. If you're using one of these clients, then later wish to migrate to the other, this should be a fairly straightforward task. Both clients have very similar philosophies and APIs and their differences are well-documented. Should your Redis journey include working with a Redis Enterprise cluster at some point, be assured that both recommended clients support this.
 
 In this unit, we discussed the role of a Redis client and we've seen how to find recommended client implementations. We saw that there are two recommended clients for use with Node.js-- node_redis and ioredis. In this course, we'll be using node_redis, as it is the most commonly used client with Node.js.
+
+![alt redis client summary](img/redisClient-summary.png)
 
 
 #### II. [Building a Rate Limiter](https://youtu.be/let90x9uR_g)
