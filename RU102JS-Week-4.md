@@ -250,25 +250,83 @@ Do keep in mind that within any Node.js application using node_redis, you'll nee
 
 
 #### V. [Error Handling](https://youtu.be/SdFIl5oSeVI)
-Let's take a few moments to look at how node_redis handles errors. We'll first see how to deal with errors that occur when we send bad commands to Redis. Then we'll move on to look at how node_redis handles connection errors. We're looking at the file, `error_handling_async.await.js` in the `examples` folder. Here, I'm calling the `SET` command, but have not provided the second parameter containing the new value to store at key. In this case, we can expect the promised return from `setAsync` to be rejected, and caught by the catch handler, which will log the resulting error object.
+Let's take a few moments to look at how node_redis handles errors. We'll first see how to deal with errors that occur when we send bad commands to Redis. Then we'll move on to look at how node_redis handles connection errors. 
 
-Running the code shows that the promise is indeed rejected, and that node_redis returns a `ReplyError` object. Here we can see that the `ReplyError` object has a `name` property, as well as a `message` property whose value is the error message. Additionally, we can access the `command`, `code` and `args` properties separately. You can use these values in your error handling code to make decisions about what to do next, as well as to create informative log messages for your application. 
+![alt error handling overview](img/errorHandling-overview.png)
 
-Errors resulting from sending invalid commands to the Redis server will all follow this same basic pattern. For example, here I am attempting to use the `INCR` command to increment the value of a key that contains a string. This is an invalid operation. So the promise returned by `incrAsync` will be rejected. We can expect to see that the catch block receives and logs an instance of `ReplyError`. And here's what that looks like. As before, we receive an appropriate error message, plus the breakdown of the command and the arguments that were sent to Redis.
+We're looking at the file, `error_handling_async.await.js` in the `examples` folder. Here, I'm calling the `SET` command, but have not provided the second parameter containing the new value to store at key. In this case, we can expect the promised return from `setAsync` to be rejected, and caught by the catch handler, which will log the resulting error object.
 
-So far, we've seen what to expect if an error occurs when sending a single command to Redis. Throughout the course, we've encouraged you to consider pipelining and transactions whenever multiple commands can be batched up together and sent to Redis in a single round trip. But what if one or more of those commands is invalid or otherwise fails? Let's take a look at that using a pipeline as an example. Here, I'm building up a pipeline containing three commands. I start by setting the value of a key to the string test. Next, I attempt to increment the value stored at that key. This will result in an error, as we cannot increment string values. Finally, I'll get the value stored in the key. I've wrapped the whole pipeline in a try/catch block. So when I call `execAsync` here to run the pipeline, we should expect to see the resulting promise to reject, with the error object logged by the catch handler. 
+![alt error handling 1](img/errorHandling-1.png)
 
-Let's run the code and see if that's what actually happens here. Here, I'm running the code to send the pipeline to Redis. And here's the result, which may not be what you were expecting. No exception was thrown, so our catch block was never executed. Instead, the promise returned by `execAsync` resolves successfully and returned an array of responses as normal. The first element in the array is OK, indicating that the initial `SET` command was successful. The second element is a `ReplyError` object. This tells us that the `INCR` command failed and why. It's important to note that this error did not cause the execution of further commands in the pipeline to stop. The third element in the array is the string test, which is the response for our `GET` command. You can also expect to see the same error reporting behavior when using a transaction. So when working with pipelines and transactions, you'll want to check the response array for errors and consider actions that your application might need to take if a command fails. Even if every command we send to Redis is correct, we'll still have to deal with another type of error. We need to handle the case where the Redis server is down or our application can't reach it over the network.
+Running the code shows that the promise is indeed rejected, and that node_redis returns a `ReplyError` object. 
 
-Let's see how node_redis handles connection errors, and how we can implement a connection retry strategy. The node_redis client emits events when the status of the connection to Redis changes. Here, I'm adding a listener for the connect event, which fires as soon as a connection to the Redis server is established. And here, I'm adding a listener for the reconnecting event. node_redis passes an object to this listener containing details about the number of retry attempts made so far, and the time since the last connection attempt. We'll see how this works shortly. Previously when creating a node_redis client, we saw that we can pass a configuration object to the `createClient` function. So far, we've used this to specify the host and port of the Redis server to connect to. This object can contain additional keys whose values are used to configure the client's behavior. One of these is retry_strategy, which can be set to a function containing logic for performing connection retries when Redis is down or otherwise unreachable. This function is invoked when the connection to Redis is lost or cannot be established.
+![alt error handling 2](img/errorHandling-2.png)
 
-It is passed an object containing details about the client's current retry attempt, and can use this information to decide how the client should proceed. Let's walk through a simple retry strategy implementation. Here, I'm checking if we have attempted to reconnect more than five times. If so, return an error, which stops node_redis from making further retry attempts. If we haven't retried five times yet, the function returns a number. This is the number of milliseconds that node_redis should wait before making the next retry attempt. Here, I'm using a basic decaying retry that waits one second, then two, and so on. The options object contains other keys whose values may be useful in building a retry strategy. For a full description of these, see the node_redis documentation. So bringing all of this together, we first create a Redis client, specifying our host, port, and retry_strategy.
+![alt error handling 3](img/errorHandling-3.png)
 
-Then add event listeners for the connect and reconnecting events. Now let's see what happens when we run the code. First, I'm shutting down the Redis server on my Macintosh development machine. Now, I'm starting our example code. As the Redis Server is down, node_redis can't connect to it, and begins to run our retry strategy. On each retry, the reconnecting listener is invoked. And we can see that it receives an object containing information about the current retry attempt.
+Here we can see that the `ReplyError` object has a `name` property, as well as a `message` property whose value is the error message. Additionally, we can access the `command`, `code` and `args` properties separately. You can use these values in your error handling code to make decisions about what to do next, as well as to create informative log messages for your application. Errors resulting from sending invalid commands to the Redis server will all follow this same basic pattern. 
 
-After five tries, the server is still down. So node_redis gives up and the program terminates. But what happens if we try and send commands to Redis while node_redis is attempting to reconnect to the server. Here, I've amended our example code to add a simple `SET` command and log the response in the Redis Server. If this command succeeds, we'd expect the string response, OK. Let's try running our code again with the Redis server offline. This time, though, I'll start Redis after a couple of connection retry attempts. OK, so Redis has stopped.
+![alt error handling 4](img/errorHandling-4.png)
 
-Let's start our example code. We don't yet see an OK response from our `SET` command. But we can see attempts to reconnect to Redis. I'm now starting the Redis server, and the code's connected successfully. And our `SET` command has now also completed successfully. So what happened with our `SET` command here? It wasn't immediately sent to Redis because the connection wasn't available. node_redis buffered it for later execution, then sent it to Redis once the connection was established.
+For example, here I am attempting to use the `INCR` command to increment the value of a key that contains a string. This is an invalid operation. So the promise returned by `incrAsync` will be rejected. We can expect to see that the catch block receives and logs an instance of `ReplyError`. And here's what that looks like. As before, we receive an appropriate error message, plus the breakdown of the command and the arguments that were sent to Redis.
+
+![alt error handling 5](img/errorHandling-5.png)
+
+So far, we've seen what to expect if an error occurs when sending a single command to Redis. Throughout the course, we've encouraged you to consider pipelining and transactions whenever multiple commands can be batched up together and sent to Redis in a single round trip. But what if one or more of those commands is invalid or otherwise fails? Let's take a look at that using a pipeline as an example. 
+
+![alt error handling 6](img/errorHandling-6.png)
+
+Here, I'm building up a pipeline containing three commands. I start by setting the value of a key to the string test. Next, I attempt to increment the value stored at that key. This will result in an error, as we cannot increment string values. Finally, I'll get the value stored in the key. I've wrapped the whole pipeline in a try/catch block. So when I call `execAsync` here to run the pipeline, we should expect to see the resulting promise to reject, with the error object logged by the catch handler. Let's run the code and see if that's what actually happens here. Here, I'm running the code to send the pipeline to Redis. 
+
+![alt error handling 7](img/errorHandling-7.png)
+
+And here's the result, which may not be what you were expecting. No exception was thrown, so our catch block was never executed. Instead, the promise returned by `execAsync` resolves successfully and returned an array of responses as normal. The first element in the array is OK, indicating that the initial `SET` command was successful. The second element is a `ReplyError` object. This tells us that the `INCR` command failed and why. 
+
+It's important to note that this error did not cause the execution of further commands in the pipeline to stop. The third element in the array is the string test, which is the response for our `GET` command. You can also expect to see the same error reporting behavior when using a transaction. 
+
+So when working with pipelines and transactions, you'll want to check the response array for errors and consider actions that your application might need to take if a command fails. Even if every command we send to Redis is correct, we'll still have to deal with another type of error. We need to handle the case where the Redis server is down or our application can't reach it over the network.
+
+![alt connection error](img/connection-errors.png)
+
+Let's see how node_redis handles connection errors, and how we can implement a connection retry strategy. The node_redis client emits events when the status of the connection to Redis changes. 
+
+![alt connection events](img/connection-events.png)
+
+Here, I'm adding a listener for the connect event, which fires as soon as a connection to the Redis server is established. And here, I'm adding a listener for the reconnecting event. node_redis passes an object to this listener containing details about the number of retry attempts made so far, and the time since the last connection attempt. We'll see how this works shortly. 
+
+Previously when creating a node_redis client, we saw that we can pass a configuration object to the `createClient` function. So far, we've used this to specify the host and port of the Redis server to connect to. This object can contain additional keys whose values are used to configure the client's behavior. 
+
+![alt retry strategy](img/retry-strategy.png)
+
+One of these is retry_strategy, which can be set to a function containing logic for performing connection retries when Redis is down or otherwise unreachable. This function is invoked when the connection to Redis is lost or cannot be established.
+
+It is passed an object containing details about the client's current retry attempt, and can use this information to decide how the client should proceed. Let's walk through a simple retry strategy implementation. Here, I'm checking if we have attempted to reconnect more than five times. If so, return an error, which stops node_redis from making further retry attempts. If we haven't retried five times yet, the function returns a number. This is the number of milliseconds that node_redis should wait before making the next retry attempt. 
+
+Here, I'm using a basic decaying retry that waits one second, then two, and so on. The options object contains other keys whose values may be useful in building a retry strategy. For a full description of these, see the node_redis documentation. 
+
+So bringing all of this together, we first create a Redis client, specifying our host, port, and retry_strategy. Then add event listeners for the connect and reconnecting events. Now let's see what happens when we run the code. 
+
+First, I'm shutting down the Redis server on my Macintosh development machine. Now, I'm starting our example code. As the Redis Server is down, node_redis can't connect to it, and begins to run our retry strategy. On each retry, the reconnecting listener is invoked. And we can see that it receives an object containing information about the current retry attempt.
+
+![alt error handling 8](img/errorHandling-8.png)
+
+After five tries, the server is still down. So node_redis gives up and the program terminates. 
+
+![alt error handling 9](img/errorHandling-9.png)
+
+But what happens if we try and send commands to Redis while node_redis is attempting to reconnect to the server. 
+
+![alt error handling 10](img/errorHandling-10.png)
+
+Here, I've amended our example code to add a simple `SET` command and log the response in the Redis Server. If this command succeeds, we'd expect the string response, OK. Let's try running our code again with the Redis server offline. This time, though, I'll start Redis after a couple of connection retry attempts. OK, so Redis has stopped. Let's start our example code. We don't yet see an OK response from our `SET` command. But we can see attempts to reconnect to Redis. 
+
+I'm now starting the Redis server, and the code's connected successfully. And our `SET` command has now also completed successfully. So what happened with our `SET` command here? 
+
+![alt error handling 11](img/errorHandling-11.png)
+
+It wasn't immediately sent to Redis because the connection wasn't available. node_redis buffered it for later execution, then sent it to Redis once the connection was established.
+
+![alt error handling 12](img/errorHandling-12.png)
 
 In this unit, we discovered how to handle errors that can arise from sending invalid commands to Redis. In a carefully written and well-tested, application these should be a rare occurrence. But it's always good to know how to deal with them. We also saw how node_redis can manage the connection to the Redis server should the server become unavailable or the connection lost. Being able to identify and report such occurrences is something that you should consider in your application design.
 
