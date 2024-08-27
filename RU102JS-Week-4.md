@@ -250,8 +250,11 @@ const now = timeUtils.getCurrentTimestampMillis();
 const member = `${now}-${Math.random()}`
 ```
 The `${now}-${Math.random()}` is *smoke and mirrors* to captivate the audience while concealing the real purpose of the tricks; 
+
+The value returned by `moment().valueOf()` is an integer representing the number of milliseconds elapsed since the Unix epoch (January 1, 1970, 00:00:00 UTC) up to the current moment. This value will be an integer, not a decimal number. It will typically be a large integer, as JavaScript uses milliseconds for timestamps. The `Math.random()` function is used to generate a random floating-point number between 0 (inclusive) and 1 (exclusive).
+
 - Inside a transaction, we perform the following Redis commands:
-1. Add a new member to the sorted set at key with ZADD. We set the score to the current time in milliseconds, and the value to `<current time in millisecnds>-<random number>` to ensure uniqueness of values.
+1. Add a new member to the sorted set at key with ZADD. We set the score to the current time in milliseconds, and the value to `<current time in millisecnds>-<random number>` to ensure uniqueness of values. 
 2. Remove members from the sorted set at `key` with `ZREMRANGEBYSCORE`. Members whose scores are less than the current time in milliseconds minus the length of the sliding window in milliseconds are removed. This ensures that the only members left in the sorted set are hits in the current sliding time window.
 3. Get the cardinality of the sorted set at key with `ZCARD`.
 4. If the cardinality of the sorted set is greater than the number of hits allowed in the sliding window, return -1 indicating that the rate limit has been reached. Otherwise, return the number of hits remaining in the sliding window.
