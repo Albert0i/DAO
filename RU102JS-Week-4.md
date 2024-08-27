@@ -9,7 +9,140 @@ Everybody is story-teller, i mean most of us. One relates stories of others, one
 I am just an ordinary dull old man who cherish for anything valuable. The following material is taken from [RU102JS- Redis for JavaScript developers](https://redis.io/university/courses/ru102js/) Week 4. 
 
 
-#### I. [Building a Rate Limiter](https://youtu.be/let90x9uR_g)
+#### I. [Redis Clients Overview](https://youtu.be/GwYozTVZrZQ)
+We've seen how easy it is to get up
+and running with Node.js and Redis by studying a basic "Hello World"
+program.
+Before starting work on a larger project,
+let's first take a look at the role
+that a Redis client plays in an application's architecture.
+We'll then learn about the client implementations
+available to Node.js developers.
+Finally, I'll explain why we've chosen
+to use the node_redis client for this course.
+So to start, let's talk about what all Redis
+clients have in common.
+A Redis client library has to do three things.
+First, it needs to manage connections between the client
+and the server.
+Second, it has to implement the Redis wire protocol,
+and third, a Redis client needs to provide
+a usable, language-specific API.
+Let's look at each of these ideas in a bit more detail.
+The first job of a Redis client library
+is to manage the connections between your application
+and your Redis deployment.
+As you know, Redis is a database server.
+Clients must connect to Redis over a network
+and almost always use TCP sockets to do so.
+The Redis client library manages the lifecycle of these sockets,
+creating, configuring, and destroying them as appropriate.
+Clients may also have special code
+for pooling these connections for reuse.
+As both Node.js and Redis share a single-threaded programming
+model, pooling is not usually a concern for Node.js developers.
+The second job of a Redis client is
+to implement the Redis protocol.
+This protocol, formally known as RESP or the Redis Serialization
+Protocol, is the language that clients use
+to speak to the Redis server.
+We'll see some examples of how this protocol works
+in Chapter 4.
+If you're interested right now, there's
+a detailed specification of the protocol on the Redis.io
+website.
+You can see that here.
+Now, on top of the protocol, Redis clients
+must also implement the Redis API.
+This typically means that the clients
+expose all of the available Redis commands.
+When new commands are added to Redis, such as those added
+in Redis 5.0 to support Redis Streams,
+these commands need to be added to the Redis clients as well.
+The final job of a Redis client is
+to provide a language-specific API to Redis.
+This usually boils down to conversions
+between Redis types and their language-specific counterparts.
+For instance, imagine a Redis hash.
+You probably know that a Redis hash is a set of key value pairs.
+So it's effectively an associative array,
+but how that's represented by a programming language
+is language-specific.
+In Java, a Redis hash translates most naturally into a map.
+In Python, it's a dictionary, and for JavaScript, it's
+an object.
+So for each of these languages, the Redis client
+deserializes a Redis type into a programming
+language-specific type.
+This makes Redis data easy to work with in most programming
+languages.
+So now we know what the role of a Redis client is.
+Let's look at the available clients for Node.js.
+on redis.io, you'll find a directory of clients organized
+by programming language.
+For Node.js, there's quite a few different options available.
+Those with a star by their names are recommended
+by the Redis community.
+The smiley face icons indicate clients
+that have had a release or update in the last six months.
+As we can see, two clients have both the star and smiley face
+icons.
+They are ioredis and node_redis.
+ioredis is a high performance full-feature client providing
+a clean and easy to learn API.
+Its strengths include a flexible system
+for mapping Redis responses to JavaScript types,
+including ES6 maps and sets and a useful abstraction
+for managing Lua scripts.
+It is well documented and actively maintained.
+The second recommended client is node_redis.
+It is also a highly performant client
+that supports all Redis functionality.
+We've chosen node_redis for this course,
+because it's the most commonly used.
+And chances are, if you have an existing Node.js codebase
+accessing Redis, then this is likely the client
+you're already using.
+In common with ioredis, node_redis
+provides an intuitive mapping between Redis commands
+and client API functions.
+This client is easily extensible.
+Should a new Redis version be released
+that includes additional commands,
+you can use these immediately without having
+to wait for a client update.
+We'll leverage this feature later in the course, when
+we introduce the new RedisTimeSeries module
+and start using commands that are only present when
+this module is loaded.
+For this course, we'll move forward with node_redis.
+However, don't forget that ioredis
+is also a community-recommended choice,
+and you should consider which of the two
+is the best match for your specific project needs.
+For example, if you know you'll be
+managing lots of Lua scripts in your application,
+ioredis's script management functionality
+may make it the right choice for you.
+If you're using one of these clients,
+then later wish to migrate to the other,
+this should be a fairly straightforward task.
+Both clients have very similar philosophies and APIs
+and their differences are well-documented.
+Should your Redis journey include
+working with a Redis Enterprise cluster at some point,
+be assured that both recommended clients support this.
+In this unit, we discussed the role of a Redis client
+and we've seen how to find recommended client
+implementations.
+We saw that there are two recommended clients for use
+with Node.js--
+node_redis and ioredis.
+In this course, we'll be using node_redis,
+as it is the most commonly used client with Node.js.
+
+
+#### II. [Building a Rate Limiter](https://youtu.be/let90x9uR_g)
 In this unit, we're going to use Redis and Node.js to build a simple rate limiter. **A rate limiter keeps track of the number of requests a user is making and prevents careless users and malicious actors from making too many requests.** This is especially important when an API exposes *expensive* operations. If you're hosting an API that does image processing, for example, you want to make sure that users don't overwhelm your servers. A rate limiter can prevent this. 
 
 ![alt rate limiter](img/rate-limiter.png)
@@ -57,7 +190,7 @@ However, if you need more precision, you'll want a sliding window-based rate lim
 ![alt sliding window rate limiter](img/sliding-window-rate-limiter.png)
 
 
-#### II. [Programming Challenge #7 Review](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/6ec86ea00f894ac9bba46a829af4e28e/b5271ee833654fb6aab2601b92978662/)
+#### III. [Programming Challenge #7 Review](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/6ec86ea00f894ac9bba46a829af4e28e/b5271ee833654fb6aab2601b92978662/)
 This final challenge was to build a sliding window rate limiter in the `hitSlidingWindow` method of the `sliding_ratelimiter_dao_redis_impl.js` module.
 
 Hints: for key naming, your key should take the form `[limiter]:[windowSize]:[name]:[maxHits]`. The key for the sliding window rate limiter doesn't need a minute block; instead you'll include the window size in the name to make it unique. Don't forget to use the `getKey` function in the key generator to ensure that your key is properly prefixed and will be cleaned up after the test suite finishes.
@@ -124,7 +257,7 @@ The `${now}-${Math.random()}` is *smoke and mirrors* to captivate the audience w
 4. If the cardinality of the sorted set is greater than the number of hits allowed in the sliding window, return -1 indicating that the rate limit has been reached. Otherwise, return the number of hits remaining in the sliding window.
 
 
-#### III. [Blocking Commands](https://youtu.be/3AZTTWE0FGQ)
+#### IV. [Blocking Commands](https://youtu.be/3AZTTWE0FGQ)
 Some Redis commands are known as *blocking* commands. These commands will block a client waiting for a result if one is not immediately available. While a node_redis client is blocked, it cannot send other commands to Redis. In this unit, we'll take a look at how to use blocking commands to implement a simple queue with node_redis. 
 
 ![alt blocking commands](img/blocking-commands.png)
@@ -198,7 +331,7 @@ So in this unit, we saw how blocking commands work as a more efficient alternati
 Do keep in mind that within any Node.js application using node_redis, you'll need one client instance per blocking use case. This is the only time you'll need to initialize more than one client in a Node.js node_redis application.
 
 
-#### IV. [Error Handling](https://youtu.be/SdFIl5oSeVI)
+#### V. [Error Handling](https://youtu.be/SdFIl5oSeVI)
 Let's take a few moments to look at how node_redis handles errors. We'll first see how to deal with errors that occur when we send bad commands to Redis. Then we'll move on to look at how node_redis handles connection errors. We're looking at the file, `error_handling_async.await.js` in the `examples` folder. Here, I'm calling the `SET` command, but have not provided the second parameter containing the new value to store at key. In this case, we can expect the promised return from `setAsync` to be rejected, and caught by the catch handler, which will log the resulting error object.
 
 Running the code shows that the promise is indeed rejected, and that node_redis returns a `ReplyError` object. Here we can see that the `ReplyError` object has a `name` property, as well as a `message` property whose value is the error message. Additionally, we can access the `command`, `code` and `args` properties separately. You can use these values in your error handling code to make decisions about what to do next, as well as to create informative log messages for your application. 
@@ -222,7 +355,7 @@ Let's start our example code. We don't yet see an OK response from our `SET` com
 In this unit, we discovered how to handle errors that can arise from sending invalid commands to Redis. In a carefully written and well-tested, application these should be a rare occurrence. But it's always good to know how to deal with them. We also saw how node_redis can manage the connection to the Redis server should the server become unavailable or the connection lost. Being able to identify and report such occurrences is something that you should consider in your application design.
 
 
-#### V. [Performance Considerations](https://youtu.be/lekMouwJay0)
+#### VI. [Performance Considerations](https://youtu.be/lekMouwJay0)
 Video transcript
 Start of transcript. Skip to the end.
 To say that performance is important is an understatement.
@@ -360,7 +493,7 @@ strategies.
 End of transcript. Skip to the start.
 
 
-#### VI. [Debugging](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/26a1adfb13d8404cb4cecd0079bfb2a6/5a5948815f1d411bab34b6021b7c8291/?child=first)
+#### VII. [Debugging](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/26a1adfb13d8404cb4cecd0079bfb2a6/5a5948815f1d411bab34b6021b7c8291/?child=first)
 Debugging
 From time to time, your Redis application may not behave in the expected way. That's when you'll need to start debugging. How do you debug a Redis application written with node_redis?
 
@@ -381,7 +514,7 @@ If it works in the CLI but not in your application, then it's possible that the 
 Lua scripts can be tricky to debug. Redis includes a proper, fully-featured debugger for Lua that you can read about on the redis.io documentation site.
 
 
-#### VII. [Client Protocol](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/26a1adfb13d8404cb4cecd0079bfb2a6/5a5948815f1d411bab34b6021b7c8291/?child=first)
+#### VIII. [Client Protocol](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/26a1adfb13d8404cb4cecd0079bfb2a6/5a5948815f1d411bab34b6021b7c8291/?child=first)
 The Redis Protocol
 The Redis protocol was designed with simplicity in mind. For this reason, it's text-based and human-readable. You can read all about the protocol on the redis.io documentation page.
 
