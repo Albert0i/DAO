@@ -403,7 +403,9 @@ ngrep -W byline -d lo0 -t '' 'port 6379'
 If you can't use ngrep, [Wireshark](https://www.wireshark.org/) also works.
 
 
-#### IX. A note on [Wireshark](https://www.wireshark.org/)
+#### Epilogue 
+A note on [Wireshark](https://www.wireshark.org/)
+
 Download, install and open Wireshark. Click the `button` on the right to show/hide interfaces if it's not listed in the main page. 
 ![alt wireshark 0](img/wireshark-0.JPG)
 
@@ -427,4 +429,4 @@ The very first entry is `info` command, Redis has sent it to make sure connectio
 ![alt wireshark 6](img/wireshark-6.JPG)
 
 
-#### Epilogue 
+### EOF (2024/08/30)
