@@ -339,16 +339,19 @@ If you don't need transactional semantics, use a pipeline, which doesn't block f
 
 #### VII. [Debugging](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/26a1adfb13d8404cb4cecd0079bfb2a6/5a5948815f1d411bab34b6021b7c8291/?child=first)
 **Debugging**
+
 From time to time, your Redis application may not behave in the expected way. That's when you'll need to start debugging. How do you debug a Redis application written with node_redis?
 
 **1. Check for Expired Keys**
+
 Key expiry is an important feature of Redis. However, you can't have code that depends on keys that have already expired. So, when debugging an issue, be certain that the keys your code depends on still exist.
 
-Check to see which keys you're calling EXPIRE on, and be sure that the TTLs are adequate.
+Check to see which keys you're calling [EXPIRE](https://redis.io/commands/expire) on, and be sure that the TTLs are adequate.
 
-Check your Redis memory settings. If the maxmemory-policy setting is set to anything other than noeviction, then Redis will start evicting keys once it hits max memory.
+Check your Redis memory settings. If the [maxmemory-policy](https://redis.io/topics/lru-cache#eviction-policies) setting is set to anything other than noeviction, then Redis will start evicting keys once it hits max memory.
 
-2. Try it in the CLI
+**2. Try it in the CLI**
+
 The Redis CLI is perfect for testing your data access patterns. If your code isn't working as expected, try running the equivalent Redis operations using the CLI. If it doesn't work in the CLI, it's not going to work in your application, either.
 
 3. Monitor the Commands Sent to Redis
