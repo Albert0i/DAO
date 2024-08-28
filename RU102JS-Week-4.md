@@ -350,7 +350,7 @@ For example, in this `findAll` function, we first fetch a set of keys, and then 
 
 ![alt pipelining](img/pipelining.png)
 
-Let's now talk about the time complexity of Redis commands. In general, it's important to be aware of the time complexity of the commands you're running. 
+Let's now talk about the [time complexity](https://en.wikipedia.org/wiki/Time_complexity) of Redis commands. In general, it's important to be aware of the time complexity of the commands you're running. 
 
 ![alt time complexity](img/time-complexity.png)
 
@@ -378,13 +378,17 @@ So to take an example, on my development laptop running an LRANGE to retrieve al
 
 There are a few O(n) commands that you should almost never run in production. The most notorious of these is the `KEYS` command, which returns all of the keys on the server matching a given pattern. As an example, running `KEYS *` on a key space of four million keys on my development laptop occupies the server for four seconds. And it's common for Redis servers to host hundreds of millions of keys. So we recommend never running the KEYS command on a production server. 
 
-And if you build extremely large lists or hashes with thousands of elements, then you should probably also avoid `LRANGE` and `HGETALL` as well. It's a good practice to disable such commands altogether. See the links on this page for documentation on disabling commands. 
+And if you build extremely large lists or hashes with thousands of elements, then you should probably also avoid `LRANGE` and `HGETALL` as well. It's a good practice to disable such commands altogether. See the links on this page for [documentation on disabling commands](https://redis.io/topics/security#disabling-of-specific-commands). 
 
-![alt avoiding commands in production.png](img/avoiding-commands-in-production.png)
+![alt avoiding commands in production](img/avoiding-commands-in-production.png)
 
-OK, so to round out this chapter, let's review atomicity and blocking, specifically as they relate to transactions and Lua scripts. In Redis, transactions and Lua scripts both run atomically and block, which means that while they're running, no other commands can run. So you'll always need to keep this in mind when using these features. When running a transaction or Lua script, consider the time complexity of the commands you plan to run, and understand the cost of running thousands of commands within a transaction or Lua script.
+OK, so to round out this chapter, let's review atomicity and blocking, specifically as they relate to transactions and Lua scripts. In Redis, transactions and Lua scripts both run atomically and block, which means that while they're running, no other commands can run. So you'll always need to keep this in mind when using these features. When running a transaction or Lua script, consider the time complexity of the commands you plan to run, and understand the cost of running thousands of commands within a transaction or Lua script. If you don't need transactional semantics, use a pipeline, which doesn't block for the duration of its run. 
 
-If you don't need transactional semantics, use a pipeline, which doesn't block for the duration of its run. Redis is a high-performance data store that keeps all of its data in memory. But you still have a responsibility to understand the cost of network round-trips, time complexity of the commands you're running, and the cardinality of your data structures. You'll get the most out of Redis by paying attention to these considerations as you design your data access strategies.
+![alt atomicity and blocking](img/atomicity-and-blocking.png)
+
+Redis is a high-performance data store that keeps all of its data in memory. But you still have a responsibility to understand the cost of network round-trips, time complexity of the commands you're running, and the cardinality of your data structures. You'll get the most out of Redis by paying attention to these considerations as you design your data access strategies.
+
+![alt performance summary](img/performance-summary.png)
 
 
 #### VII. [Debugging](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/26a1adfb13d8404cb4cecd0079bfb2a6/5a5948815f1d411bab34b6021b7c8291/?child=first)
