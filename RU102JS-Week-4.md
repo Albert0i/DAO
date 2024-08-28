@@ -338,10 +338,10 @@ If you don't need transactional semantics, use a pipeline, which doesn't block f
 
 
 #### VII. [Debugging](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/26a1adfb13d8404cb4cecd0079bfb2a6/5a5948815f1d411bab34b6021b7c8291/?child=first)
-Debugging
+**Debugging**
 From time to time, your Redis application may not behave in the expected way. That's when you'll need to start debugging. How do you debug a Redis application written with node_redis?
 
-1. Check for Expired Keys
+**1. Check for Expired Keys**
 Key expiry is an important feature of Redis. However, you can't have code that depends on keys that have already expired. So, when debugging an issue, be certain that the keys your code depends on still exist.
 
 Check to see which keys you're calling EXPIRE on, and be sure that the TTLs are adequate.
