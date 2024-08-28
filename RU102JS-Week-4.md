@@ -354,11 +354,13 @@ Check your Redis memory settings. If the [maxmemory-policy](https://redis.io/top
 
 The Redis CLI is perfect for testing your data access patterns. If your code isn't working as expected, try running the equivalent Redis operations using the CLI. If it doesn't work in the CLI, it's not going to work in your application, either.
 
-3. Monitor the Commands Sent to Redis
-If it works in the CLI but not in your application, then it's possible that the application, somehow, isn't sending the right commands or arguments to the Redis server. For that, Redis provides a command that emits a stream of all operations being sent to the server. The command is called MONITOR. You'll see how to use it in the upcoming hands-on activity.
+**3. Monitor the Commands Sent to Redis**
 
-4. Special Case: Lua
-Lua scripts can be tricky to debug. Redis includes a proper, fully-featured debugger for Lua that you can read about on the redis.io documentation site.
+If it works in the CLI but not in your application, then it's possible that the application, somehow, isn't sending the right commands or arguments to the Redis server. For that, Redis provides a command that emits a stream of all operations being sent to the server. The command is called [MONITOR](https://redis.io/commands/monitor). You'll see how to use it in the upcoming hands-on activity.
+
+**4. Special Case: Lua**
+
+Lua scripts can be tricky to debug. Redis includes a proper, [fully-featured debugger](https://redis.io/topics/ldb) for Lua that you can read about on the redis.io documentation site.
 
 
 #### VIII. [Client Protocol](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/26a1adfb13d8404cb4cecd0079bfb2a6/5a5948815f1d411bab34b6021b7c8291/?child=first)
