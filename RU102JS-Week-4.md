@@ -6,7 +6,7 @@
 #### Prologue 
 Everybody is story-teller, i mean most of us. One relates stories of others, one relates stories of oneself. Chances are one gets a couple of audiences and more often than not the *only* audience is oneself. Just like one can have many nodding acquaintances but to aught one could confide... 
 
-I am just an ordinary dull old man who cherish for anything valuable. The following material is taken from [RU102JS- Redis for JavaScript developers](https://redis.io/university/courses/ru102js/) Week 4. 
+I am just an ordinary dull old man who cherish for anything valuable. Most of the material here is taken from [RU102JS- Redis for JavaScript developers](https://redis.io/university/courses/ru102js/) Week 4. 
 
 
 #### I. [Redis Clients Overview](https://youtu.be/GwYozTVZrZQ)
@@ -359,14 +359,16 @@ Lua scripts can be tricky to debug. Redis includes a proper, fully-featured debu
 
 
 #### VIII. [Client Protocol](https://university.redis.com/courses/course-v1:redislabs+RU102JS+2024_03/courseware/26a1adfb13d8404cb4cecd0079bfb2a6/5a5948815f1d411bab34b6021b7c8291/?child=first)
-The Redis Protocol
+**The Redis Protocol**
 The Redis protocol was designed with simplicity in mind. For this reason, it's text-based and human-readable. You can read all about the protocol on the redis.io documentation page.
 
 Here's a small example. If you run the command:
-
+```
 lpush test hello
-It will be encoded as follows (Note that the protocol is delimited by newlines, which consist of a carriage return (\r) followed by a line feed (\n):
+```
 
+It will be encoded as follows (Note that the protocol is delimited by newlines, which consist of a carriage return (\r) followed by a line feed (\n):
+```
 *3\r\n
 $5\r\n
 lpush\r\n
@@ -374,24 +376,55 @@ $4\r\n
 test\r\n
 $5\r\n
 Hello\r\n
+```
+
 Recall that the command consists of three strings: "lpush", "test" and "hello".
 
-So the first line "*3" indicates that we're sending Redis an array of three elements. The "*" indicates the array type, and the "3" indicates length. The three strings will follow.
+So the first line "\*3" indicates that we're sending Redis an array of three elements. The "\*" indicates the array type, and the "3" indicates length. The three strings will follow.
 
-The first element of the command we're running is a 5-character string. So we pass in a "$" to signify the string type and follow that with a 5 to indicate the size of the string. The next line is the string itself, delimited by a newline: "lpush\r\n".
+The first element of the command we're running is a 5-character string. So we pass in a "$" to signify the string type and follow that with a 5 to indicate the size of the string. The next line is the string itself, delimited by a newline: "**lpush**\r\n".
 
-The next two strings follow the same pattern: ":$" to indicate a string, then a length, then a CRLF.
+The next two strings follow the same pattern: "$" to indicate a string, then a length, then a CRLF.
 
 This command has an integer reply of 1. In the Redis protocol, that reply looks like this:
-
+```
 :1\r\n
+```
+
 Here, the ":" character indicates that the reply is an integer. This is followed by an integer. The line is then terminated with a CRLF.
 
-Viewing the Redis Protocol Live
-If you're on a Linux machine, you can observe the Redis protocol in action using ngrep:
+**Viewing the Redis Protocol Live**
+If you're on a Linux machine, you can observe the Redis protocol in action using [ngrep](https://en.wikipedia.org/wiki/Ngrep):
 
+```
 ngrep -W byline -d lo0 -t '' 'port 6379'
-If you can't use ngrep, Wireshark also works.
+```
+
+If you can't use ngrep, [Wireshark](https://www.wireshark.org/) also works.
+
+
+#### IX. [Wireshark](https://www.wireshark.org/)
+Download, install and open Wireshark. Click the `button` on the right to show/hide interfaces if it's not listed in the main page. 
+![alt wireshark 0](img/wireshark-0.JPG)
+
+Choose `Edit` → `Preferences` → `Protocols`. Scroll down to `RESP`. Edit the port number if necessary. As you can see, I am running Redis on port 7000. Press `OK` to exit. 
+![alt wireshark 1](img/wireshark-1.JPG)
+
+Input port 7000. choose loopback interface and press big `Start` on the top left corner. 
+![alt wireshark 2](img/wireshark-2.JPG)
+
+Open `redis-cli` and run `lpush test hello` command. Four entries are shown accordingly. 
+![alt wireshark 3](img/wireshark-3.JPG)
+
+Double click on entry with `lpush test hello` in `info` column. Scroll down to check the content sent. 
+![alt wireshark 4](img/wireshark-4.JPG)
+
+Press `Close` and double click on the next entry and check the content receive3d. 
+![alt wireshark 5](img/wireshark-5.JPG)
+
+The very first entry is `info` command, Redis has sent it to make sure connection is available. 
+
+![alt wireshark 6](img/wireshark-6.JPG)
 
 
 #### Epilogue 
