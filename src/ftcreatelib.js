@@ -39,7 +39,7 @@ function generateFTCreateCommand(indexName, indexType, indexPrefix, obj) {
                 fieldType = 'NOINDEX'; // Default to NOINDEX
             }
 
-            schema += `${key} ${fieldType} `;
+            schema += (indexType==='HASH' ? '': '$.' ) +`${key} ${fieldType} `;
         }
     }
 
