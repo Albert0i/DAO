@@ -1,4 +1,4 @@
-### Redis 二三事 
+### Redis 二三事 ─── Notes from Redis
 
 > Not often in a life-time does a man stand on the edge of eternity, but when I spoke those words in that East End cellar I was perfectly certain that they were my last words on earth. I braced myself for the shock of those black, rushing waters beneath, and experienced in advance the horror of that breath-choking fall.
 
@@ -24,7 +24,7 @@ As you know, Redis is a database server. Clients must connect to Redis over a ne
 
 Clients may also have special code for pooling these connections for reuse. As both Node.js and Redis share a single-threaded programming model, pooling is not usually a concern for Node.js developers. 
 
-The second job of a Redis client is to implement the Redis protocol. This protocol, formally known as `RESP` or the Redis Serialization Protocol, is the language that clients use to speak to the Redis server. We'll see some examples of how this protocol works in Chapter 4. 
+The second job of a Redis client is to implement the Redis protocol. This protocol, formally known as `RESP` or the Redis Serialization Protocol, is the language that clients use to speak to the Redis server. We'll see some examples of how this protocol works in [Chapter 4](#viii-client-protocol). 
 
 ![alt redis RESP](img/redis-RESP.png)
 
