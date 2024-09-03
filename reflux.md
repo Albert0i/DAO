@@ -8,8 +8,8 @@ Flux and Reflux
 Ｏracle				    AS/400
 
                egg 
-FILEA  ←—--------------- FILEA ←–.
-					             |
+FILEA  ←—------------------- FILEA ←–.
+                                     |
 FILEAB1 —--.		     FILEB1  |
    ↓	   |		     	     |
 FILEAB2     `-----------→ FILEB2-'
