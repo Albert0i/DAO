@@ -9,10 +9,10 @@ Flux and Reflux
 
                egg 
 FILEA  ←—------------------- FILEA ←–.
-                               |
-FILEAB1 —--.		     FILEB1  |
-   ↓	   |		     	     |
-FILEAB2     `-----------→ FILEB2-'
+                                     |
+FILEAB1 —--.                 FILEB1  |
+  ↓        |                         |
+FILEAB2     `-----------→ FILEB2-----'
 ```
 
 
