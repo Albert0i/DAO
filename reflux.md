@@ -1,5 +1,7 @@
 ### Reflux 
 
+![alt BSMalestrom2](img/BSMalestrom2.jpg)
+
 
 #### Prologue 
 ```
@@ -16,7 +18,13 @@ FILEAB2     `-----------→ FILEB2-----'
 ```
 
 
-#### I. The employee table 
+#### I. Introduction 
+I want to update a table in Oracle. But I am reluctant to let things pass by soothingly and smoothly. The SQL statement is placed on a buffer and shipped to AS/400. On arrivial it is executed thereupon, this process is called `reflux`. A third party tool takes charge and moves the afftected data back to Oracle, this process is called `flux`. That's it. 
+
+If you ask me what's the point? It's fun, is it not? 
+
+
+#### II. The employee table 
 To create employee table in AS/400: 
 ```
 CREATE TABLE albertoi/employee (
@@ -35,7 +43,7 @@ STRJRNPF FILE(ALBERTOI/EMPLOYEE) JRN(ALBERTOI/MYJRN) IMAGES(*BOTH) OMTJRNE(*OPNC
 ```
 
 
-#### II. Three ways to insert data  
+#### III. Three ways to insert data  
 Insert employee via [5250 Terminal](https://en.wikipedia.org/wiki/IBM_5250): 
 ```
 insert into albertoi/employee (name, birthday, gender) values('alberto', 19661223, 'M')
@@ -62,7 +70,7 @@ select * from albertoi.employee@as400.ih;
 As you can see, bad chinese characters! 
 
 
-#### III. The reflux table
+#### IV. The reflux table
 To create reflux table in AS/400: 
 ```
 CREATE TABLE albertoi/reflux (
@@ -80,7 +88,7 @@ STRJRNPF FILE(ALBERTOI/REFLUX) JRN(ALBERTOI/MYJRN) IMAGES(*BOTH) OMTJRNE(*OPNCLO
 ```
 
 
-#### IV. The trigger function 
+#### V. The trigger function 
 To create triggr function in AS/400:
 ```
 CREATE TRIGGER albertoi/reflux_processor
@@ -106,7 +114,7 @@ END
 ```
 
 
-#### V. Three ways to insert data *indirectly*
+#### VI. Three ways to insert data *indirectly*
 Insert reflux table via [5250 Terminal](https://en.wikipedia.org/wiki/IBM_5250): 
 ```
 insert into albertoi/reflux (content) values('insert into albertoi.employee(name, birthday, gender) values(''alberto'', 19661223, ''M'') ')
@@ -125,7 +133,7 @@ insert into albertoi.reflux@as400.ih (content) values('update albertoi.employee 
 ```
 
 
-#### VI. On error
+#### VII. On error
 ```
 insert into albertoi.reflux@as400.ih (content) values('update albertoi.employee set birthday='''' where id=9 ')
 
@@ -133,7 +141,7 @@ insert into albertoi.reflux@as400.ih (content) values('update albertoi.employee 
 ```
 
 
-#### VII. The results 
+#### VIII. The results 
 ```
 insert into albertoi.reflux@as400.ih (content) values('delete from albertoi.employee where id=9 ')
 ```
@@ -159,7 +167,7 @@ order by id desc
 
 
 #### Epilogue 
-The very idea of `reflux` orginates from the piece of note first proposed on 2023/04/03: 
+The idea of `reflux` orginates from a piece of note first proposed on 2023/04/03: 
 ```
 Flux and Reflux on April Fools' Day --- 
 implementation of a special form of "Read/Write Splitting" (讀寫分離)
