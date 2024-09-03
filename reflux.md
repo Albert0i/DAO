@@ -89,7 +89,7 @@ STRJRNPF FILE(ALBERTOI/REFLUX) JRN(ALBERTOI/MYJRN) IMAGES(*BOTH) OMTJRNE(*OPNCLO
 
 
 #### V. The trigger function 
-To create triggr function in AS/400:
+To create trigger function in AS/400:
 ```
 CREATE TRIGGER albertoi/reflux_processor
 AFTER INSERT ON reflux
