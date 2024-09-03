@@ -7,7 +7,7 @@ Flux and Reflux
 
 Ｏracle				    AS/400
 
-               egg 
+                egg 
 FILEA  ←—------------------- FILEA ←–.
                                      |
 FILEAB1 —--.                 FILEB1  |
