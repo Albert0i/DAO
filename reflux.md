@@ -5,7 +5,7 @@
 ```
 Flux and Reflux
 
-Ｏracle				    AS/400
+Ｏracle                       AS/400
 
                 egg 
 FILEA  ←—------------------- FILEA ←–.
