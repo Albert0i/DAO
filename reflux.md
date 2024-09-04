@@ -78,8 +78,15 @@ CREATE TABLE albertoi/reflux (
     content VARCHAR(1024),
     completed CHAR(6) default 'false',     
     updatedAt TIMESTAMP, 
-    createdAt TIMESTAMP default current timestamp
+    createdAt TIMESTAMP default current timestamp,
+    PRIMARY KEY (id)
 )
+
+CREATE INDEX albertoi/reflux_content_index
+ON albertoi/reflux (content)
+
+CREATE INDEX albertoi/reflux_completed_index
+ON albertoi/reflux (completed)
 ```
 
 Journal reflux table: 
