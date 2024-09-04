@@ -178,9 +178,9 @@ In case you MUST manipulate chinese fields, instead of using `albertoi.reflux@as
 ```
 insert into albertoi/reflux (content) values('insert into albertoi.employee(name, birthday, gender) values('' 容水強 '', 19661223, ''M'') ')
 
-insert into albertoi/reflux (content) values('update albertoi.employee set name=''容火強'' where id = 11 ')
+insert into albertoi/reflux (content) values('update albertoi.employee set name=''容火強'' where id = 1 ')
 
-insert into albertoi/reflux (content) values('delete from albertoi.employee where id = 11 ')
+insert into albertoi/reflux (content) values('delete from albertoi.employee where id = 1 ')
 ```
 
 
