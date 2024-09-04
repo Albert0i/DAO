@@ -19,9 +19,9 @@ FILEAB2     `-----------→ FILEB2-----'
 
 
 #### I. Introduction 
-I want to update a table in Oracle. But I am reluctant to let things pass by soothingly and smoothly. The SQL statement is placed on a buffer and shipped to AS/400. On arrivial it is executed thereupon, this process is called `reflux`. A third party tool takes charge and moves the afftected data back to Oracle, this process is called `flux`. That's it. 
+I have a pending change on Oracle. Overwhelming by extreme mental fatigue and yet... I am quite reluctant to let things happened so placidly. I manage to write down the SQL statement, seal in an envelope and have it shipped to AS/400 not without much effort. Upon arrivial, the envelope is opened and SQL is executed thereupon, a stamp is secretly made to remark, either 'true' or 'falied'. This process is called `reflux`. A third party agent takes charge in transporting the affected data back to Oracle, as you may guess, this process is called `flux`. 
 
-If you ask me what's the point? It's fun, is it not? 
+You will ask me what's the point? It's fun, is it not? 
 
 
 #### II. The employee table 
@@ -164,6 +164,17 @@ from albertoi/employee
 order by id desc        
 ```
 ![alt employee](img/employee.JPG)
+
+
+#### IX. Chinese issue 
+In case you MUST manipulate chinese fields, instead of using `albertoi.reflux@as400.ih`, it is possible to operate on `reflux` table on AS/400 directly to achieve the ssame effect. 
+```
+insert into albertoi/reflux (content) values('insert into albertoi.employee(name, birthday, gender) values('' 容水強 '', 19661223, ''M'') ')
+
+insert into albertoi/reflux (content) values('update albertoi.employee set name=''容火強'' where id = 11 ')
+
+insert into albertoi/reflux (content) values('delete from albertoi.employee where id = 11 ')
+```
 
 
 #### Epilogue 
