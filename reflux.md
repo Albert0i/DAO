@@ -79,7 +79,7 @@ CREATE TABLE albertoi/reflux (
     completed CHAR(6) default 'false',     
     updatedAt TIMESTAMP, 
     createdAt TIMESTAMP default current timestamp,
-    PRIMARY KEY (id)
+    CONSTRAINT pk_reflux_id PRIMARY KEY (id)
 )
 
 CREATE INDEX albertoi/reflux_content_index
@@ -176,11 +176,11 @@ order by id desc
 #### IX. Chinese issue 
 In case you MUST manipulate chinese fields, instead of using `albertoi.reflux@as400.ih`, it is possible to operate on `reflux` table on AS/400 directly to achieve the ssame effect. 
 ```
-insert into albertoi/reflux (content) values('insert into albertoi.employee(name, birthday, gender) values('' 容水強 '', 19661223, ''M'') ')
+insert into albertoi/reflux (content) values('insert into albertoi.employee(name, birthday, gender) values(''容水強'', 19661223, ''M'') ')
 
-insert into albertoi/reflux (content) values('update albertoi.employee set name=''容火強'' where id = 1 ')
+insert into albertoi/reflux (content) values('update albertoi.employee set name=''容火強'' where id = 13 ')
 
-insert into albertoi/reflux (content) values('delete from albertoi.employee where id = 1 ')
+insert into albertoi/reflux (content) values('delete from albertoi.employee where id = 13 ')
 ```
 
 
